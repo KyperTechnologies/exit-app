@@ -2,6 +2,7 @@ import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,7 +18,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import Card  from '../components/Card';
 
 const drawerWidth = 240;
 
@@ -46,12 +46,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-
+  padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
-/*const AppBar = styled(MuiAppBar, {
+const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -67,7 +67,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-}));*/
+}));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -86,7 +86,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+export default function Layout({children}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -99,9 +99,9 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', backgroundColor:'rgb(26, 32, 39)' }}>
       <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+      <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -118,12 +118,13 @@ export default function MiniDrawer() {
           <Typography variant="h6" noWrap component="div">
             Mini variant drawer
           </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
-        </Toolbar>
-        <DrawerHeader>
-
         </DrawerHeader>
         <Divider />
         <List>
@@ -176,17 +177,9 @@ export default function MiniDrawer() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" 
-      sx={{
-            display:'flex',
-            flexFlow:'row wrap',
-            }}>
-        <DrawerHeader/>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        {children}
       </Box>
     </Box>
   );
