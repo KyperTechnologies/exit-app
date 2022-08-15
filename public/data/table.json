@@ -1,0 +1,34 @@
+{
+  "tables": [
+    {
+      "id": 1,
+      "name": "Masa1",
+      "orders": [
+        {
+          "id": 1,
+          "name": "Cay"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Masa2",
+      "orders": [
+        {
+          "id": 1,
+          "name": "Cay"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Masa3",
+      "orders": [
+        {
+          "id": 1,
+          "name": "Cay"
+        }
+      ]
+    }
+  ]
+}
