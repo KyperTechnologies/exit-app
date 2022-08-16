@@ -6,16 +6,18 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import Editable from '../components/EditableInline'
 import { TextField } from '@mui/material';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export default function ImgMediaCard() {
+
+  
 
   const [task, setTask] = useState("");
 
   return (
     <Card sx={{ maxWidth: 345,
-                margin:'40px',
+                margin:'30px',
                 backgroundColor: 'rgb(18, 18, 18)',
                 borderRadius:'4px',
                 boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
@@ -41,7 +43,8 @@ export default function ImgMediaCard() {
         </Editable>
       </CardContent>
       <CardActions>
-        <Button size="small">EKLE</Button>
+        <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
+        <Button size="small">SİPARİŞ</Button>
         <Button size="small">HESAP</Button>
       </CardActions>
     </Card>
