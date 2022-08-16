@@ -177,8 +177,7 @@ export default function Layout({children}) {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 ,display:'flex',flexFlow:'row wrap',marginTop:'40px'}}>
         {children}
       </Box>
     </Box>
