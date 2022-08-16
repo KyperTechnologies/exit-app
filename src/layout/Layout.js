@@ -99,7 +99,7 @@ export default function Layout({children}) {
   };
 
   return (
-    <Box sx={{ display: 'flex', backgroundColor:'rgb(26, 32, 39)' }}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
