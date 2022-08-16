@@ -2,33 +2,47 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+import Editable from '../components/EditableInline'
+import { TextField } from '@mui/material';
+
+
 
 export default function ImgMediaCard() {
+
+  const [task, setTask] = useState("");
+
   return (
     <Card sx={{ maxWidth: 345,
                 margin:'40px',
+                backgroundColor: 'rgb(18, 18, 18)',
+                borderRadius:'4px',
+                boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
+                color:'rgb(255,255,255)',
     }}>
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-      />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
+        <Editable
+        text={task}
+        placeholder="Masa Adı Giriniz :"
+        type="input"
+        >
+        <TextField
+        sx={{input:{color:'white'}}}
+                  id="standard-basic" 
+                  label="Masa Adı :"
+                  variant="standard"
+                  color='info'
+                  type="text"
+                  name="task"
+                  value={task}
+                  onChange={e => setTask(e.target.value)}>
+        </TextField>
+        </Editable>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">EKLE</Button>
+        <Button size="small">HESAP</Button>
       </CardActions>
     </Card>
   );
