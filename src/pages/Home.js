@@ -39,7 +39,7 @@ const Home = () => {
       </Grid>
     );
   }
-  
+
   return (
     <>
       <Layout>

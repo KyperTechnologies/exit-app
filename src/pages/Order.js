@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from '../layout/Layout'
 import MenuTable from '../components/MenuTable';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -8,6 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import OrderCard from '../components/OrderCard'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,7 +42,7 @@ function a11yProps(index) {
   };
 }
 
-const Menu = () => {
+const Order = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -56,7 +56,6 @@ const Menu = () => {
 
   return (
     <>
-      <Layout>
         <AppBar position="static" style={{marginTop: '20px'}}>
           <Tabs
             value={value}
@@ -74,18 +73,16 @@ const Menu = () => {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={value}
           onChangeIndex={handleChangeIndex}
-          style={{ width: '100%'}}
         >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            Item One
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
-          </TabPanel>
+          <OrderCard value={value} index={0} dir={theme.direction}>
+            
+          </OrderCard>
+          <OrderCard value={value} index={1} dir={theme.direction}>
+            
+          </OrderCard>
         </SwipeableViews>
-      </Layout>
     </>
   );
 };
   
-export default Menu;
+export default Order;

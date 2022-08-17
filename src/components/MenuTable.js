@@ -9,7 +9,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -20,7 +19,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 function createData(id, name, price, icon) {
@@ -90,7 +88,7 @@ const rows = [
   createData(1, 'Çay', 4, 'icon')
 ];
 
-const style = {
+/*const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -100,7 +98,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-};
+};*/
 
 export default function CollapsibleTable() {
   const [open, setOpen] = React.useState(false);
