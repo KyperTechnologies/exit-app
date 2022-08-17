@@ -16,6 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -87,6 +88,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Layout({children}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  let navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -95,6 +97,10 @@ export default function Layout({children}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const onButtonClick = (state) => {
+    navigate(state);
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -126,15 +132,15 @@ export default function Layout({children}) {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem button onClick={() => onButtonClick('/')}>
             <ListItemIcon>{<MailIcon />}</ListItemIcon>
             <ListItemText primary= "Anasayfa"/>
           </ListItem>
-          <ListItem button key= "Menü">
+          <ListItem button key= "Menü" onClick={() => onButtonClick('/menu')}>
             <ListItemIcon>{<MailIcon />}</ListItemIcon>
             <ListItemText primary= "Menü" />
           </ListItem>
-          <ListItem button key= "Veresiye">
+          <ListItem button key= "Veresiye" onClick={() => onButtonClick('/order')}>
             <ListItemIcon>{<MailIcon />}</ListItemIcon>
             <ListItemText primary= "Veresiye" />
           </ListItem>

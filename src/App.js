@@ -1,24 +1,25 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { createBrowserHistory } from "history";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Order from './pages/Order';
 
 function App() {
 
-  var hist = createBrowserHistory();
-
   return (
     <div className='App'>
-    <Router history={hist}>
-      <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/menu' exact component={Menu} />
-        <Route path='/order' exact component={Order}/>
-      </Switch>
-    </Router>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/order" element={<Order />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
