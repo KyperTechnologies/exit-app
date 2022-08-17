@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import Editable from '../components/EditableInline'
-import { TextField } from '@mui/material';
+import { CardActionArea, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
@@ -23,8 +23,10 @@ export default function ImgMediaCard() {
                 boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
                 color:'rgb(255,255,255)',
     }}>
+      <CardActionArea>
       <CardContent>
         <Editable
+        style={{fontSize:'35px'}}
         text={task}
         placeholder="Masa Adı Giriniz :"
         type="input"
@@ -42,6 +44,7 @@ export default function ImgMediaCard() {
         </TextField>
         </Editable>
       </CardContent>
+      </CardActionArea>
       <CardActions>
         <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
         <Button size="small">SİPARİŞ</Button>

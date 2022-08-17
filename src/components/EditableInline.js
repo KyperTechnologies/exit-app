@@ -26,7 +26,7 @@ const Editable = ({
         <div
           onClick={() => setEditing(true)}
         >
-          <span style={{fontSize:'35px'}}>
+          <span>
             {text || placeholder || "Editable content"}
           </span>
         </div>
