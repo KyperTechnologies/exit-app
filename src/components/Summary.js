@@ -8,7 +8,7 @@ import SpanningTable from './SpanningTable';
 
 export default function ImgMediaCard() {
   return (
-    <Card sx={{ maxWidth: 345,height:'100vh',display:'flex',flexDirection:'column' }}>
+    <Card sx={{ maxWidth: 345,height:'100vh',display:'flex',flexDirection:'column'}}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Masa_Adı

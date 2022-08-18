@@ -22,8 +22,10 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <MenuTable/>
+        <Box style={{p:3,marginTop:'60px',marginLeft:'30px',display:'flex',flexDirection:'row',flexFlow:'row wrap'}}>
+          <OrderCard></OrderCard>
+          <OrderCard></OrderCard>
+          <OrderCard></OrderCard>
         </Box>
       )}
     </div>
@@ -76,17 +78,16 @@ const Order = () => {
           </Tabs>
         </AppBar>
         <SwipeableViews
-          style={{marginTop:'60px',marginLeft:'30px'}}
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={value}
           onChangeIndex={handleChangeIndex}
         >
-          <OrderCard value={value} index={0} dir={theme.direction}>
-            
-          </OrderCard>
-          <OrderCard value={value} index={1} dir={theme.direction}>
-            
-          </OrderCard>
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            Item One
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            Item Two
+          </TabPanel>
         </SwipeableViews>
       </Box>
     </>
