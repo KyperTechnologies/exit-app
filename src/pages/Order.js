@@ -7,7 +7,8 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import OrderCard from '../components/OrderCard'
+import OrderCard from '../components/OrderCard';
+import Summary from '../components/Summary';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,6 +23,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
+          <Summary/>
           <MenuTable/>
         </Box>
       )}
@@ -55,8 +57,10 @@ const Order = () => {
   };
 
   return (
-    <>
-        <AppBar position="static" style={{marginTop: '20px'}}>
+    <>  
+        <Box style={{display:'flex'}}>
+        <Summary></Summary>
+        <AppBar>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -70,6 +74,7 @@ const Order = () => {
           </Tabs>
         </AppBar>
         <SwipeableViews
+          style={{marginTop:'20px'}}
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={value}
           onChangeIndex={handleChangeIndex}
@@ -81,6 +86,7 @@ const Order = () => {
             
           </OrderCard>
         </SwipeableViews>
+        </Box>
     </>
   );
 };

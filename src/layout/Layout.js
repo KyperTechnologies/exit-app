@@ -126,7 +126,7 @@ export default function Layout({children}) {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem button key='Anasayfa'>
             <ListItemIcon>{<MailIcon />}</ListItemIcon>
             <ListItemText primary= "Anasayfa"/>
           </ListItem>
