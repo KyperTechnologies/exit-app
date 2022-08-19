@@ -28,7 +28,7 @@ const Home = () => {
 
   const getContent = () => {
     return (
-      <Grid container spacing={3}>
+      <Grid container spacing={3} minHeight='100vh' justifyContent='space-between'>
         {tables.map(element => {
           return (
             <Grid xs={4}>

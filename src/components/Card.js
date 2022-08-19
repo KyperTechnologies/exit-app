@@ -7,13 +7,18 @@ import { useState } from 'react';
 import Editable from '../components/EditableInline'
 import { CardActionArea, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function ImgMediaCard() {
 
-  
+  let navigate = useNavigate();
 
   const [task, setTask] = useState("");
+
+  const onButtonClick = (state) => {
+    navigate(state);
+  }
 
   return (
     <Card sx={{ maxWidth: 345,
@@ -45,9 +50,9 @@ export default function ImgMediaCard() {
         </Editable>
       </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions style={{justifyContent:'space-around'}}>
         <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
-        <Button size="small">SİPARİŞ</Button>
+        <Button size="small" onClick={() => onButtonClick('/order')}>SİPARİŞ</Button>
         <Button size="small">HESAP</Button>
       </CardActions>
     </Card>
