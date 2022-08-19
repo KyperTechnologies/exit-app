@@ -28,10 +28,10 @@ const Home = () => {
 
   const getContent = () => {
     return (
-      <Grid container spacing={3} minHeight='100vh' justifyContent='space-between'>
+      <Grid container spacing={3}>
         {tables.map(element => {
           return (
-            <Grid xs={4}>
+            <Grid xs={4} marginTop='20px' maxHeight='207px'>'
               <Card></Card>
             </Grid>
           );
