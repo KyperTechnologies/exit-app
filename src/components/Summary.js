@@ -5,8 +5,15 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import SpanningTable from './SpanningTable';
+import { useNavigate } from 'react-router-dom';
 
 export default function ImgMediaCard() {
+
+  let navigate = useNavigate();
+
+  const onButtonClick = (state) => {
+    navigate(state);
+  }
   return (
     <Card sx={{ maxWidth: 345,height:'100vh',display:'flex',flexDirection:'column'}}>
       <CardContent>
@@ -18,8 +25,8 @@ export default function ImgMediaCard() {
         </SpanningTable>
       </CardContent>
       <CardActions style={{justifyContent:'space-evenly'}}>
-        <Button variant="outlined" color="error">İPTAL</Button>
-        <Button variant="contained" color="success">ONAY</Button>
+        <Button variant="outlined" color="error" onClick={() => onButtonClick('/')}>İPTAL</Button>
+        <Button variant="contained" color="success" onClick={() => onButtonClick('/')}>ONAY</Button>
       </CardActions>
     </Card>
   );
