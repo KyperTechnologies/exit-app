@@ -42,12 +42,6 @@ export default function SpanningTable() {
       <Table  aria-label="spanning table">
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={3} sx={{fontSize:'25px',fontWeight:'bold'}}>
-              Ürünler
-            </TableCell>
-            <TableCell sx={{fontSize:'20px',fontWeight:'bold'}}>Fiyat</TableCell>
-          </TableRow>
-          <TableRow>
             <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Ürün İsmi</TableCell>
             <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Tane</TableCell>
             <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Birim Fiyat</TableCell>

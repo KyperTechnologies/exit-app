@@ -21,9 +21,9 @@ export default function ActionAreaCard() {
           <Typography variant='h5'>Ürün İsmi</Typography>
 
         </CardContent>
-        <CardActions style={{display:'flex',justifyContent:'space-evenly'}}>
+        <CardActions style={{gap:'5px',minWidth:'206px',justifyContent:'space-around'}}>
           <Button variant="contained" color="success">
-          ☑
+          ✔
           </Button>
           <Editable style={{fontSize:'15px'}}
                     text={task}
@@ -42,9 +42,6 @@ export default function ActionAreaCard() {
                     onChange={e => setTask(e.target.value)}>
           </TextField>
         </Editable>
-          <Button variant="outlined" color="error" >
-            -
-          </Button>
         </CardActions>
     </Card>
   );

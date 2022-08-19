@@ -10,16 +10,16 @@ export default function ImgMediaCard() {
   return (
     <Card sx={{ maxWidth: 345,height:'100vh',display:'flex',flexDirection:'column'}}>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h4" component="div">
           Masa_Adı
         </Typography>
         <SpanningTable>
 
         </SpanningTable>
       </CardContent>
-      <CardActions >
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+      <CardActions style={{justifyContent:'space-evenly'}}>
+        <Button variant="outlined" color="error">İPTAL</Button>
+        <Button variant="contained" color="success">ONAY</Button>
       </CardActions>
     </Card>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import MenuTable from '../components/MenuTable';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
@@ -22,7 +21,10 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box style={{p:3,marginTop:'60px',marginLeft:'30px',display:'flex',flexDirection:'row',flexFlow:'row wrap'}}>
+        <Box style={{margin:'60px',gap:'10px 5px',display:'flex',flexFlow:'row wrap'}}>
+          <OrderCard></OrderCard>
+          <OrderCard></OrderCard>
+          <OrderCard></OrderCard>
           <OrderCard></OrderCard>
           <OrderCard></OrderCard>
           <OrderCard></OrderCard>
