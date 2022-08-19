@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Editable from '../components/EditableInline'
 import { CardActionArea, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -53,7 +54,7 @@ export default function ImgMediaCard() {
       <CardActions style={{justifyContent:'space-around'}}>
         <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
         <Button size="small" onClick={() => onButtonClick('/order')}>SİPARİŞ</Button>
-        <Button size="small">HESAP</Button>
+        <Button variant="contained" endIcon={<SendIcon />}>HESAP</Button>
       </CardActions>
     </Card>
   );
