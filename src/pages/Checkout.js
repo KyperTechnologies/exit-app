@@ -53,8 +53,8 @@ const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
 export default function TransferList() {
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([0, 1, 2, 3]);
-  const [right, setRight] = React.useState([4, 5, 6, 7]);
+  const [left, setLeft] = React.useState([0]);
+  const [right, setRight] = React.useState([4]);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -95,8 +95,8 @@ export default function TransferList() {
   };
 
   const customList = (items) => (
-    <TableContainer component={Paper} >
-      <Table  aria-label="spanning table">
+  <TableContainer component={Paper} >
+    <Table  aria-label="spanning table">
         <TableHead>
           <TableRow>
             <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Ürün İsmi</TableCell>
@@ -105,46 +105,43 @@ export default function TransferList() {
             <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Tutar</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell>
-                <Paper sx={{ width: 200, height: 230, overflow: 'auto' }}>
+      <TableBody>
+        {rows.map((row) => (
+          <TableRow key={row.name}>
+            <TableCell>
+              <Paper sx={{ overflow: 'auto' }}>
                 <List dense component="div" role="list">
-                    {items.map((value) => {
-                    const labelId = `transfer-list-item-${value}-label`;
-
+                  {items.map((value) => {
+                  const labelId = `transfer-list-item-${value}-label`;
                     return (
-                        <ListItem
+                      <ListItem
                         key={value}
                         role="listitem"
                         button
                         onClick={handleToggle(value)}
-                        >
-                        <ListItemIcon>
+                      >
+                          <ListItemIcon>
                             <Checkbox
-                            checked={checked.indexOf(value) !== -1}
-                            tabIndex={-1}
-                            disableRipple
-                            inputProps={{
+                                checked={checked.indexOf(value) !== -1}
+                                tabIndex={-1}
+                                disableRipple
+                                inputProps={{
                                 'aria-labelledby': labelId,
-                            }}
+                              }}
                             />
-                        </ListItemIcon>
-                        <ListItemText id={labelId} primary={row.name} />
-                        </ListItem>
+                          </ListItemIcon>
+                        <ListItemText id={labelId} primary={row.name}/>
+                      </ListItem>
                     );
-                    })}
-                    <ListItem />
+                  })}
                 </List>
-                </Paper>
-              </TableCell>
-              <TableCell >{row.qty}</TableCell>
-              <TableCell >{row.unit}</TableCell>
-              <TableCell >{ccyFormat(row.price)}</TableCell>
-            </TableRow>
-          ))}
-
+              </Paper>
+            </TableCell>
+            <TableCell >{row.qty}</TableCell>
+            <TableCell >{row.unit}</TableCell>
+            <TableCell >{ccyFormat(row.price)}</TableCell>
+          </TableRow>
+        ))}
           <TableRow>
             <TableCell rowSpan={3} />
           </TableRow>
@@ -152,9 +149,9 @@ export default function TransferList() {
             <TableCell colSpan={2} sx={{fontSize:'20px',fontWeight:'bold'}}>Toplam Tutar :</TableCell>
             <TableCell>{ccyFormat(invoiceTotal)}</TableCell>
           </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+      </TableBody>
+    </Table>
+  </TableContainer>
   );
 
   return (
