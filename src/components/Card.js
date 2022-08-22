@@ -54,7 +54,7 @@ export default function ImgMediaCard() {
       <CardActions style={{justifyContent:'space-around'}}>
         <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
         <Button size="small" onClick={() => onButtonClick('/order')}>SİPARİŞ</Button>
-        <Button variant="contained" endIcon={<SendIcon />}>HESAP</Button>
+        <Button variant="contained" onClick={() => onButtonClick('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
       </CardActions>
     </Card>
   );
