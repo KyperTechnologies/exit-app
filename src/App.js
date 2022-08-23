@@ -8,7 +8,6 @@ import {
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Order from './pages/Order';
-import Table from './components/SpanningTable';
 import Checkout from './pages/Checkout';
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/order" element={<Order />} />
-          <Route path="/table" element={<Table />} />
           <Route path='/checkout' element={<Checkout/>}></Route>
         </Routes>
       </BrowserRouter>

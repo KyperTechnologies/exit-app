@@ -7,7 +7,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import OrderCard from '../components/OrderCard'
-import Summary from '../components/Summary';
+import OrderSummary from '../components/OrderSummary';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -63,8 +63,8 @@ const Order = () => {
     <>
     <Box style={{display:'flex'}}>
       <Box style={{marginTop:'45px'}}>
-        <Summary>
-        </Summary>
+        <OrderSummary>
+        </OrderSummary>
       </Box>
         <AppBar>
           <Tabs
