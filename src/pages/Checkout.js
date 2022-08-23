@@ -8,7 +8,7 @@ import SplitCheckSummary from '../components/SplitCheckSummary';
 export default function ImgMediaCard() {
   return (
     <Card style={{backgroundColor:'black',height:'100vh'}}>
-      <CardContent sx={{display:'flex',flexFlow:'row wrap',justifyContent:'space-between'}}>
+      <CardContent sx={{display:'flex',flexFlow:'row wrap',justifyContent:'space-evenly',marginTop:'30px'}}>
         <CheckoutSummary>
         </CheckoutSummary>
         <SplitCheckSummary>

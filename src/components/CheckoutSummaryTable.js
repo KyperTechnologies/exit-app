@@ -50,20 +50,20 @@ export default function SpanningTable() {
       <Table  aria-label="spanning table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold',color:'rgb(255,255,255)'}}>Ürün İsmi</TableCell>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold',color:'rgb(255,255,255)'}}>Tane</TableCell>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold',color:'rgb(255,255,255)'}}>Birim Fiyat</TableCell>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold',color:'rgb(255,255,255)'}}>Tutar</TableCell>
+            <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Ürün İsmi</TableCell>
+            <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Tane</TableCell>
+            <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Birim Fiyat</TableCell>
+            <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Tutar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name}>
-              <TableCell sx={{color:'rgb(255,255,255)'}}>{row.name}</TableCell>
-              <TableCell sx={{color:'rgb(255,255,255)'}}>{row.qty}</TableCell>
-              <TableCell sx={{color:'rgb(255,255,255)'}}>{row.unit}</TableCell>
-              <TableCell sx={{color:'rgb(255,255,255)'}}>{ccyFormat(row.price)}</TableCell>
-              <TableCell>
+              <TableCell sx={{color:'rgb(255,255,255)',textAlign:'center'}}>{row.name}</TableCell>
+              <TableCell sx={{color:'rgb(255,255,255)',textAlign:'center'}}>{row.qty}</TableCell>
+              <TableCell sx={{color:'rgb(255,255,255)',textAlign:'center'}}>{row.unit}</TableCell>
+              <TableCell sx={{color:'rgb(255,255,255)',textAlign:'center'}}>{ccyFormat(row.price)}</TableCell>
+              <TableCell sx={{textAlign:'center'}}>
                 <SplitCheckButton></SplitCheckButton>
               </TableCell>
             </TableRow>
@@ -73,8 +73,8 @@ export default function SpanningTable() {
             <TableCell rowSpan={3} />
           </TableRow>
           <TableRow>
-            <TableCell colSpan={2} sx={{fontSize:'20px',fontWeight:'bold',color:'rgb(255,255,255)'}}>Toplam Tutar :</TableCell>
-            <TableCell sx={{color:'rgb(255,255,255)'}}>{ccyFormat(invoiceTotal)}</TableCell>
+            <TableCell colSpan={2} sx={{fontSize:'20px',fontWeight:'bold',color:'rgb(255,255,255)',textAlign:'center'}}>Toplam Tutar :</TableCell>
+            <TableCell sx={{color:'rgb(255,255,255)',textAlign:'center'}}>{ccyFormat(invoiceTotal)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
