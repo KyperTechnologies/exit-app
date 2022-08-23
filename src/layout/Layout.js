@@ -15,7 +15,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -119,9 +121,11 @@ export default function Layout({children}) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h4" noWrap component="div">
+          <Box sx={{marginLeft:'530px'}}>
+          <Typography variant="h2" noWrap component="div" style={{color:'rgb(18, 18, 18)'}}>
             EXIT
           </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -133,15 +137,15 @@ export default function Layout({children}) {
         <Divider />
         <List>
           <ListItem button onClick={() => onButtonClick('/')}>
-            <ListItemIcon>{<MailIcon />}</ListItemIcon>
+            <ListItemIcon>{<TableRestaurantIcon />}</ListItemIcon>
             <ListItemText primary= "Anasayfa"/>
           </ListItem>
           <ListItem button key= "Menü" onClick={() => onButtonClick('/menu')}>
-            <ListItemIcon>{<MailIcon />}</ListItemIcon>
+            <ListItemIcon>{<RestaurantMenuIcon />}</ListItemIcon>
             <ListItemText primary= "Menü" />
           </ListItem>
           <ListItem button key= "Veresiye" onClick={() => onButtonClick('/order')}>
-            <ListItemIcon>{<MailIcon />}</ListItemIcon>
+            <ListItemIcon>{<AutoStoriesIcon />}</ListItemIcon>
             <ListItemText primary= "Veresiye" />
           </ListItem>
         </List>

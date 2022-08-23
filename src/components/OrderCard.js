@@ -2,14 +2,9 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { CardActions, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
-import Editable from '../components/EditableInline'
-import { TextField } from '@mui/material';
-import { useState } from 'react';
+import OrderSliderButton from '../components/OrderSliderButton';
 
 export default function ActionAreaCard() {
-
-    const [task, setTask] = useState("");
 
   return (
     <Card sx={{ maxWidth: 245,    
@@ -19,29 +14,9 @@ export default function ActionAreaCard() {
         color:'rgb(255,255,255)', }}>
         <CardContent>
           <Typography variant='h5'>Ürün İsmi</Typography>
-
         </CardContent>
-        <CardActions style={{gap:'5px',minWidth:'206px',justifyContent:'space-around'}}>
-          <Button variant="contained" color="success">
-          ✔
-          </Button>
-          <Editable style={{fontSize:'15px'}}
-                    text={task}
-                    placeholder="ADET :"
-                    type="input"
-        >
-          <TextField
-          sx={{input:{color:'white'}}}
-                    id="filled-basic" 
-                    label="ADET :"
-                    variant="filled"
-                    color='info'
-                    type="text"
-                    name="task"
-                    value={task}
-                    onChange={e => setTask(e.target.value)}>
-          </TextField>
-        </Editable>
+        <CardActions sx={{minWidth:'206px',display:'flex',justifyContent:'center'}}>
+          <OrderSliderButton></OrderSliderButton>
         </CardActions>
     </Card>
   );
