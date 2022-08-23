@@ -51,10 +51,10 @@ export default function SpanningTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name}>
-              <TableCell>{row.name}</TableCell>
-              <TableCell >{row.qty}</TableCell>
-              <TableCell >{row.unit}</TableCell>
-              <TableCell >{ccyFormat(row.price)}</TableCell>
+              <TableCell sx={{textAlign:'center'}}>{row.name}</TableCell>
+              <TableCell sx={{textAlign:'center'}}>{row.qty}</TableCell>
+              <TableCell sx={{textAlign:'center'}}>{row.unit}</TableCell>
+              <TableCell sx={{textAlign:'center'}}>{ccyFormat(row.price)}</TableCell>
             </TableRow>
           ))}
 
@@ -62,8 +62,8 @@ export default function SpanningTable() {
             <TableCell rowSpan={3} />
           </TableRow>
           <TableRow>
-            <TableCell colSpan={2} sx={{fontSize:'20px',fontWeight:'bold'}}>Toplam Tutar :</TableCell>
-            <TableCell>{ccyFormat(invoiceTotal)}</TableCell>
+            <TableCell colSpan={2} sx={{fontSize:'20px',fontWeight:'bold',textAlign:'center'}}>Toplam Tutar :</TableCell>
+            <TableCell sx={{textAlign:'center'}}>{ccyFormat(invoiceTotal)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

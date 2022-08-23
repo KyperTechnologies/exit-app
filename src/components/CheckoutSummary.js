@@ -33,6 +33,7 @@ export default function ImgMediaCard() {
       </CardContent>
       <CardActions style={{justifyContent:'space-evenly'}}>
         <Button variant="outlined" color="error" onClick={() => onButtonClick('/')}>İPTAL</Button>
+        <Button variant="contained" onClick={() => onButtonClick('/')}>Veresİye Yazdır</Button>
         <Button variant="contained" color="success" onClick={() => onButtonClick('/')}>ONAY</Button>
       </CardActions>
     </Card>
