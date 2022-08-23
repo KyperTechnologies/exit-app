@@ -25,9 +25,9 @@ export default function IconButtons() {
                 <DialogContent>
                     <Slider></Slider>
                 </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Vazgeç</Button>
-                <Button onClick={handleClose}>Ayır</Button>
+            <DialogActions sx={{display:'flex',justifyContent:'space-between'}}>
+                <Button variant='contained' onClick={handleClose}>Vazgeç</Button>
+                <Button variant='contained' onClick={handleClose}>Ayır</Button>
             </DialogActions>
         </Dialog>
     </div>

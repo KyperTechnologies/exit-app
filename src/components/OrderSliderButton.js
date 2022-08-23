@@ -1,6 +1,6 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,18 +16,18 @@ export default function IconButtons() {
     <>
     <div>
       <IconButton color="primary" aria-label="add to shopping cart">
-        <DeleteIcon  onClick={handleOpen}/>
+        <AddShoppingCartIcon  onClick={handleOpen}/>
       </IconButton>
     </div>
     <div>
         <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Ayrım İptali</DialogTitle>
+            <DialogTitle>Ürün Miktarı</DialogTitle>
                 <DialogContent>
                     <Slider></Slider>
                 </DialogContent>
             <DialogActions sx={{display:'flex',justifyContent:'space-between'}}>
-                <Button  variant='contained' onClick={handleClose}>Vazgeç</Button>
-                <Button variant='contained' onClick={handleClose}>İptalİ Onayla</Button>
+                <Button variant='contained' onClick={handleClose}>Vazgeç</Button>
+                <Button variant='contained' onClick={handleClose}>Onayla</Button>
             </DialogActions>
         </Dialog>
     </div>
