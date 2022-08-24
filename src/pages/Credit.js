@@ -33,7 +33,7 @@ const Home = () => {
       <Grid container spacing={3}>
         {tables.map(element => {
           return (
-            <Grid xs={4} marginTop='20px' maxHeight='207px'>'
+            <Grid m={8} sx={{marginTop:'50px',maxHeight:'207px'}}>
               <CreditCard></CreditCard>
             </Grid>
           );

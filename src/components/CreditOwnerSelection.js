@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -22,17 +21,7 @@ const names = [
   'Burak Kiper',
 ];
 
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
 export default function MultipleSelect() {
-  const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
@@ -47,7 +36,7 @@ export default function MultipleSelect() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 5, width: 300 }}>
         <InputLabel id="demo-multiple-name-label" sx={{color:'rgb(40,100,150)'}}>SEÇİNİZ</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
@@ -56,13 +45,14 @@ export default function MultipleSelect() {
           onChange={handleChange}
           input={<OutlinedInput label="SEÇİNİZ" />}
           MenuProps={MenuProps}
+          style={{color:'white'}}
         >
           {names.map((name) => (
             <MenuItem
               back
               key={name}
               value={name}
-              style={getStyles(name, personName, theme)}
+              style={{backgroundColor:'rgb(18, 18, 18)',color:'white'}}
             >
               {name}
             </MenuItem>
