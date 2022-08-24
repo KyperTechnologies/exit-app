@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Order from './pages/Order';
 import Checkout from './pages/Checkout';
+import Credit from './pages/Credit';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/order" element={<Order />} />
           <Route path='/checkout' element={<Checkout/>}></Route>
+          <Route path='/credit' element={<Credit/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
