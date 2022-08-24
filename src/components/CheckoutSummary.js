@@ -10,6 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import CreditOwnerSelection from '../components/CreditOwnerSelection';
 
 export default function ImgMediaCard() {
 
@@ -47,13 +48,13 @@ export default function ImgMediaCard() {
       </CardActions>
       <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle sx={{fontWeight:'bold',color:'rgb(40,100,150)',backgroundColor:'rgb(18, 18, 18)'}}>VERESİYE ÖDEME</DialogTitle>
+        <DialogTitle sx={{fontWeight:'bold',color:'rgb(40,100,150)',backgroundColor:'rgb(18, 18, 18)'}}>VERESİYE YAZDIRMA</DialogTitle>
         <DialogContent sx={{backgroundColor: 'rgb(18, 18, 18)'}}>
-          
+          <CreditOwnerSelection></CreditOwnerSelection>
         </DialogContent>
         <DialogActions sx={{backgroundColor: 'rgb(18, 18, 18)',justifyContent:'space-between'}}>
-          <Button onClick={handleClose}>Vazgeç</Button>
-          <Button color='success' onClick={handleClose}>ÖDENDİ</Button>
+          <Button onClick={handleClose}>VAZGEÇ</Button>
+          <Button color='success' onClick={handleClose}>YAZDIR</Button>
         </DialogActions>
       </Dialog>
       </div>
