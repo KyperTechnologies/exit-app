@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import Layout from '../layout/Layout'
-import TableCard  from '../components/TableCard';
+import CreditCard  from '../components/CreditCard';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
@@ -34,7 +34,7 @@ const Home = () => {
         {tables.map(element => {
           return (
             <Grid xs={4} marginTop='20px' maxHeight='207px'>'
-              <TableCard></TableCard>
+              <CreditCard></CreditCard>
             </Grid>
           );
         })}

@@ -36,28 +36,30 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' },      
+      backgroundColor:'rgb(18, 18, 18)'}}>
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
+            color='primary'
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" sx={{color:'rgb(255,255,255)'}}>
           {row.icon}
         </TableCell>
-        <TableCell>{row.name}</TableCell>
-        <TableCell>{row.price}</TableCell>
+        <TableCell sx={{color:'rgb(255,255,255)'}}>{row.name}</TableCell>
+        <TableCell sx={{color:'rgb(255,255,255)'}}>{row.price}</TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow sx={{backgroundColor:'rgb(18, 18, 18)'}}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1, textAlign: 'right' }}>
-              <Button>Güncelle</Button>
-              <Button>Sil</Button>
+              <Button >Güncelle</Button>
+              <Button >Sİl</Button>
             </Box>
           </Collapse>
         </TableCell>
@@ -110,11 +112,11 @@ export default function CollapsibleTable() {
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow>
+            <TableRow sx={{backgroundColor:'rgb(18, 18, 18)'}}>
               <TableCell />
-              <TableCell >Icon</TableCell>
-              <TableCell >Ürün İsmi</TableCell>
-              <TableCell >Fiyat</TableCell>
+              <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Icon</TableCell>
+              <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Ürün İsmi</TableCell>
+              <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Fiyat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

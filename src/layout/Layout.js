@@ -144,7 +144,7 @@ export default function Layout({children}) {
             <ListItemIcon>{<RestaurantMenuIcon />}</ListItemIcon>
             <ListItemText primary= "Menü" />
           </ListItem>
-          <ListItem button key= "Veresiye" onClick={() => onButtonClick('/order')}>
+          <ListItem button key= "Veresiye" onClick={() => onButtonClick('/credit')}>
             <ListItemIcon>{<AutoStoriesIcon />}</ListItemIcon>
             <ListItemText primary= "Veresiye" />
           </ListItem>

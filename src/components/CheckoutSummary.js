@@ -6,6 +6,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CheckoutSummaryTable from './CheckoutSummaryTable';
 import { useNavigate } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function ImgMediaCard() {
 
@@ -14,6 +18,11 @@ export default function ImgMediaCard() {
   const onButtonClick = (state) => {
     navigate(state);
   }
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(true);
+
+  const handleClose = () => setOpen(false);
   return (
     <Card sx={{ 
         maxWidth: 450,
@@ -33,9 +42,21 @@ export default function ImgMediaCard() {
       </CardContent>
       <CardActions style={{justifyContent:'space-evenly'}}>
         <Button variant="outlined" color="error" onClick={() => onButtonClick('/')}>İPTAL</Button>
-        <Button variant="contained" onClick={() => onButtonClick('/')}>Veresİye Yazdır</Button>
+        <Button variant="contained" onClick={handleOpen}>Veresİye Yazdır</Button>
         <Button variant="contained" color="success" onClick={() => onButtonClick('/')}>ONAY</Button>
       </CardActions>
+      <div>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle sx={{fontWeight:'bold',color:'rgb(40,100,150)',backgroundColor:'rgb(18, 18, 18)'}}>VERESİYE ÖDEME</DialogTitle>
+        <DialogContent sx={{backgroundColor: 'rgb(18, 18, 18)'}}>
+          
+        </DialogContent>
+        <DialogActions sx={{backgroundColor: 'rgb(18, 18, 18)',justifyContent:'space-between'}}>
+          <Button onClick={handleClose}>Vazgeç</Button>
+          <Button color='success' onClick={handleClose}>ÖDENDİ</Button>
+        </DialogActions>
+      </Dialog>
+      </div>
     </Card>
   );
 }
