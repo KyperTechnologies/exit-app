@@ -36,7 +36,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' },      
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' },
       backgroundColor:'rgb(18, 18, 18)'}}>
         <TableCell>
           <IconButton
