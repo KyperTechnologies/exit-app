@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../layout/Layout'
-import MenuTable from '../components/MenuTable';
+import MenuTableDrinks from '../components/MenuTableDrinks';
+import MenuTableFoods from '../components/MenuTableFoods';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
@@ -22,7 +23,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3,height:'100vh' }}>
-          <MenuTable/>
+          {children}
         </Box>
       )}
     </div>
@@ -77,10 +78,10 @@ const Menu = () => {
           style={{ width: '100%'}}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            Item One
+            <MenuTableDrinks></MenuTableDrinks>
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
+            <MenuTableFoods></MenuTableFoods>
           </TabPanel>
         </SwipeableViews>
       </Layout>
