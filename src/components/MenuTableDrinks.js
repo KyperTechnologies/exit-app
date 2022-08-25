@@ -26,7 +26,7 @@ function createData(id, name, price, icon) {
     name,
     price,
     icon,
-    id
+    id,
   };
 }
 
@@ -87,20 +87,12 @@ Row.propTypes = {
 };
 
 const rows = [
-  createData(1, 'Çay', 4, 'icon')
+  createData(1, 'Çay', 4, 'icon'),
+  createData(2, "Kahve", 12, 'icon'),
+  createData(3, 'Soda', 10, 'icon'),
 ];
 
-/*const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};*/
+
 
 export default function CollapsibleTable() {
   const [open, setOpen] = React.useState(false);
@@ -156,7 +148,7 @@ export default function CollapsibleTable() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Vazgeç</Button>
-          <Button onClick={handleClose}>Ekle</Button>
+          <Button>Ekle</Button>
         </DialogActions>
       </Dialog>
       </div>
