@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -20,6 +20,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import {addDrink,getDrink} from '../Config';
+
 
 function createData(id, name, price, icon) {
   return {
@@ -87,9 +89,7 @@ Row.propTypes = {
 };
 
 const rows = [
-  createData(1, 'Çay', 4, 'icon'),
-  createData(2, "Kahve", 12, 'icon'),
-  createData(3, 'Soda', 10, 'icon'),
+  createData(id, name, price, 'icon'),
 ];
 
 
@@ -98,6 +98,21 @@ export default function CollapsibleTable() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [id,Setid] = useState(1);
+  const [name, Setname] = useState('');
+  const[price,Setprice] = useState('');
+  
+  
+
+
+  const onAddClick = () => {
+    Setid(id+1);
+    addDrink(id, {
+      "id" : id,
+      "name": name,
+      "price":price,
+    });
+  }
 
   return (
     <>
@@ -126,8 +141,9 @@ export default function CollapsibleTable() {
       <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Ürün Ekle</DialogTitle>
-        <DialogContent>
+        <DialogContent onSubmit={addDrink}>
           <TextField
+           onChange={(e)=>{Setname(e.target.value)}}
             autoFocus
             margin="dense"
             id="name"
@@ -137,6 +153,7 @@ export default function CollapsibleTable() {
             variant="standard"
           />
                <TextField
+            onChange={(e)=>{Setprice(e.target.value)}}
             autoFocus
             margin="dense"
             id="name"
@@ -148,7 +165,7 @@ export default function CollapsibleTable() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Vazgeç</Button>
-          <Button>Ekle</Button>
+          <Button type ='submit' onClick={onAddClick} >Ekle</Button>
         </DialogActions>
       </Dialog>
       </div>
