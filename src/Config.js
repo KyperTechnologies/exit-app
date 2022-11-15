@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
-import {getDatabase, ref, set, get, child } from 'firebase/database';
+import {getDatabase, ref, set, get, child,update,push } from 'firebase/database';
+import { doc, updateDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -65,3 +66,14 @@ export const getDrink = async () => {
       console.error(error);
     });
 };
+
+export const updateDrink = async (drink) => {
+  const newDrinkKey = push(child(ref(db), 'drinks')).key;
+  
+  const updates = {};
+  updates['/drinks/' + drink.id + '/'+ newDrinkKey] = drink;
+
+  return update(ref(db), updates);
+
+ 
+}

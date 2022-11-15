@@ -9,28 +9,28 @@ import {addTable, getTable} from '../Config';
 
 const Home = () => {
   const [tables, setTables] = useState([]);
+  const [id,Setid] = useState(1);
+  const [name, Setname] = useState('');
 
   useEffect(()=>{
-    async function fetchData() {
-      const tableData = await getTable();
-      if (tableData && tableData.length > 0) {
-        setTables(tableData);
-      }
-    }
+
     fetchData();
   },[])
+
+  async function fetchData() {
+    const tableData = await getTable();
+    if (tableData && tableData.length > 0) {
+      setTables(tableData);
+    }
+  }
   
   const onAddClick = () => {
-    addTable(1, {
-      "id": 1,
-      "name": "Masa1",
-      "orders": [
-        {
-          "id": 1,
-          "name": "Cay"
-        }
-      ]
+    Setid(id+1);
+    addTable(id, {
+      "id" : id,
+      "name": name,
     });
+    fetchData();
   }
 
   const getContent = () => {
