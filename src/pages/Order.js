@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import OrderCardDrinks from '../components/OrderCardDrinks'
 import OrderCardFoods from '../components/OrderCardFoods'
 import OrderSummary from '../components/OrderSummary';
+import Grid from '@mui/material/Grid';
+import { addDrink, getDrink, updateDrink, deleteDrink } from '../Config';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,7 +24,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box style={{margin:'60px',gap:'10px 5px',display:'flex',flexFlow:'row wrap'}}>
+        <Box style={{ margin: '60px', gap: '10px 5px', display: 'flex', flexFlow: 'row wrap' }}>
           {children}
         </Box>
       )}
@@ -46,6 +48,7 @@ function a11yProps(index) {
 const Order = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [drinks, setDrinks] = useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -55,13 +58,42 @@ const Order = () => {
     setValue(index);
   };
 
+  useEffect(() => {
+
+    fetchData();
+  }, [])
+
+  async function fetchData() {
+    const drinkData = await getDrink();
+    if (drinkData && drinkData.length > 0) {
+      setDrinks(drinkData);
+    }
+  }
+
+  const getContent = () => {
+    return (
+      <Box sx={{ height: '100vh' }}>
+        <Grid container spacing={3}>
+          {drinks.map(element => {
+            return (
+              <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }}>
+                <OrderCardDrinks>
+                </OrderCardDrinks>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+    );
+  }
+
   return (
     <>
-    <Box style={{display:'flex'}}>
-      <Box style={{marginTop:'45px'}}>
-        <OrderSummary>
-        </OrderSummary>
-      </Box>
+      <Box style={{ display: 'flex' }}>
+        <Box style={{ marginTop: '45px' }}>
+          <OrderSummary>
+          </OrderSummary>
+        </Box>
         <AppBar>
           <Tabs
             value={value}
@@ -81,7 +113,7 @@ const Order = () => {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <OrderCardDrinks></OrderCardDrinks>
+            {getContent()}
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             <OrderCardFoods></OrderCardFoods>
@@ -91,5 +123,5 @@ const Order = () => {
     </>
   );
 };
-  
+
 export default Order;
