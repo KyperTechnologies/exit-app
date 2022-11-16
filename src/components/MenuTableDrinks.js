@@ -20,17 +20,15 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { addDrink, getDrink, updateDrink } from '../Config';
+import { addDrink, getDrink, updateDrink, deleteDrink } from '../Config';
 
 
-function Row(props) {
+export function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-
-
+  const [name, upName] = useState("");
+  const [price, upPrice] = useState("");
 
   const handleOpen = () => setDialogOpen(true);
   const handleClose = () => setDialogOpen(false);
@@ -44,71 +42,79 @@ function Row(props) {
     setDialogOpen(false);
   }
 
-  return (
-    <div>
-      <React.Fragment>
-        <TableRow sx={{
-          '& > *': { borderBottom: 'unset' },
-          backgroundColor: 'rgb(18, 18, 18)'
-        }}>
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-              color='primary'
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row" sx={{ color: 'rgb(255,255,255)' }}>
-            {row.icon}
-          </TableCell>
-          <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.name}</TableCell>
-          <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.price}</TableCell>
-        </TableRow>
-        <TableRow sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1, textAlign: 'right' }}>
-                <Button onClick={() => setDialogOpen(true)}>Güncelle</Button>
-                <Button >Sİl</Button>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
+  const deleteOnClick = () => {
+    const drink = {
+      id: row.id,
+      name: name,
+      price: price,
+    }
+    deleteDrink(drink);
+  }
 
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogTitle>Ürün Ekle</DialogTitle>
-        <DialogContent onSubmit={addDrink}>
-          <TextField
-            onChange={(e) => { setName(e.target.value) }}
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Ürün İsmi"
-            type="name"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            onChange={(e) => { setPrice(e.target.value) }}
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Fiyat"
-            type="price"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Vazgeç</Button>
-          <Button type='submit' onClick={updateOnClick} >Kaydet</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+  return (
+    <React.Fragment>
+      <TableRow sx={{
+        '& > *': { borderBottom: 'unset' },
+        backgroundColor: 'rgb(18, 18, 18)'
+      }}>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+            color='primary'
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row" sx={{ color: 'rgb(255,255,255)' }}>
+          {row.icon}
+        </TableCell>
+        <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.name}</TableCell>
+        <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.price}</TableCell>
+      </TableRow>
+      <TableRow sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1, textAlign: 'right' }}>
+              <Button onClick={() => setDialogOpen(true)}>Güncelle</Button>
+              <Button onClick={deleteOnClick} >Sİl</Button>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+      <div>
+        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+          <DialogTitle>Ürün Güncelle</DialogTitle>
+          <DialogContent>
+            <TextField
+              onChange={(e) => { upName(e.target.value) }}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Ürün İsmi"
+              type="name"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              onChange={(e) => { upPrice(e.target.value) }}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Fiyat"
+              type="price"
+              fullWidth
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Vazgeç</Button>
+            <Button type='submit' onClick={updateOnClick} >Kaydet</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </React.Fragment>
   );
 }
 
@@ -135,10 +141,10 @@ export default function CollapsibleTable() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [drinks, setDrinks] = useState([]);
-  const [id, Setid] = useState(1);
-  const [name, Setname] = useState('');
-  const [price, Setprice] = useState('');
+  const [drink, setDrink] = useState([]);
+  const [id, setId] = useState(1);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -147,12 +153,13 @@ export default function CollapsibleTable() {
   async function fetchData() {
     const drinkData = await getDrink();
     if (drinkData && drinkData.length > 0) {
-      setDrinks(drinkData);
+      setDrink(drinkData);
     }
   }
 
+
   const onAddClick = () => {
-    Setid(id + 1);
+    setId(id + 1);
     addDrink(id, {
       "id": id,
       "name": name,
@@ -175,7 +182,7 @@ export default function CollapsibleTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {drinks.map((row) => (
+            {drink.map((row) => (
               <Row key={row.id} row={row} />
             ))}
           </TableBody>
@@ -189,9 +196,9 @@ export default function CollapsibleTable() {
       <div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Ürün Ekle</DialogTitle>
-          <DialogContent onSubmit={addDrink}>
+          <DialogContent>
             <TextField
-              onChange={(e) => { Setname(e.target.value) }}
+              onChange={(e) => { setName(e.target.value) }}
               autoFocus
               margin="dense"
               id="name"
@@ -201,7 +208,7 @@ export default function CollapsibleTable() {
               variant="standard"
             />
             <TextField
-              onChange={(e) => { Setprice(e.target.value) }}
+              onChange={(e) => { setPrice(e.target.value) }}
               autoFocus
               margin="dense"
               id="name"

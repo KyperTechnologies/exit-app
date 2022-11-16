@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
-import {initializeApp} from "firebase/app";
-import {getDatabase, ref, set, get, child,update,push } from 'firebase/database';
-import { doc, updateDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, get, child, update, push, remove } from 'firebase/database';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,7 +21,7 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const db = getDatabase();
-  
+
 export const addTable = (id, data) => {
   set(ref(db, 'tables/' + id), data);
 };
@@ -32,7 +31,7 @@ export const getTable = async () => {
   return await get(child(dbRef, `tables`))
     .then((snapshot) => {
       if (snapshot.exists()) {
-        const data = Object.entries(snapshot.exportVal()).map(([key, value])=> {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
           return value;
         });
 
@@ -54,7 +53,7 @@ export const getDrink = async () => {
   return await get(child(dbRef, `drinks`))
     .then((snapshot) => {
       if (snapshot.exists()) {
-        const data = Object.entries(snapshot.exportVal()).map(([key, value])=> {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
           return value;
         });
 
@@ -68,12 +67,16 @@ export const getDrink = async () => {
 };
 
 export const updateDrink = async (drink) => {
-  const newDrinkKey = push(child(ref(db), 'drinks')).key;
-  
+
   const updates = {};
-  updates['/drinks/' + drink.id + '/'+ newDrinkKey] = drink;
+  updates['/drinks/' + drink.id] = drink;
 
   return update(ref(db), updates);
 
- 
+
 }
+
+export const deleteDrink = (drink) => {
+
+  remove(ref(db, '/drinks/' + drink.id));
+};
