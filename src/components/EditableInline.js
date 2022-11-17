@@ -9,6 +9,7 @@ const Editable = ({
 }) => {
 
   const [isEditing, setEditing] = useState(false);
+  const { addTableName } = props;
 
   const handleKeyDown = (event, type) => {
   };
@@ -16,9 +17,11 @@ const Editable = ({
   return (
     <section {...props}>
       {isEditing ? (
+
         <div
           onBlur={() => setEditing(false)}
           onKeyDown={e => handleKeyDown(e, type)}
+          onChange={addTableName}
         >
           {children}
         </div>

@@ -44,6 +44,16 @@ export const getTable = async () => {
     });
 };
 
+export const updateTable = async (table) => {
+
+  const updates = {};
+  updates['/tables/' + table.id] = table;
+
+  return update(ref(db), updates);
+
+
+}
+
 export const addDrink = (id, name, price) => {
   set(ref(db, 'drinks/' + id), name, price);
 };

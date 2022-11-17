@@ -21,10 +21,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { addDrink, getDrink, updateDrink, deleteDrink } from '../Config';
+import uuid from 'react-uuid';
 
 
 export function Row(props) {
-  const { row } = props;
+  const { row , fetch} = props;
   const [open, setOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [name, upName] = useState("");
@@ -40,6 +41,7 @@ export function Row(props) {
     }
     updateDrink(drink);
     setDialogOpen(false);
+    fetch();
   }
 
   const deleteOnClick = () => {
@@ -49,6 +51,7 @@ export function Row(props) {
       price: price,
     }
     deleteDrink(drink);
+    fetch();
   }
 
   return (
@@ -66,9 +69,6 @@ export function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row" sx={{ color: 'rgb(255,255,255)' }}>
-          {row.icon}
         </TableCell>
         <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.name}</TableCell>
         <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.price}</TableCell>
@@ -96,6 +96,7 @@ export function Row(props) {
               type="name"
               fullWidth
               variant="standard"
+              defaultValue={row.name}
             />
             <TextField
               onChange={(e) => { upPrice(e.target.value) }}
@@ -106,6 +107,7 @@ export function Row(props) {
               type="price"
               fullWidth
               variant="standard"
+              defaultValue={row.price}
             />
           </DialogContent>
           <DialogActions>
@@ -142,7 +144,6 @@ export default function CollapsibleTable() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [drink, setDrink] = useState([]);
-  const [id, setId] = useState(1);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
 
@@ -159,7 +160,7 @@ export default function CollapsibleTable() {
 
 
   const onAddClick = () => {
-    setId(id + 1);
+    const id = uuid();
     addDrink(id, {
       "id": id,
       "name": name,
@@ -176,14 +177,13 @@ export default function CollapsibleTable() {
           <TableHead>
             <TableRow sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
               <TableCell />
-              <TableCell sx={{ fontSize: '90%', fontWeight: 'bold', color: 'rgb(40,100,150)' }}>Icon</TableCell>
               <TableCell sx={{ fontSize: '90%', fontWeight: 'bold', color: 'rgb(40,100,150)' }}>Ürün İsmi</TableCell>
               <TableCell sx={{ fontSize: '90%', fontWeight: 'bold', color: 'rgb(40,100,150)' }}>Fiyat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {drink.map((row) => (
-              <Row key={row.id} row={row} />
+              <Row key={row.id} row={row} fetch={fetchData} />
             ))}
           </TableBody>
         </Table>

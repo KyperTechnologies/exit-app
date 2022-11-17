@@ -3,21 +3,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { CardActions, Typography } from '@mui/material';
 import OrderSliderButton from '../components/OrderSliderButton';
-import { getDrink } from '../Config';
 
-export default function ActionAreaCard() {
-  const [drink, setDrink] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, [])
-
-  async function fetchData() {
-    const drinkData = await getDrink();
-    if (drinkData && drinkData.length > 0) {
-      setDrink(drinkData);
-    }
-  }
+export default function ActionAreaCard(props) {
+  const {drink} = props ;
 
   return (
     <Card sx={{
@@ -28,13 +16,7 @@ export default function ActionAreaCard() {
       color: 'rgb(255,255,255)',
     }}>
       <CardContent>
-        {drink.map(element => {
-          return (
-            <Typography key={drink.id}>
-              A
-            </Typography>
-          );
-        })}
+              <Typography variant='h5' key={drink.id} drink={drink}>{drink.name}</Typography>
       </CardContent>
       <CardActions sx={{ minWidth: '206px', display: 'flex', justifyContent: 'center' }}>
         <OrderSliderButton></OrderSliderButton>
