@@ -48,7 +48,7 @@ function a11yProps(index) {
 const Order = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [drinks, setDrinks] = useState([]);
+  const [drink, setDrinks] = useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -74,11 +74,10 @@ const Order = () => {
     return (
       <Box sx={{ height: '100vh' }}>
         <Grid container spacing={3}>
-          {drinks.map(element => {
+          {drink.map(element => {
             return (
-              <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }}>
-                <OrderCardDrinks>
-                </OrderCardDrinks>
+              <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
+                  <OrderCardDrinks drink = {element}></OrderCardDrinks>
               </Grid>
             );
           })}
