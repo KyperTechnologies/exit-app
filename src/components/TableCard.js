@@ -4,73 +4,84 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import Editable from '../components/EditableInline'
-import { CardActionArea, TextField } from '@mui/material';
+import { CardActionArea, Typography, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import { updateTable } from '../Config';
+import { addTable } from '../Config';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 export default function ImgMediaCard(props) {
 
   let navigate = useNavigate();
 
-  const [task, setTask] = useState("");
-  const { fetch } = props;
+  const [tableName, setTableName] = useState("");
   const { table } = props;
+  const { fetch } = props;
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const handleOpen = () => setDialogOpen(true);
+  const handleClose = () => setDialogOpen(false);
 
 
-  const onButtonClick = (state) => {
-    navigate(state);
+  const onButtonClick = () => {
+    navigate('/order', { state: { tableId: table.id } });
   }
 
-  const addTableName = () => {
-    const addtableName = {
-      id: table.id,
-      name: task
-    }
-    updateTable(addtableName)
+  const addTableNameOnClick = () => {
+    addTable(table.id, {
+      "id": table.id,
+      "name": tableName,
+
+    });
+    handleClose();
     fetch();
   }
 
   return (
-    <Card sx={{
-      maxWidth: 345,
-      margin: '30px',
-      backgroundColor: 'rgb(18, 18, 18)',
-      borderRadius: '4px',
-      boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
-      color: 'rgb(255,255,255)',
-    }}>
-      <CardActionArea>
-        <CardContent>
-          <Editable
-            addTableName={addTableName}
-            style={{ fontSize: '35px' }}
-            placeholder="Masa Adı Giriniz :"
-            type="input"
-            text={task}
-          >
-            <TextField
-              sx={{ input: { color: 'white' } }}
-              id="standard-basic"
-              label="Masa Adı :"
-              variant="standard"
-              color='info'
-              type="text"
-              name="task"
-              value={task}
-              onChange={e => setTask(e.target.value)}>
-            </TextField>
-          </Editable>
-        </CardContent>
-      </CardActionArea>
-      <CardActions style={{ justifyContent: 'space-around' }}>
-        <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
-        <Button size="small" onClick={() => onButtonClick('/order')}>SİPARİŞ</Button>
-        <Button variant="contained" onClick={() => onButtonClick('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
-      </CardActions>
-    </Card>
+    <React.Fragment>
+      <Card sx={{
+        maxWidth: 345,
+        margin: '30px',
+        backgroundColor: 'rgb(18, 18, 18)',
+        borderRadius: '4px',
+        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
+        color: 'rgb(255,255,255)',
+      }}>
+        <CardActionArea onClick={() => setDialogOpen(true)}>
+          <CardContent>
+            <Typography variant='h4' key={table.id}>{table.name}</Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions style={{ justifyContent: 'space-around' }}>
+          <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
+          <Button size="small" onClick={() => { onButtonClick() }}>SİPARİŞ</Button>
+          <Button variant="contained" onClick={() => onButtonClick('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
+        </CardActions>
+      </Card>
+
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>Masa Adı :</DialogTitle>
+        <DialogContent>
+          <TextField
+            onChange={(e) => { setTableName(e.target.value) }}
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Masa adı giriniz :"
+            type="name"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Vazgeç</Button>
+          <Button type='submit' onClick={addTableNameOnClick} >Kaydet</Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 }

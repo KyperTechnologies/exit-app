@@ -25,7 +25,7 @@ import uuid from 'react-uuid';
 
 
 export function Row(props) {
-  const { row , fetch} = props;
+  const { row, fetch } = props;
   const [open, setOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [name, upName] = useState("");

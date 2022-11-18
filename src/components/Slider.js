@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
@@ -59,18 +59,22 @@ const PrettoSlider = styled(Slider)({
   },
 });
 
-export default function CustomizedSlider() {
+export default function CustomizedSlider(props) {
+
+  const { value, handleValue } = props;
+
   return (
     <Box sx={{ width: 320 }}>
       <PrettoSlider
-        sx={{marginTop:'45px'}}
+        sx={{ marginTop: '45px' }}
         valueLabelDisplay="on"
         aria-label="pretto slider"
-        defaultValue={1}
+        value={value}
         step={1}
         marks
         min={1}
         max={10}
+        onChange={handleValue}
       />
       <Box sx={{ m: 3 }} />
     </Box>
