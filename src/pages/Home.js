@@ -10,7 +10,6 @@ import uuid from 'react-uuid';
 
 const Home = () => {
   const [table, setTable] = useState([]);
-  const [tableName] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -27,7 +26,6 @@ const Home = () => {
     const id = uuid();
     addTable(id, {
       "id": id,
-      "name": tableName
     });
     fetchData();
   }
@@ -39,7 +37,7 @@ const Home = () => {
           {table.map(element => {
             return (
               <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }}>
-                <TableCard table={element} fetch={fetchData}></TableCard>
+                <TableCard key={table.id} table={element} fetch={fetchData}></TableCard>
               </Grid>
             );
           })}

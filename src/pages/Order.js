@@ -10,10 +10,12 @@ import OrderCardDrinks from '../components/OrderCardDrinks'
 import OrderCardFoods from '../components/OrderCardFoods'
 import OrderSummary from '../components/OrderSummary';
 import Grid from '@mui/material/Grid';
-import { addDrink, getDrink, updateDrink, deleteDrink } from '../Config';
+import { getDrink } from '../Config';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
 
   return (
     <div
@@ -77,7 +79,7 @@ const Order = () => {
           {drink.map(element => {
             return (
               <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
-                  <OrderCardDrinks drink = {element}></OrderCardDrinks>
+                <OrderCardDrinks key={element.id} drink={element} fetch={fetchData}></OrderCardDrinks>
               </Grid>
             );
           })}

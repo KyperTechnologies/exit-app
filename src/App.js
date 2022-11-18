@@ -20,12 +20,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/order" element={<Order />} />
-          <Route path='/checkout' element={<Checkout/>}></Route>
-          <Route path='/credit' element={<Credit/>}></Route>
+          <Route path='/checkout' element={<Checkout />}></Route>
+          <Route path='/credit' element={<Credit />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
-  
+
 export default App;

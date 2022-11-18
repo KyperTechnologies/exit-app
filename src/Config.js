@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get, child, update, push, remove } from 'firebase/database';
+import { getDatabase, ref, set, get, child, update, remove, query, equalTo, orderByChild } from 'firebase/database';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -44,16 +44,6 @@ export const getTable = async () => {
     });
 };
 
-export const updateTable = async (table) => {
-
-  const updates = {};
-  updates['/tables/' + table.id] = table;
-
-  return update(ref(db), updates);
-
-
-}
-
 export const addDrink = (id, name, price) => {
   set(ref(db, 'drinks/' + id), name, price);
 };
@@ -90,3 +80,54 @@ export const deleteDrink = (drink) => {
 
   remove(ref(db, '/drinks/' + drink.id));
 };
+
+
+export const addOrder = async (id, data) => {
+
+  const orders = await getOrderWithProductId(data.tableId, data.productId);
+
+  if (orders && orders.length > 0) {
+    orders[0].value = orders[0].value + data.value;
+    updateOrder(orders[0]);
+  }
+  else {
+    set(ref(db, 'orders/' + id), data);
+  }
+};
+
+export const getOrderWithTableId = async (tableId) => {
+  const dbRef = ref(db);
+
+
+}
+
+export const getOrderWithProductId = async (tableId, productId) => {
+  const dbRef = ref(db, 'orders/');
+
+  const q = query(dbRef, orderByChild('productId'), equalTo(productId));
+
+  return await get(q)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
+          return value;
+        });
+
+        return data;
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+}
+
+export const updateOrder = async (order) => {
+
+  const updates = {};
+  updates['/orders/' + order.id] = order;
+
+  return update(ref(db), updates);
+
+
+}
