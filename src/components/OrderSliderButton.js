@@ -34,8 +34,8 @@ export default function IconButtons(props) {
       "tableId": location.state.tableId,
       "nameOfOrder": drink.name,
       "value": value,
-      "unitPrice": drink.price,
-      "totalPrice": value * drink.price,
+      "unitPrice": Number(drink.price),
+      "totalPrice": value * Number(drink.price),
     });
     handleClose();
     fetch();

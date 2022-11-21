@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';

@@ -8,8 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 export default function SpanningTable(props) {
-
   const { order } = props;
+
+  const getTotalPrice = () => {
+    return order.reduce((acc, obj) => acc + obj.totalPrice, 0);
+  }
 
   return (
     <TableContainer component={Paper} sx={{ maxWidth: 345 }}>
@@ -32,11 +35,7 @@ export default function SpanningTable(props) {
             </TableRow>
           ))}
           <TableRow>
-            <TableCell rowSpan={3} />
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Toplam Tutar :</TableCell>
-            <TableCell sx={{ textAlign: 'center' }}></TableCell>
+            <TableCell colSpan={6} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Toplam Tutar: {getTotalPrice()}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
