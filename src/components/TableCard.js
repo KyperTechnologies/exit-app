@@ -28,7 +28,7 @@ export default function ImgMediaCard(props) {
 
 
   const onButtonClick = () => {
-    navigate('/order', { state: { tableId: table.id } });
+    navigate('/order', { state: { tableId: table.id, tableName: table.name } });
   }
 
   const addTableNameOnClick = () => {
@@ -51,7 +51,7 @@ export default function ImgMediaCard(props) {
         boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
         color: 'rgb(255,255,255)',
       }}>
-        <CardActionArea onClick={() => setDialogOpen(true)}>
+        <CardActionArea onClick={handleOpen}>
           <CardContent>
             <Typography variant='h4' key={table.id}>{table.name}</Typography>
           </CardContent>

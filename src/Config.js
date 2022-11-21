@@ -37,7 +37,7 @@ export const getTable = async () => {
 
         return data;
       } else {
-        console.log("No data available");
+        console.log("No data available1");
       }
     }).catch((error) => {
       console.error(error);
@@ -59,7 +59,7 @@ export const getDrink = async () => {
 
         return data;
       } else {
-        console.log("No data available");
+        console.log("No data available2");
       }
     }).catch((error) => {
       console.error(error);
@@ -96,9 +96,24 @@ export const addOrder = async (id, data) => {
 };
 
 export const getOrderWithTableId = async (tableId) => {
-  const dbRef = ref(db);
+  const dbRef = ref(db, 'orders/');
 
+  const q = query(dbRef, orderByChild('tableId'), equalTo(tableId));
 
+  return await get(q)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
+          return value;
+        });
+
+        return data;
+      } else {
+        console.log("No data available3");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 }
 
 export const getOrderWithProductId = async (tableId, productId) => {
@@ -121,13 +136,11 @@ export const getOrderWithProductId = async (tableId, productId) => {
       console.error(error);
     });
 }
-
 export const updateOrder = async (order) => {
 
   const updates = {};
   updates['/orders/' + order.id] = order;
 
   return update(ref(db), updates);
-
 
 }
