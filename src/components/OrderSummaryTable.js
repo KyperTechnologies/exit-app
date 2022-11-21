@@ -7,63 +7,36 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const TAX_RATE = 0;
+export default function SpanningTable(props) {
 
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
+  const { order } = props;
 
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(name, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { name, qty, unit, price };
-}
-
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  createRow('Çay', 5, 4),
-  createRow('Kahve', 2, 12),
-  createRow('Soda', 2, 10),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
-export default function SpanningTable() {
   return (
     <TableContainer component={Paper} sx={{ maxWidth: 345 }}>
-      <Table  aria-label="spanning table">
+      <Table aria-label="spanning table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Ürün İsmi</TableCell>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Tane</TableCell>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Birim Fiyat</TableCell>
-            <TableCell sx={{fontSize:'80%',fontWeight:'bold'}}>Tutar</TableCell>
+            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Ürün İsmi</TableCell>
+            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Tane</TableCell>
+            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Birim Fiyat</TableCell>
+            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Tutar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell sx={{textAlign:'center'}}>{row.name}</TableCell>
-              <TableCell sx={{textAlign:'center'}}>{row.qty}</TableCell>
-              <TableCell sx={{textAlign:'center'}}>{row.unit}</TableCell>
-              <TableCell sx={{textAlign:'center'}}>{ccyFormat(row.price)}</TableCell>
+          {order.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell sx={{ textAlign: 'center' }}>{row.nameOfOrder}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{row.value}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{row.unitPrice}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{row.totalPrice}</TableCell>
             </TableRow>
           ))}
-
           <TableRow>
             <TableCell rowSpan={3} />
           </TableRow>
           <TableRow>
-            <TableCell colSpan={2} sx={{fontSize:'20px',fontWeight:'bold',textAlign:'center'}}>Toplam Tutar :</TableCell>
-            <TableCell sx={{textAlign:'center'}}>{ccyFormat(invoiceTotal)}</TableCell>
+            <TableCell colSpan={2} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Toplam Tutar :</TableCell>
+            <TableCell sx={{ textAlign: 'center' }}></TableCell>
           </TableRow>
         </TableBody>
       </Table>

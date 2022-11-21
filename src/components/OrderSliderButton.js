@@ -27,12 +27,15 @@ export default function IconButtons(props) {
 
   const addOrderOnClick = () => {
     const id = uuid();
+
     addOrder(id, {
       "id": id,
       "productId": drink.id,
       "tableId": location.state.tableId,
       "nameOfOrder": drink.name,
-      "value": value
+      "value": value,
+      "unitPrice": drink.price,
+      "totalPrice": value * drink.price,
     });
     handleClose();
     fetch();
