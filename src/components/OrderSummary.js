@@ -21,7 +21,6 @@ export default function ImgMediaCard() {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line
   }, [])
 
   async function fetchData() {

@@ -15,7 +15,6 @@ const firebaseConfig = {
   messagingSenderId: "837750412660",
   appId: "1:837750412660:web:2e003bce7ca921b0188821",
   measurementId: "G-9Z0MN8EJZB"
-
 };
 
 // Initialize Firebase
@@ -38,6 +37,7 @@ export const getTable = async () => {
         return data;
       } else {
         console.log("No data available1");
+        return [];
       }
     }).catch((error) => {
       console.error(error);
@@ -60,6 +60,7 @@ export const getDrink = async () => {
         return data;
       } else {
         console.log("No data available2");
+        return [];
       }
     }).catch((error) => {
       console.error(error);
@@ -87,7 +88,10 @@ export const addOrder = async (id, data) => {
   const orders = await getOrderWithProductId(data.tableId, data.productId);
 
   if (orders && orders.length > 0) {
-    orders[0].value = orders[0].value + data.value;
+    const newValue = orders[0].value + data.value;
+    orders[0].value = newValue;
+    orders[0].totalPrice = newValue * data.unitPrice;
+    // OROSPU KIPER
     updateOrder(orders[0]);
   }
   else {
@@ -110,6 +114,7 @@ export const getOrderWithTableId = async (tableId) => {
         return data;
       } else {
         console.log("No data available3");
+        return [];
       }
     }).catch((error) => {
       console.error(error);
@@ -117,30 +122,12 @@ export const getOrderWithTableId = async (tableId) => {
 }
 
 export const getOrderWithProductId = async (tableId, productId) => {
-  const dbRef = ref(db, 'orders/');
-
-  const q = query(dbRef, orderByChild('productId'), equalTo(productId));
-
-  return await get(q)
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
-          return value;
-        });
-
-        return data;
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
+  return await getOrderWithTableId(tableId).then(res => res.filter(ele => ele.productId === productId));
 }
-export const updateOrder = async (order) => {
 
+export const updateOrder = async (order) => {
   const updates = {};
   updates['/orders/' + order.id] = order;
 
   return update(ref(db), updates);
-
 }

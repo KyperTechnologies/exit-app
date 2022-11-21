@@ -188,11 +188,13 @@ export default function CollapsibleTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <div style={{ textAlign: 'center', marginTop: '15px' }}>
-        <Fab color="primary" aria-label="add">
-          <AddIcon onClick={handleOpen} />
-        </Fab>
-      </div>
+      <IconButton
+          style={{ backgroundColor: "#1976d2", marginTop: "20px", width: "70px", height: "70px" }}
+          aria-label="expand row"
+          size="small"
+          onClick={handleOpen}>
+        <AddIcon></AddIcon>
+      </IconButton>
       <div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Ürün Ekle</DialogTitle>
