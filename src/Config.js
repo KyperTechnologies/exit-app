@@ -91,7 +91,6 @@ export const addOrder = async (id, data) => {
     const newValue = orders[0].value + data.value;
     orders[0].value = newValue;
     orders[0].totalPrice = newValue * data.unitPrice;
-    // OROSPU KIPER
     updateOrder(orders[0]);
   }
   else {

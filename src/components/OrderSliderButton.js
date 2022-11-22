@@ -15,7 +15,7 @@ export default function IconButtons(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { fetch, drink } = props;
+  const { drink, fetchOrder } = props;
   const [value, setValue] = useState(1);
   const location = useLocation();
 
@@ -37,8 +37,8 @@ export default function IconButtons(props) {
       "unitPrice": Number(drink.price),
       "totalPrice": value * Number(drink.price),
     });
+    fetchOrder();
     handleClose();
-    fetch();
   };
 
   return (

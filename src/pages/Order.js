@@ -11,6 +11,8 @@ import OrderCardFoods from '../components/OrderCardFoods'
 import OrderSummary from '../components/OrderSummary';
 import Grid from '@mui/material/Grid';
 import { getDrink } from '../Config';
+import { getOrderWithTableId } from '../Config';
+import { useLocation } from 'react-router-dom';
 
 
 function TabPanel(props) {
@@ -51,6 +53,8 @@ const Order = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [drink, setDrinks] = useState([]);
+  const [order, setOrder] = useState([]);
+  const location = useLocation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -61,14 +65,22 @@ const Order = () => {
   };
 
   useEffect(() => {
-
     fetchData();
+    fetchOrderData();
+    // eslint-disable-next-line
   }, [])
 
   async function fetchData() {
     const drinkData = await getDrink();
     if (drinkData && drinkData.length > 0) {
       setDrinks(drinkData);
+    }
+  }
+
+  async function fetchOrderData() {
+    const orderData = await getOrderWithTableId(location.state.tableId);
+    if (orderData && orderData.length > 0) {
+      setOrder(orderData);
     }
   }
 
@@ -79,7 +91,7 @@ const Order = () => {
           {drink.map(element => {
             return (
               <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
-                <OrderCardDrinks key={element.id} drink={element} fetch={fetchData}></OrderCardDrinks>
+                <OrderCardDrinks key={element.id} drink={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardDrinks>
               </Grid>
             );
           })}
@@ -92,7 +104,7 @@ const Order = () => {
     <>
       <Box style={{ display: 'flex' }}>
         <Box style={{ marginTop: '45px' }}>
-          <OrderSummary>
+          <OrderSummary fetchOrder={fetchOrderData} order={order}>
           </OrderSummary>
         </Box>
         <AppBar>

@@ -13,7 +13,6 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from '@mui/material';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -77,7 +76,7 @@ export function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1, textAlign: 'right' }}>
-              <Button onClick={() => setDialogOpen(true)}>Güncelle</Button>
+              <Button onClick={handleOpen}>Güncelle</Button>
               <Button onClick={deleteOnClick} >Sİl</Button>
             </Box>
           </Collapse>
@@ -189,10 +188,10 @@ export default function CollapsibleTable() {
         </Table>
       </TableContainer>
       <IconButton
-          style={{ backgroundColor: "#1976d2", marginTop: "20px", width: "70px", height: "70px" }}
-          aria-label="expand row"
-          size="small"
-          onClick={handleOpen}>
+        style={{ backgroundColor: "#1976d2", marginTop: "20px", width: "70px", height: "70px" }}
+        aria-label="expand row"
+        size="small"
+        onClick={handleOpen}>
         <AddIcon></AddIcon>
       </IconButton>
       <div>

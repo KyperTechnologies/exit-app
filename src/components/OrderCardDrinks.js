@@ -5,8 +5,7 @@ import { CardActions, Typography } from '@mui/material';
 import OrderSliderButton from '../components/OrderSliderButton';
 
 export default function ActionAreaCard(props) {
-  const { drink } = props;
-  const { fetch } = props;
+  const { drink, fetch, fetchOrder } = props;
 
   return (
     <Card sx={{
@@ -20,7 +19,7 @@ export default function ActionAreaCard(props) {
         <Typography variant='h5' key={drink.id} drink={drink}>{drink.name}</Typography>
       </CardContent>
       <CardActions sx={{ minWidth: '206px', display: 'flex', justifyContent: 'center' }}>
-        <OrderSliderButton fetch={fetch} drink={drink}></OrderSliderButton>
+        <OrderSliderButton fetch={fetch} drink={drink} fetchOrder={fetchOrder}></OrderSliderButton>
       </CardActions>
     </Card>
   );
