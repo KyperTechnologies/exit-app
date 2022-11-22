@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
-import Slider from '../components/Slider';
+import OrderSlider from '../components/OrderSlider';
 import { addOrder } from '../Config';
 import { useLocation } from 'react-router-dom';
 import uuid from 'react-uuid';
@@ -37,7 +37,7 @@ export default function IconButtons(props) {
       "unitPrice": Number(drink.price),
       "totalPrice": value * Number(drink.price),
     });
-    
+
     await fetchOrder();
     handleClose();
   };
@@ -51,7 +51,7 @@ export default function IconButtons(props) {
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Ürün Miktarı</DialogTitle>
           <DialogContent>
-            <Slider handleValue={handleValue} value={value}></Slider>
+            <OrderSlider handleValue={handleValue} value={value}></OrderSlider>
           </DialogContent>
           <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button variant='contained' onClick={handleClose}>Vazgeç</Button>

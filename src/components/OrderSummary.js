@@ -13,7 +13,7 @@ import { useLocation } from 'react-router-dom';
 export default function ImgMediaCard(props) {
 
   const location = useLocation();
-  const { order } = props;
+  const { order, fetchOrder, drink } = props;
 
   let navigate = useNavigate();
 
@@ -22,12 +22,12 @@ export default function ImgMediaCard(props) {
   }
 
   return (
-    <Card sx={{ maxWidth: 345, height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ maxWidth: 445, height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <CardContent>
         <Typography gutterBottom variant="h4" component="div">
           {location.state.tableName}
         </Typography>
-        <OrderSummaryTable order={order}>
+        <OrderSummaryTable drink={drink} order={order} fetchOrder={fetchOrder}>
         </OrderSummaryTable>
       </CardContent>
       <CardActions style={{ justifyContent: 'space-evenly' }}>
