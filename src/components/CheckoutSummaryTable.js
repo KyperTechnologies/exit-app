@@ -35,13 +35,13 @@ export default function SpanningTable(props) {
         </TableHead>
         <TableBody>
           {order.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell sx={{ color: 'rgb(255,255,255)', textAlign: 'center' }}>{row.nameOfOrder}</TableCell>
               <TableCell sx={{ color: 'rgb(255,255,255)', textAlign: 'center' }}>{row.value}</TableCell>
               <TableCell sx={{ color: 'rgb(255,255,255)', textAlign: 'center' }}>{row.unitPrice}</TableCell>
               <TableCell sx={{ color: 'rgb(255,255,255)', textAlign: 'center' }}>{row.totalPrice}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>
-                <SplitCheckButton></SplitCheckButton>
+                <SplitCheckButton orderValue={row.value}></SplitCheckButton>
               </TableCell>
             </TableRow>
           ))}

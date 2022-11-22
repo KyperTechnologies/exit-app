@@ -6,13 +6,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
-import Slider from '../components/Slider';
+import CheckoutSlider from '../components/CheckoutSlider';
 
-export default function IconButtons() {
+export default function IconButtons(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [value, setValue] = useState(1);
+  const { orderValue } = props;
 
   const handleValue = (e) => {
     e.preventDefault();
@@ -22,15 +23,15 @@ export default function IconButtons() {
   return (
     <>
       <div>
-        <IconButton color="primary" aria-label="add to shopping cart">
-          <AddShoppingCartIcon onClick={handleOpen} />
+        <IconButton onClick={handleOpen} color="primary" aria-label="add to shopping cart">
+          <AddShoppingCartIcon />
         </IconButton>
       </div>
       <div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Ürün Ayır</DialogTitle>
-          <DialogContent>
-            <Slider handleValue={handleValue} value={value}></Slider>
+          <DialogContent onClick={console.log(orderValue)}>
+            <CheckoutSlider handleValue={handleValue} value={value} orderValue={orderValue}></CheckoutSlider>
           </DialogContent>
           <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button variant='contained' onClick={handleClose}>Vazgeç</Button>

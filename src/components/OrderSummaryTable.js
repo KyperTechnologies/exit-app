@@ -6,16 +6,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import CancelOrderButton from '../components/CancelOrderButton';
 
 export default function SpanningTable(props) {
-  const { order } = props;
+  const { order, fetchOrder } = props;
 
   const getTotalPrice = () => {
     return order.reduce((acc, obj) => acc + obj.totalPrice, 0);
   }
 
   return (
-    <TableContainer component={Paper} sx={{ maxWidth: 345 }}>
+    <TableContainer component={Paper} sx={{ maxWidth: 445 }}>
       <Table aria-label="spanning table">
         <TableHead>
           <TableRow>
@@ -32,6 +33,10 @@ export default function SpanningTable(props) {
               <TableCell sx={{ textAlign: 'center' }}>{row.value}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{row.unitPrice}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{row.totalPrice}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>
+                <CancelOrderButton
+                  unitPrice={row.unitPrice} orderName={row.nameOfOrder} orderValue={row.value} orderId={row.id} orderPrdctId={row.productId} fetchOrder={fetchOrder}></CancelOrderButton>
+              </TableCell>
             </TableRow>
           ))}
           <TableRow>
