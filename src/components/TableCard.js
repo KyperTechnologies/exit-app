@@ -27,8 +27,11 @@ export default function ImgMediaCard(props) {
   const handleClose = () => setDialogOpen(false);
 
 
-  const onButtonClick = () => {
+  const onButtonClickToOrder = () => {
     navigate('/order', { state: { tableId: table.id, tableName: table.name } });
+  }
+  const onButtonClickToCheckout = (state) => {
+    navigate('/checkout', { state: { tableId: table.id, tableName: table.name } });
   }
 
   const addTableNameOnClick = () => {
@@ -58,8 +61,8 @@ export default function ImgMediaCard(props) {
         </CardActionArea>
         <CardActions style={{ justifyContent: 'space-around' }}>
           <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
-          <Button size="small" onClick={() => { onButtonClick() }}>SİPARİŞ</Button>
-          <Button variant="contained" onClick={() => onButtonClick('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
+          <Button size="small" onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
+          <Button variant="contained" onClick={() => onButtonClickToCheckout('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
         </CardActions>
       </Card>
 

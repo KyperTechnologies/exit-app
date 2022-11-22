@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -6,28 +6,19 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import OrderSummaryTable from './OrderSummaryTable';
 import { useNavigate } from 'react-router-dom';
-import { getOrderWithTableId } from '../Config';
 import { useLocation } from 'react-router-dom';
 
-export default function ImgMediaCard() {
 
-  const [order, setOrder] = useState([]);
+
+export default function ImgMediaCard(props) {
+
   const location = useLocation();
+  const { order } = props;
+
   let navigate = useNavigate();
 
   const onButtonClick = (state) => {
     navigate(state);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, [])
-
-  async function fetchData() {
-    const orderData = await getOrderWithTableId(location.state.tableId);
-    if (orderData && orderData.length > 0) {
-      setOrder(orderData);
-    }
   }
 
   return (
