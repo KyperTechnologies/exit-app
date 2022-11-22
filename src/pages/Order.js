@@ -10,7 +10,7 @@ import OrderCardDrinks from '../components/OrderCardDrinks'
 import OrderCardFoods from '../components/OrderCardFoods'
 import OrderSummary from '../components/OrderSummary';
 import Grid from '@mui/material/Grid';
-import { getDrink } from '../Config';
+import { getProduct } from '../Config';
 import { getOrderWithTableId } from '../Config';
 import { useLocation } from 'react-router-dom';
 
@@ -52,7 +52,7 @@ function a11yProps(index) {
 const Order = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [drink, setDrinks] = useState([]);
+  const [product, setProduct] = useState([]);
   const [order, setOrder] = useState([]);
   const location = useLocation();
 
@@ -71,9 +71,9 @@ const Order = () => {
   }, [])
 
   async function fetchData() {
-    const drinkData = await getDrink();
-    if (drinkData && drinkData.length > 0) {
-      setDrinks(drinkData);
+    const productData = await getProduct();
+    if (productData && productData.length > 0) {
+      setProduct(productData);
     }
   }
 
@@ -84,14 +84,30 @@ const Order = () => {
     }
   }
 
-  const getContent = () => {
+  const getDrinkContent = () => {
     return (
       <Box sx={{ height: '100vh' }}>
         <Grid container spacing={3}>
-          {drink.map(element => {
+          {product.filter(element => element.type === "drink").map(element => {
             return (
               <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
                 <OrderCardDrinks key={element.id} drink={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardDrinks>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+    );
+  }
+
+  const getFoodContent = () => {
+    return (
+      <Box sx={{ height: '100vh' }}>
+        <Grid container spacing={3}>
+        {product.filter(element => element.type === "food").map(element => {
+            return (
+              <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
+                <OrderCardFoods key={element.id} food={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardFoods>
               </Grid>
             );
           })}
@@ -117,7 +133,7 @@ const Order = () => {
             aria-label="full width tabs example"
           >
             <Tab label="İçecekler" {...a11yProps(0)} />
-            <Tab label="Yİyecekler" {...a11yProps(1)} />
+            <Tab label="Yiyecekler" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -126,10 +142,10 @@ const Order = () => {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            {getContent()}
+            {getDrinkContent()}
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <OrderCardFoods></OrderCardFoods>
+            {getFoodContent()}
           </TabPanel>
         </SwipeableViews>
       </Box>

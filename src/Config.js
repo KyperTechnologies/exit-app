@@ -21,8 +21,8 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const db = getDatabase();
 
-export const addTable = (id, data) => {
-  set(ref(db, 'tables/' + id), data);
+export const addTable = async (id, data) => {
+  await set(ref(db, 'tables/' + id), data);
 };
 
 export const getTable = async () => {
@@ -44,13 +44,19 @@ export const getTable = async () => {
     });
 };
 
-export const addDrink = (id, name, price) => {
-  set(ref(db, 'drinks/' + id), name, price);
+export const addProduct = async (id, name, price) => {
+  await set(ref(db, 'products/' + id), name, price);
 };
 
-export const getDrink = async () => {
-  const dbRef = ref(db);
-  return await get(child(dbRef, `drinks`))
+export const getProduct = async (type) => {
+  const dbRef = ref(db, 'products/');
+  let q = query(dbRef);
+
+  if (type) {
+    q = query(dbRef, orderByChild('type'), equalTo(type));
+  }
+
+  return await get(q)
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
@@ -67,19 +73,16 @@ export const getDrink = async () => {
     });
 };
 
-export const updateDrink = async (drink) => {
+export const updateProduct = async (product) => {
 
   const updates = {};
-  updates['/drinks/' + drink.id] = drink;
+  updates['/products/' + product.id] = product;
 
-  return update(ref(db), updates);
-
-
+  return await update(ref(db), updates);
 }
 
-export const deleteDrink = (drink) => {
-
-  remove(ref(db, '/drinks/' + drink.id));
+export const deleteProduct = async (product) => {
+  await remove(ref(db, '/products/' + product.id));
 };
 
 
@@ -129,4 +132,8 @@ export const updateOrder = async (order) => {
   updates['/orders/' + order.id] = order;
 
   return await update(ref(db), updates);
+}
+
+export const deleteOrder = async (id) => {
+  await remove(ref(db, '/orders/' + id));
 }

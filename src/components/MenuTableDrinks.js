@@ -19,7 +19,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { addDrink, getDrink, updateDrink, deleteDrink } from '../Config';
+import { addProduct, getProduct, updateProduct, deleteProduct } from '../Config';
 import uuid from 'react-uuid';
 
 
@@ -37,19 +37,15 @@ export function Row(props) {
       id: row.id,
       name: name,
       price: price,
+      type: row.type
     }
-    updateDrink(drink);
+    updateProduct(drink);
     setDialogOpen(false);
     fetch();
   }
 
   const deleteOnClick = () => {
-    const drink = {
-      id: row.id,
-      name: name,
-      price: price,
-    }
-    deleteDrink(drink);
+    deleteProduct(row);
     fetch();
   }
 
@@ -151,7 +147,7 @@ export default function CollapsibleTable() {
   }, [])
 
   async function fetchData() {
-    const drinkData = await getDrink();
+    const drinkData = await getProduct("drink");
     if (drinkData && drinkData.length > 0) {
       setDrink(drinkData);
     }
@@ -160,10 +156,11 @@ export default function CollapsibleTable() {
 
   const onAddClick = () => {
     const id = uuid();
-    addDrink(id, {
+    addProduct(id, {
       "id": id,
       "name": name,
       "price": price,
+      type: "drink"
     });
     handleClose();
     fetchData();

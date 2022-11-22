@@ -4,7 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import { CardActions, Typography } from '@mui/material';
 import OrderSliderButton from '../components/OrderSliderButton';
 
-export default function ActionAreaCard() {
+export default function ActionAreaCard(props) {
+  const { food, fetch, fetchOrder } = props;
 
   return (
     <Card sx={{ maxWidth: 245,    
@@ -13,10 +14,10 @@ export default function ActionAreaCard() {
         boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
         color:'rgb(255,255,255)', }}>
         <CardContent>
-          <Typography variant='h5'>Ürün İsmi-Yiyecek</Typography>
+          <Typography variant='h5' key={food.id} food={food}>{food.name}</Typography>
         </CardContent>
         <CardActions sx={{minWidth:'206px',display:'flex',justifyContent:'center'}}>
-          <OrderSliderButton></OrderSliderButton>
+          <OrderSliderButton fetch={fetch} product={food} fetchOrder={fetchOrder}></OrderSliderButton>
         </CardActions>
     </Card>
   );
