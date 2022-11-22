@@ -25,10 +25,10 @@ export default function IconButtons(props) {
   };
 
 
-  const addOrderOnClick = () => {
+  const addOrderOnClick = async () => {
     const id = uuid();
 
-    addOrder(id, {
+    await addOrder(id, {
       "id": id,
       "productId": drink.id,
       "tableId": location.state.tableId,
@@ -37,7 +37,8 @@ export default function IconButtons(props) {
       "unitPrice": Number(drink.price),
       "totalPrice": value * Number(drink.price),
     });
-    fetchOrder();
+    
+    await fetchOrder();
     handleClose();
   };
 

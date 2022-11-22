@@ -91,10 +91,10 @@ export const addOrder = async (id, data) => {
     const newValue = orders[0].value + data.value;
     orders[0].value = newValue;
     orders[0].totalPrice = newValue * data.unitPrice;
-    updateOrder(orders[0]);
+    await updateOrder(orders[0]);
   }
   else {
-    set(ref(db, 'orders/' + id), data);
+    await set(ref(db, 'orders/' + id), data);
   }
 };
 
@@ -128,5 +128,5 @@ export const updateOrder = async (order) => {
   const updates = {};
   updates['/orders/' + order.id] = order;
 
-  return update(ref(db), updates);
+  return await update(ref(db), updates);
 }
