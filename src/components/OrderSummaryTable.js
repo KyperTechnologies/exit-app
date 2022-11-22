@@ -34,8 +34,7 @@ export default function SpanningTable(props) {
               <TableCell sx={{ textAlign: 'center' }}>{row.unitPrice}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{row.totalPrice}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>
-                <CancelOrderButton
-                  unitPrice={row.unitPrice} orderName={row.nameOfOrder} orderValue={row.value} orderId={row.id} orderPrdctId={row.productId} fetchOrder={fetchOrder}></CancelOrderButton>
+                <CancelOrderButton order={row} fetchOrder={fetchOrder}></CancelOrderButton>
               </TableCell>
             </TableRow>
           ))}

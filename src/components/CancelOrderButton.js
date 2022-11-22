@@ -7,57 +7,54 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
 import CancelOrderSlider from '../components/CancelOrderSlider';
-import { updateOrder } from '../Config';
-import { useLocation } from 'react-router-dom';
+import { updateOrder, deleteOrder } from '../Config';
 
 export default function IconButtons(props) {
+    const [newValue, setValue] = useState(1);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [newValue, setValue] = useState(1);
-    const { fetchOrder, orderId, orderValue, orderName, unitPrice, orderPrdctId } = props;
-    const location = useLocation();
+    
+    const { fetchOrder, order } = props;
 
     const handleValue = (e) => {
-        e.preventDefault();
-        setValue(e.target.value);
+      e.preventDefault();
+      setValue(e.target.value);
     };
 
-
     const updateOnClick = async () => {
-        const order = {
-            id: orderId,
-            productId: orderPrdctId,
-            tableId: location.state.tableId,
-            nameOfOrder: orderName,
-            value: orderValue - newValue,
-            unitPrice: Number(unitPrice),
-            totalPrice: orderValue * Number(unitPrice),
-        }
-        await updateOrder(order);
-        handleClose();
-        await fetchOrder();
+      const value = Number(order.value) - newValue;
+
+      if (value === 0) {
+        await deleteOrder(order.id);
+      } else {
+        const newOrder = { ...order, value: value, totalPrice: Number(order.unitPrice) * value };
+        await updateOrder(newOrder);
+      }
+      
+      await fetchOrder();
+      handleClose();
     }
 
     return (
-        <>
-            <div>
-                <IconButton onClick={handleOpen} color="primary" aria-label="add to shopping cart">
-                    <DeleteIcon />
-                </IconButton>
-            </div>
-            <div>
-                <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>Ayrım İptali</DialogTitle>
-                    <DialogContent>
-                        <CancelOrderSlider orderValue={orderValue} handleValue={handleValue} newValue={newValue}></CancelOrderSlider>
-                    </DialogContent>
-                    <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button variant='contained' onClick={handleClose}>Vazgeç</Button>
-                        <Button variant='contained' onClick={updateOnClick}>İptalİ Onayla</Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        </>
+      <>
+        <div>
+          <IconButton onClick={handleOpen} color="primary" aria-label="add to shopping cart">
+            <DeleteIcon />
+          </IconButton>
+        </div>
+        <div>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Ayrım İptali</DialogTitle>
+            <DialogContent>
+              <CancelOrderSlider orderValue={order.value} handleValue={handleValue} newValue={newValue}></CancelOrderSlider>
+            </DialogContent>
+            <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Button variant='contained' onClick={handleClose}>Vazgeç</Button>
+              <Button variant='contained' onClick={updateOnClick}>İptalİ Onayla</Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      </>
     );
 }

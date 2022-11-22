@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -13,31 +13,48 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from '@mui/material';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { addProduct, getProduct, updateProduct, deleteProduct } from '../Config';
+import uuid from 'react-uuid';
 
-function createData(id, name, price, icon) {
-  return {
-    name,
-    price,
-    icon,
-    id,
-  };
-}
 
-function Row(props) {
-  const { row } = props;
+export function Row(props) {
+  const { row, fetch } = props;
   const [open, setOpen] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [name, upName] = useState("");
+  const [price, upPrice] = useState("");
+
+  const handleOpen = () => setDialogOpen(true);
+  const handleClose = () => setDialogOpen(false);
+  const updateOnClick = () => {
+    const drink = {
+      id: row.id,
+      name: name,
+      price: price,
+      type: row.type
+    }
+    updateProduct(drink);
+    setDialogOpen(false);
+    fetch();
+  }
+
+  const deleteOnClick = () => {
+    deleteProduct(row);
+    fetch();
+  }
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' },      
-      backgroundColor:'rgb(18, 18, 18)'}}>
+      <TableRow sx={{
+        '& > *': { borderBottom: 'unset' },
+        backgroundColor: 'rgb(18, 18, 18)'
+      }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -48,22 +65,52 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row" sx={{color:'rgb(255,255,255)'}}>
-          {row.icon}
-        </TableCell>
-        <TableCell sx={{color:'rgb(255,255,255)'}}>{row.name}</TableCell>
-        <TableCell sx={{color:'rgb(255,255,255)'}}>{row.price}</TableCell>
+        <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.name}</TableCell>
+        <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.price}</TableCell>
       </TableRow>
-      <TableRow sx={{backgroundColor:'rgb(18, 18, 18)'}}>
+      <TableRow sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1, textAlign: 'right' }}>
-              <Button >Güncelle</Button>
-              <Button >Sİl</Button>
+              <Button onClick={handleOpen}>Güncelle</Button>
+              <Button onClick={deleteOnClick} >Sİl</Button>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
+      <div>
+        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+          <DialogTitle>Ürün Güncelle</DialogTitle>
+          <DialogContent>
+            <TextField
+              onChange={(e) => { upName(e.target.value) }}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Ürün İsmi"
+              type="name"
+              fullWidth
+              variant="standard"
+              defaultValue={row.name}
+            />
+            <TextField
+              onChange={(e) => { upPrice(e.target.value) }}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Fiyat"
+              type="price"
+              fullWidth
+              variant="standard"
+              defaultValue={row.price}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Vazgeç</Button>
+            <Button type='submit' onClick={updateOnClick} >Kaydet</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </React.Fragment>
   );
 }
@@ -86,82 +133,95 @@ Row.propTypes = {
   }).isRequired,
 };
 
-const rows = [
-  createData(1, 'Tost', 25, 'icon'),
-  createData(2, "Sandviç", 30, 'icon'),
-  createData(3, 'Hamburger', 40, 'icon')
-];
-
-/*const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};*/
 
 export default function CollapsibleTable() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [drink, setDrink] = useState([]);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+  async function fetchData() {
+    const drinkData = await getProduct("food");
+    if (drinkData && drinkData.length > 0) {
+      setDrink(drinkData);
+    }
+  }
+
+
+  const onAddClick = () => {
+    const id = uuid();
+    addProduct(id, {
+      "id": id,
+      "name": name,
+      "price": price,
+      type: "food"
+    });
+    handleClose();
+    fetchData();
+  }
 
   return (
-    <>
+    <React.Fragment>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow sx={{backgroundColor:'rgb(18, 18, 18)'}}>
+            <TableRow sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
               <TableCell />
-              <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Icon</TableCell>
-              <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Ürün İsmi</TableCell>
-              <TableCell sx={{fontSize:'90%',fontWeight:'bold',color:'rgb(40,100,150)'}}>Fiyat</TableCell>
+              <TableCell sx={{ fontSize: '90%', fontWeight: 'bold', color: 'rgb(40,100,150)' }}>Ürün İsmi</TableCell>
+              <TableCell sx={{ fontSize: '90%', fontWeight: 'bold', color: 'rgb(40,100,150)' }}>Fiyat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <Row key={row.name} row={row} />
+            {drink.map((row) => (
+              <Row key={row.id} row={row} fetch={fetchData} />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div style={{ textAlign: 'center', marginTop: '15px' }}>
-        <Fab color="primary" aria-label="add">
-          <AddIcon onClick={handleOpen}/>
-        </Fab>
-      </div>
+      <IconButton
+        style={{ backgroundColor: "#1976d2", marginTop: "20px", width: "70px", height: "70px" }}
+        aria-label="expand row"
+        size="small"
+        onClick={handleOpen}>
+        <AddIcon></AddIcon>
+      </IconButton>
       <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Ürün Ekle</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Ürün İsmi"
-            type="name"
-            fullWidth
-            variant="standard"
-          />
-               <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Fiyat"
-            type="price"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Vazgeç</Button>
-          <Button onClick={handleClose}>Ekle</Button>
-        </DialogActions>
-      </Dialog>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Ürün Ekle</DialogTitle>
+          <DialogContent>
+            <TextField
+              onChange={(e) => { setName(e.target.value) }}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Ürün İsmi"
+              type="name"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              onChange={(e) => { setPrice(e.target.value) }}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Fiyat"
+              type="price"
+              fullWidth
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Vazgeç</Button>
+            <Button type='submit' onClick={onAddClick} >Ekle</Button>
+          </DialogActions>
+        </Dialog>
       </div>
-    </>
+    </React.Fragment>
   );
 }

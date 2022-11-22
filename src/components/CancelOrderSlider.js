@@ -61,22 +61,22 @@ const PrettoSlider = styled(Slider)({
 
 export default function CustomizedSlider(props) {
 
-    const { value, handleValue, orderValue } = props;
+    const { newValue, handleValue, orderValue } = props;
 
     return (
-        <Box sx={{ width: 320 }}>
-            <PrettoSlider
-                sx={{ marginTop: '45px' }}
-                valueLabelDisplay="on"
-                aria-label="pretto slider"
-                value={value}
-                step={1}
-                marks
-                min={1}
-                max={orderValue}
-                onChange={handleValue}
-            />
-            <Box sx={{ m: 3 }} />
-        </Box>
+      <Box sx={{ width: 320 }}>
+        <PrettoSlider
+          sx={{ marginTop: '45px' }}
+          valueLabelDisplay="on"
+          aria-label="pretto slider"
+          value={newValue}
+          step={1}
+          marks
+          min={1}
+          max={orderValue}
+          onChange={handleValue}
+        />
+        <Box sx={{ m: 3 }} />
+      </Box>
     );
 }

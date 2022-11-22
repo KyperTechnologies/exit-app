@@ -15,7 +15,7 @@ export default function IconButtons(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { drink, fetchOrder } = props;
+  const { product, fetchOrder } = props;
   const [value, setValue] = useState(1);
   const location = useLocation();
 
@@ -30,12 +30,12 @@ export default function IconButtons(props) {
 
     await addOrder(id, {
       "id": id,
-      "productId": drink.id,
+      "productId": product.id,
       "tableId": location.state.tableId,
-      "nameOfOrder": drink.name,
+      "nameOfOrder": product.name,
       "value": value,
-      "unitPrice": Number(drink.price),
-      "totalPrice": value * Number(drink.price),
+      "unitPrice": Number(product.price),
+      "totalPrice": value * Number(product.price),
     });
 
     await fetchOrder();

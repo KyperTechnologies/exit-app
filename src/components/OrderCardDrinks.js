@@ -19,7 +19,7 @@ export default function ActionAreaCard(props) {
         <Typography variant='h5' key={drink.id} drink={drink}>{drink.name}</Typography>
       </CardContent>
       <CardActions sx={{ minWidth: '206px', display: 'flex', justifyContent: 'center' }}>
-        <OrderSliderButton fetch={fetch} drink={drink} fetchOrder={fetchOrder}></OrderSliderButton>
+        <OrderSliderButton fetch={fetch} product={drink} fetchOrder={fetchOrder}></OrderSliderButton>
       </CardActions>
     </Card>
   );
