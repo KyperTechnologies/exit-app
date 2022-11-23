@@ -8,11 +8,12 @@ import { CardActionArea, Typography, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import { addTable } from '../Config';
+import { addTable, deleteTable, getOrderWithTableId } from '../Config';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContentText from '@mui/material/DialogContentText';
 
 
 export default function ImgMediaCard(props) {
@@ -25,6 +26,9 @@ export default function ImgMediaCard(props) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const handleOpen = () => setDialogOpen(true);
   const handleClose = () => setDialogOpen(false);
+  const [errorOpen, setErrorOpen] = React.useState(false);
+  const handleErrorOpen = () => setErrorOpen(true);
+  const handleErrorClose = () => setErrorOpen(false);
 
 
   const onButtonClickToOrder = () => {
@@ -44,6 +48,16 @@ export default function ImgMediaCard(props) {
     fetch();
   }
 
+  const deleteButtonClicked = async () => {
+    const orders = await getOrderWithTableId(table.id);
+    if (orders && orders.length > 0) {
+      handleErrorOpen();
+      return;
+    }
+    await deleteTable(table.id);
+    fetch();
+  }
+
   return (
     <React.Fragment>
       <Card sx={{
@@ -60,7 +74,7 @@ export default function ImgMediaCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions style={{ justifyContent: 'space-around' }}>
-          <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
+          <Button variant="outlined" onClick={deleteButtonClicked} startIcon={<DeleteIcon />}>SİL</Button>
           <Button size="small" onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
           <Button variant="contained" onClick={() => onButtonClickToCheckout('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
         </CardActions>
@@ -85,6 +99,28 @@ export default function ImgMediaCard(props) {
           <Button type='submit' onClick={addTableNameOnClick} >Kaydet</Button>
         </DialogActions>
       </Dialog>
+      <div>
+        <Dialog
+          open={errorOpen}
+          onClose={handleErrorClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Masa Silinemedi"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Masaya ait hesap bulunmaktadır.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button color='success' onClick={handleErrorClose} autoFocus>
+              Tamam Orhan
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </React.Fragment>
   );
 }

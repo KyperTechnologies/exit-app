@@ -37,7 +37,6 @@ export default function IconButtons(props) {
       "unitPrice": Number(product.price),
       "totalPrice": value * Number(product.price),
     });
-
     await fetchOrder();
     handleClose();
   };

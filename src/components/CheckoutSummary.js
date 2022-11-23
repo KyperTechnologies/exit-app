@@ -9,24 +9,33 @@ import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CreditOwnerSelection from '../components/CreditOwnerSelection';
-import { useLocation } from 'react-router-dom';
+import { deleteTable } from '../Config';
 
 export default function ImgMediaCard(props) {
 
   let navigate = useNavigate();
-  const { order } = props;
-  const location = useLocation();
+  const { order, fetchOrder, tableId, tableName } = props;
 
   const onButtonClick = (state) => {
     navigate(state);
   }
   const [open, setOpen] = useState(false);
+  const [openCheckout, setOpenCheckout] = useState(false);
 
   const handleOpen = () => setOpen(true);
-
   const handleClose = () => setOpen(false);
+  const handleCheckoutOpen = () => setOpenCheckout(true);
+  const handleCheckoutClose = () => setOpenCheckout(false);
+
+
+  const checkoutAll = async () => {
+    await deleteTable(tableId);
+    onButtonClick('/')
+  }
+
   return (
     <Card sx={{
       maxWidth: 450,
@@ -39,16 +48,14 @@ export default function ImgMediaCard(props) {
     }}>
       <CardContent>
         <Typography gutterBottom variant="h4" component="div">
-          {location.state.tableName}
+          {tableName}
         </Typography>
-        <CheckoutSummaryTable order={order}>
-        </CheckoutSummaryTable>
-
+        <CheckoutSummaryTable order={order} fetchOrder={fetchOrder}></CheckoutSummaryTable>
       </CardContent>
       <CardActions style={{ justifyContent: 'space-evenly' }}>
         <Button variant="outlined" color="error" onClick={() => onButtonClick('/')}>İPTAL</Button>
         <Button variant="contained" onClick={handleOpen}>Veresİye Yazdır</Button>
-        <Button variant="contained" color="success" onClick={() => onButtonClick('/')}>ONAY</Button>
+        <Button variant="contained" color="success" onClick={handleCheckoutOpen}>HESABI KAPAT</Button>
       </CardActions>
       <div>
         <Dialog open={open} onClose={handleClose}>
@@ -59,6 +66,31 @@ export default function ImgMediaCard(props) {
           <DialogActions sx={{ backgroundColor: 'rgb(18, 18, 18)', justifyContent: 'space-between' }}>
             <Button onClick={handleClose}>VAZGEÇ</Button>
             <Button color='success' onClick={handleClose}>YAZDIR</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+      <div>
+        <Dialog
+          open={openCheckout}
+          onClose={handleCheckoutClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"UYARI"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Hesap kapatılacaktır, emin misiniz?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button color='warning' onClick={handleCheckoutClose} autoFocus>
+              Tamam Değil Orhan
+            </Button>
+            <Button color='success' onClick={checkoutAll} autoFocus>
+              Tamam Orhan
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
