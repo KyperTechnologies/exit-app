@@ -3,7 +3,6 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CheckoutSummary from '../components/CheckoutSummary';
-import SplitCheckSummary from '../components/SplitCheckSummary';
 import { useLocation } from 'react-router-dom';
 import { getOrderWithTableId } from '../Config';
 
@@ -27,10 +26,8 @@ export default function ImgMediaCard() {
   return (
     <Card style={{ backgroundColor: 'black', height: '100vh' }}>
       <CardContent sx={{ display: 'flex', flexFlow: 'row wrap', justifyContent: 'space-evenly', marginTop: '30px' }}>
-        <CheckoutSummary order={order}>
+        <CheckoutSummary order={order} fetchOrder={fetchOrderData} tableId={location.state.tableId} tableName={location.state.tableName} >
         </CheckoutSummary>
-        <SplitCheckSummary>
-        </SplitCheckSummary>
       </CardContent>
       <CardActions>
       </CardActions>

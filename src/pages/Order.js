@@ -79,9 +79,7 @@ const Order = () => {
 
   async function fetchOrderData() {
     const orderData = await getOrderWithTableId(location.state.tableId);
-    if (orderData && orderData.length > 0) {
-      setOrder(orderData);
-    }
+    setOrder(orderData);
   }
 
   const getDrinkContent = () => {
@@ -104,7 +102,7 @@ const Order = () => {
     return (
       <Box sx={{ height: '100vh' }}>
         <Grid container spacing={3}>
-        {product.filter(element => element.type === "food").map(element => {
+          {product.filter(element => element.type === "food").map(element => {
             return (
               <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
                 <OrderCardFoods key={element.id} food={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardFoods>

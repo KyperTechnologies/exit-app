@@ -26,21 +26,32 @@ const Home = () => {
     const id = uuid();
     addTable(id, {
       "id": id,
+      "name": `Masa ${table.length + 1}`,
     });
     fetchData();
   }
 
   const getContent = () => {
     return (
-      <Box sx={{ height: '100vh' }}>
-        <Grid container spacing={3}>
-          {table.map(element => {
-            return (
-              <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }}>
-                <TableCard key={table.id} table={element} fetch={fetchData}></TableCard>
-              </Grid>
-            );
-          })}
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid xs={10}>
+            <Grid container spacing={2}>
+              {table.map(element => {
+                return (
+                  <Grid m={8}>
+                    <TableCard key={table.id} table={element} fetch={fetchData}></TableCard>
+                  </Grid>
+                );
+              })}
+
+            </Grid>
+          </Grid>
+          <Grid xs={2}>
+            <Button style={{ display: 'flex', }} onClick={onAddClick} variant="contained" endIcon={<SendIcon />}>
+              Ekle
+            </Button>
+          </Grid>
         </Grid>
       </Box >
     );
@@ -49,13 +60,16 @@ const Home = () => {
   return (
     <>
       <Layout>
-        <Button style={{ marginTop: '40px' }} onClick={onAddClick} variant="contained" endIcon={<SendIcon />}>
-          Ekle
-        </Button>
+
         {getContent()}
       </Layout>
     </>
   );
+
 };
 
 export default Home;
+
+/*<Button style={{ marginTop: '40px' }} onClick={onAddClick} variant="contained" endIcon={<SendIcon />}>
+Ekle
+</Button>*/
