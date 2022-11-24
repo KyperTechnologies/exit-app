@@ -120,6 +120,11 @@ export default function Layout({ children }) {
           >
             <MenuIcon />
           </IconButton>
+          <Box sx={{marginLeft:'530px'}}>
+          <Typography variant="h2" noWrap component="div" style={{fontFamily : 'Arial Black' , color:'rgb(255,255,255)'}}>
+            EXIT
+          </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

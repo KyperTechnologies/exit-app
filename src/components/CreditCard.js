@@ -39,7 +39,7 @@ export default function ImgMediaCard() {
       </CardActions>
       <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle sx={{fontWeight:'bold',color:'rgb(40,100,150)',backgroundColor:'rgb(18, 18, 18)'}}>VERESİYE ÖDEME</DialogTitle>
+        <DialogTitle sx={{fontWeight:'bold',color:'rgb(40,100,150)',backgroundColor:'rgb(18,18,18)'}}>VERESİYE ÖDEME</DialogTitle>
         <DialogContent sx={{backgroundColor: 'rgb(18, 18, 18)'}}>
           <CreditTable></CreditTable>
         </DialogContent>
