@@ -6,7 +6,6 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -87,7 +86,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   let navigate = useNavigate();
@@ -138,19 +137,19 @@ export default function Layout({children}) {
         <List>
           <ListItem button onClick={() => onButtonClick('/')}>
             <ListItemIcon>{<TableRestaurantIcon />}</ListItemIcon>
-            <ListItemText primary= "Anasayfa"/>
+            <ListItemText primary="Anasayfa" />
           </ListItem>
-          <ListItem button key= "Menü" onClick={() => onButtonClick('/menu')}>
+          <ListItem button key="Menü" onClick={() => onButtonClick('/menu')}>
             <ListItemIcon>{<RestaurantMenuIcon />}</ListItemIcon>
-            <ListItemText primary= "Menü" />
+            <ListItemText primary="Menü" />
           </ListItem>
-          <ListItem button key= "Veresiye" onClick={() => onButtonClick('/credit')}>
+          <ListItem button key="Veresiye" onClick={() => onButtonClick('/credit')}>
             <ListItemIcon>{<AutoStoriesIcon />}</ListItemIcon>
-            <ListItemText primary= "Veresiye" />
+            <ListItemText primary="Veresiye" />
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 ,display:'flex',flexFlow:'row wrap',marginTop:'40px'}}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, display: 'flex', flexFlow: 'row wrap', marginTop: '40px' }}>
         {children}
       </Box>
     </Box>

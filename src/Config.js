@@ -137,3 +137,17 @@ export const updateOrder = async (order) => {
 export const deleteOrder = async (id) => {
   await remove(ref(db, '/orders/' + id));
 }
+
+export const deleteAllOrder = async (tableId) => {
+  const dbRef = ref(db, 'orders/');
+
+  const q = query(dbRef, orderByChild('tableId'), equalTo(tableId));
+
+  await remove(q)
+}
+
+export const deleteTable = async (tableId) => {
+  await deleteAllOrder(tableId);
+
+  await remove(ref(db, '/tables/' + tableId));
+}

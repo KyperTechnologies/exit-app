@@ -6,11 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import SplitCheckButton from '../components/SplitCheckButton';
+import CheckoutButton from '../components/CheckoutButton';
 
 export default function SpanningTable(props) {
 
-  const { order } = props;
+  const { order, fetchOrder, splitValue } = props;
 
   const getTotalPrice = () => {
     return order.reduce((acc, obj) => acc + obj.totalPrice, 0);
@@ -41,7 +41,7 @@ export default function SpanningTable(props) {
               <TableCell sx={{ color: 'rgb(255,255,255)', textAlign: 'center' }}>{row.unitPrice}</TableCell>
               <TableCell sx={{ color: 'rgb(255,255,255)', textAlign: 'center' }}>{row.totalPrice}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>
-                <SplitCheckButton orderValue={row.value}></SplitCheckButton>
+                <CheckoutButton row={row} fetchOrder={fetchOrder} splitValue={splitValue}></CheckoutButton>
               </TableCell>
             </TableRow>
           ))}
