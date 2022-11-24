@@ -144,7 +144,7 @@ export default function Layout({ children }) {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, display: 'flex', flexFlow: 'row wrap', marginTop: '40px' }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, display: 'flex', flexFlow: 'row wrap', marginTop: '40px', minHeight: '100vh' }}>
         {children}
       </Box>
     </Box>

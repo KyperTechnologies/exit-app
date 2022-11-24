@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import Layout from '../layout/Layout'
 import TableCard from '../components/TableCard';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import { addTable, getTable } from '../Config';
 import uuid from 'react-uuid';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 
 const Home = () => {
   const [table, setTable] = useState([]);
@@ -33,34 +32,31 @@ const Home = () => {
 
   const getContent = () => {
     return (
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid xs={10}>
-            <Grid container spacing={2}>
-              {table.map(element => {
-                return (
-                  <Grid m={8}>
-                    <TableCard key={table.id} table={element} fetch={fetchData}></TableCard>
-                  </Grid>
-                );
-              })}
+      <Grid container spacing={2}>
+        <Grid xs={11}>
+          <Grid container spacing={2} justifyContent='space-evenly'>
+            {table.map(element => {
+              return (
+                <Grid m={8}>
+                  <TableCard key={table.id} table={element} fetch={fetchData}></TableCard>
+                </Grid>
+              );
+            })}
 
-            </Grid>
-          </Grid>
-          <Grid xs={2}>
-            <Button style={{ display: 'flex', }} onClick={onAddClick} variant="contained" endIcon={<SendIcon />}>
-              Ekle
-            </Button>
           </Grid>
         </Grid>
-      </Box >
+        <Grid xs={1} display='flex' container direction='column'>
+          <Button onClick={onAddClick} variant="outlined" sx={{ backgroundColor: 'white', position: 'fixed', bottom: '50%', }} endIcon={<AddCircleOutline />}>
+            Ekle
+          </Button>
+        </Grid>
+      </Grid>
     );
   }
 
   return (
     <>
       <Layout>
-
         {getContent()}
       </Layout>
     </>
