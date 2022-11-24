@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SendIcon from '@mui/icons-material/Send';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import Button from '@mui/material/Button';
 import Layout from '../layout/Layout'
 import TableCard from '../components/TableCard';
@@ -49,7 +49,7 @@ const Home = () => {
   return (
     <>
       <Layout>
-        <Button style={{ marginTop: '40px' }} onClick={onAddClick} variant="contained" endIcon={<SendIcon />}>
+        <Button style={{ marginTop: '40px' }} onClick={onAddClick} variant="contained" endIcon={<AddBoxIcon   />}>
           Ekle
         </Button>
         {getContent()}
