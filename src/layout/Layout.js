@@ -18,6 +18,7 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -120,10 +121,10 @@ export default function Layout({ children }) {
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{marginLeft:'530px'}}>
-          <Typography variant="h2" noWrap component="div" style={{fontFamily : 'Arial Black' , color:'rgb(255,255,255)'}}>
-            EXIT
-          </Typography>
+          <Box sx={{ marginLeft: '530px' }}>
+            <Typography variant="h2" noWrap component="div" style={{ fontFamily: 'Arial Black', color: 'rgb(255,255,255)' }}>
+              EXIT
+            </Typography>
           </Box>
         </Toolbar>
       </AppBar>
@@ -149,7 +150,7 @@ export default function Layout({ children }) {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, display: 'flex', flexFlow: 'row wrap', marginTop: '40px' }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, display: 'flex', flexFlow: 'row wrap', marginTop: '40px', minHeight: '100vh' }}>
         {children}
       </Box>
     </Box>
