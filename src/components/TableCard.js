@@ -13,6 +13,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import {blueGrey, cyan} from "@mui/material/colors";
 
 
 export default function ImgMediaCard(props) {
@@ -49,7 +50,7 @@ export default function ImgMediaCard(props) {
       <Card sx={{
         maxWidth: 345,
         margin: '30px',
-        backgroundColor: 'rgb(18, 18, 18)',
+        backgroundColor: 'rgb(58,59,60)',
         borderRadius: '4px',
         boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
         color: 'rgb(255,255,255)',
@@ -60,8 +61,8 @@ export default function ImgMediaCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions style={{ justifyContent: 'space-around' }}>
-          <Button variant="outlined" startIcon={<DeleteIcon />}>SİL</Button>
-          <Button size="small" onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
+          <Button color={'error'} variant="contained" startIcon={<DeleteIcon />}>SİL</Button>
+          <Button color={'success'}  variant='contained'  onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
           <Button variant="contained" onClick={() => onButtonClickToCheckout('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
         </CardActions>
       </Card>

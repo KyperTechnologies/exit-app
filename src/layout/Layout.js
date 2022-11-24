@@ -122,7 +122,7 @@ export default function Layout({children}) {
             <MenuIcon />
           </IconButton>
           <Box sx={{marginLeft:'530px'}}>
-          <Typography variant="h2" noWrap component="div" style={{color:'rgb(18, 18, 18)'}}>
+          <Typography variant="h2" noWrap component="div" style={{fontFamily : 'Arial Black' , color:'rgb(255,255,255)'}}>
             EXIT
           </Typography>
           </Box>
