@@ -65,7 +65,3 @@ const Home = () => {
 };
 
 export default Home;
-
-/*<Button style={{ marginTop: '40px' }} onClick={onAddClick} variant="contained" endIcon={<SendIcon />}>
-Ekle
-</Button>*/
