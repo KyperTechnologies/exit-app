@@ -24,6 +24,7 @@ const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
+  backgroundColor: "#612335",
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -32,6 +33,7 @@ const openedMixin = (theme) => ({
 });
 
 const closedMixin = (theme) => ({
+  backgroundColor: "#612335",
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -75,14 +77,17 @@ const AppBar = styled(MuiAppBar, {
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
+  
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     ...(open && {
+      
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
     }),
     ...(!open && {
+    
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
     }),
@@ -110,13 +115,14 @@ export default function Layout({ children }) {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
+              color: "#E9E0D2",
               marginRight: 5,
               ...(open && { display: 'none' }),
             }}
@@ -124,7 +130,7 @@ export default function Layout({ children }) {
             <MenuIcon />
           </IconButton>
           <Box sx={{ marginLeft: '530px' }}>
-            <Typography variant="h2" noWrap component="div" style={{ fontFamily: 'Arial Black', color: 'rgb(255,255,255)' }}>
+            <Typography variant="h2" noWrap component="div" style={{ fontFamily: 'Arial Black', color: "#E9E0D2" }}>
               EXIT
             </Typography>
           </Box>
@@ -132,22 +138,22 @@ export default function Layout({ children }) {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton style={{color: "#E9E0D2"}} onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           <ListItem button onClick={() => onButtonClick('/')}>
-            <ListItemIcon>{<TableRestaurantIcon />}</ListItemIcon>
-            <ListItemText primary="Anasayfa" />
+            <ListItemIcon style={{color: "#E9E0D2"}} >{<TableRestaurantIcon />}</ListItemIcon>
+            <ListItemText primary="Anasayfa" style={{color: "#E9E0D2"}}/>
           </ListItem>
-          <ListItem button key="Menü" onClick={() => onButtonClick('/menu')}>
-            <ListItemIcon>{<RestaurantMenuIcon />}</ListItemIcon>
+          <ListItem button key="Menü" style={{color: "#E9E0D2"}} onClick={() => onButtonClick('/menu')}>
+            <ListItemIcon style={{color: "#E9E0D2"}} >{<RestaurantMenuIcon />}</ListItemIcon>
             <ListItemText primary="Menü" />
           </ListItem>
-          <ListItem button key="Veresiye" onClick={() => onButtonClick('/credit')}>
-            <ListItemIcon>{<AutoStoriesIcon />}</ListItemIcon>
+          <ListItem button key="Veresiye" style={{color: "#E9E0D2"}} onClick={() => onButtonClick('/credit')}>
+            <ListItemIcon style={{color: "#E9E0D2"}} >{<AutoStoriesIcon />}</ListItemIcon>
             <ListItemText primary="Veresiye" />
           </ListItem>
         </List>
