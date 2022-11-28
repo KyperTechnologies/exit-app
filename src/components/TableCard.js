@@ -64,10 +64,10 @@ export default function ImgMediaCard(props) {
       <Card sx={{
         maxWidth: 345,
         margin: '30px',
-        backgroundColor: 'rgb(58,59,60)',
+        backgroundColor: "#F6F8E8",
         borderRadius: '4px',
         boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 2px, rgba(0, 0, 0, 0.12) 0px 1px 3px 2px',
-        color: 'black',
+        color: "#00",
       }}>
         <CardActionArea onClick={handleOpen}>
           <CardContent>
@@ -75,9 +75,9 @@ export default function ImgMediaCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions style={{ justifyContent: 'space-around' }}>
-          <Button variant="outlined" onClick={deleteButtonClicked} startIcon={<DeleteIcon />}>SİL</Button>
-          <Button size="small" onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
-          <Button variant="contained" onClick={() => onButtonClickToCheckout('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
+          <Button style={{backgroundColor: "#612335"}} variant="contained" onClick={deleteButtonClicked} startIcon={<DeleteIcon />}>SİL</Button>
+          <Button style={{color: "#004225", borderColor: "#004225" }} variant='outlined' onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
+          <Button style={{backgroundColor: "#004225"}} variant="contained" onClick={() => onButtonClickToCheckout('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
         </CardActions>
       </Card>
 
