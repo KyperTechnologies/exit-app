@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
+import { IconButton } from '@mui/material';
 import Layout from '../layout/Layout'
 import TableCard from '../components/TableCard';
 import Grid from '@mui/material/Grid';
 import { addTable, getTable } from '../Config';
 import uuid from 'react-uuid';
-import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import { AddCircle } from '@mui/icons-material';
 
 const Home = () => {
   const [table, setTable] = useState([]);
@@ -45,10 +45,18 @@ const Home = () => {
 
           </Grid>
         </Grid>
-        <Grid xs={1} display='flex' container direction='column'>
-          <Button onClick={onAddClick} variant="outlined" sx={{ backgroundColor: 'white', position: 'fixed', bottom: '50%', }} endIcon={<AddCircleOutline />}>
-            Ekle
-          </Button>
+        <Grid xs={1} display='flex' justifyContent='center'>
+          <IconButton onClick={onAddClick} variant="outlined" sx={{
+            color: 'lightgoldenrodyellow',
+            backgroundColor: '#004225',
+            position: 'fixed',
+            bottom: '50%',
+            width: '10%',
+            height: '20%',
+            transition: 0,
+          }}>
+            <AddCircle />
+          </IconButton>
         </Grid>
       </Grid>
     );

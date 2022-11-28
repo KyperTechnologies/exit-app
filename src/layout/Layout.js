@@ -77,17 +77,17 @@ const AppBar = styled(MuiAppBar, {
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
-  
+
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     ...(open && {
-      
+
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
     }),
     ...(!open && {
-    
+
       ...closedMixin(theme),
       '& .MuiDrawer-paper': closedMixin(theme),
     }),
@@ -138,22 +138,22 @@ export default function Layout({ children }) {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton style={{color: "#E9E0D2"}} onClick={handleDrawerClose}>
+          <IconButton style={{ color: "#E9E0D2" }} onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           <ListItem button onClick={() => onButtonClick('/')}>
-            <ListItemIcon style={{color: "#E9E0D2"}} >{<TableRestaurantIcon />}</ListItemIcon>
-            <ListItemText primary="Anasayfa" style={{color: "#E9E0D2"}}/>
+            <ListItemIcon style={{ color: "#E9E0D2" }} >{<TableRestaurantIcon />}</ListItemIcon>
+            <ListItemText primary="Anasayfa" style={{ color: "#E9E0D2" }} />
           </ListItem>
-          <ListItem button key="Menü" style={{color: "#E9E0D2"}} onClick={() => onButtonClick('/menu')}>
-            <ListItemIcon style={{color: "#E9E0D2"}} >{<RestaurantMenuIcon />}</ListItemIcon>
+          <ListItem button key="Menü" style={{ color: "#E9E0D2" }} onClick={() => onButtonClick('/menu')}>
+            <ListItemIcon style={{ color: "#E9E0D2" }} >{<RestaurantMenuIcon />}</ListItemIcon>
             <ListItemText primary="Menü" />
           </ListItem>
-          <ListItem button key="Veresiye" style={{color: "#E9E0D2"}} onClick={() => onButtonClick('/credit')}>
-            <ListItemIcon style={{color: "#E9E0D2"}} >{<AutoStoriesIcon />}</ListItemIcon>
+          <ListItem button key="Veresiye" style={{ color: "#E9E0D2" }} onClick={() => onButtonClick('/credit')}>
+            <ListItemIcon style={{ color: "#E9E0D2" }} >{<AutoStoriesIcon />}</ListItemIcon>
             <ListItemText primary="Veresiye" />
           </ListItem>
         </List>
