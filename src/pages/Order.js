@@ -84,11 +84,11 @@ const Order = () => {
 
   const getDrinkContent = () => {
     return (
-      <Box sx={{ height: '100vh' }}>
+      <Box sx={{ minHeight: '100vh', }}>
         <Grid container spacing={3}>
           {product.filter(element => element.type === "drink").map(element => {
             return (
-              <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
+              <Grid m={8} key={element.id}>
                 <OrderCardDrinks key={element.id} drink={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardDrinks>
               </Grid>
             );
@@ -100,11 +100,11 @@ const Order = () => {
 
   const getFoodContent = () => {
     return (
-      <Box sx={{ height: '100vh' }}>
+      <Box sx={{ minHhight: '100vh' }}>
         <Grid container spacing={3}>
           {product.filter(element => element.type === "food").map(element => {
             return (
-              <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }} key={element.id}>
+              <Grid m={8} key={element.id}>
                 <OrderCardFoods key={element.id} food={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardFoods>
               </Grid>
             );
@@ -116,38 +116,45 @@ const Order = () => {
 
   return (
     <>
-      <Box style={{ display: 'flex' }}>
-        <Box style={{ marginTop: '45px' }}>
-          <OrderSummary fetchOrder={fetchOrderData} order={order}>
-          </OrderSummary>
+      <Grid container spacing={3}>
+        <Box style={{ display: 'flex' }}>
+          <Grid xs={2} marginTop='27px'>
+            <Box style={{ marginTop: '45px' }}>
+              <OrderSummary fetchOrder={fetchOrderData} order={order}>
+              </OrderSummary>
+            </Box>
+          </Grid>
+          <Grid xs={10} display='flex' alignItems='center'>
+            <AppBar>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor="exit"
+                textColor="inherit"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+                sx={{ backgroundColor: '#004225' }}
+              >
+                <Tab label="İçecekler" {...a11yProps(0)} />
+                <Tab label="Yiyecekler" {...a11yProps(1)} />
+              </Tabs>
+            </AppBar>
+
+            <SwipeableViews
+              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+              index={value}
+              onChangeIndex={handleChangeIndex}
+            >
+              <TabPanel value={value} index={0} dir={theme.direction}>
+                {getDrinkContent()}
+              </TabPanel>
+              <TabPanel value={value} index={1} dir={theme.direction}>
+                {getFoodContent()}
+              </TabPanel>
+            </SwipeableViews>
+          </Grid>
         </Box>
-        <AppBar>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="exit"
-            textColor="inherit"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-            sx={{ backgroundColor: '#004225' }}
-          >
-            <Tab label="İçecekler" {...a11yProps(0)} />
-            <Tab label="Yiyecekler" {...a11yProps(1)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            {getDrinkContent()}
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            {getFoodContent()}
-          </TabPanel>
-        </SwipeableViews>
-      </Box>
+      </Grid>
     </>
   );
 };
