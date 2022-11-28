@@ -44,17 +44,17 @@ export default function IconButtons(props) {
   return (
     <>
       <div>
-        <IconButton color="primary" onClick={handleOpen} >
+        <IconButton sx={{ backgroundColor: '#004225', color: 'lightgoldenrodyellow' }} onClick={handleOpen} >
           <AddShoppingCartIcon />
         </IconButton>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Ürün Miktarı</DialogTitle>
-          <DialogContent>
+        <Dialog open={open} onClose={handleClose} sx={{ color: 'lightgoldenrodyellow' }}>
+          <DialogTitle fontWeight='bold'>Ürün Miktarı</DialogTitle>
+          <DialogContent >
             <OrderSlider handleValue={handleValue} value={value}></OrderSlider>
           </DialogContent>
           <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant='contained' onClick={handleClose}>Vazgeç</Button>
-            <Button variant='contained' onClick={addOrderOnClick}>Onayla</Button>
+            <Button variant='contained' sx={{ backgroundColor: '#004225' }} onClick={handleClose}>Vazgeç</Button>
+            <Button variant='contained' sx={{ backgroundColor: '#004225' }} onClick={addOrderOnClick}>Onayla</Button>
           </DialogActions>
         </Dialog>
       </div>
