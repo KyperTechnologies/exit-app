@@ -125,10 +125,11 @@ const Order = () => {
           <Tabs
             value={value}
             onChange={handleChange}
-            indicatorColor="secondary"
+            indicatorColor="exit"
             textColor="inherit"
             variant="fullWidth"
             aria-label="full width tabs example"
+            sx={{ backgroundColor: '#004225' }}
           >
             <Tab label="İçecekler" {...a11yProps(0)} />
             <Tab label="Yiyecekler" {...a11yProps(1)} />

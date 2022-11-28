@@ -22,7 +22,7 @@ export default function ImgMediaCard(props) {
   }
 
   return (
-    <Card sx={{ maxWidth: 445, height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ maxWidth: 445, height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#E9E0D2' }}>
       <CardContent>
         <Typography gutterBottom variant="h4" component="div">
           {location.state.tableName}
