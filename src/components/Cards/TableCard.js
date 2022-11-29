@@ -8,12 +8,13 @@ import { CardActionArea, Typography, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import { addTable, deleteTable, getOrderWithTableId } from '../Config';
+import { addTable, deleteTable, getOrderWithTableId } from '../../Config';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
+import styled from 'styled-components';
 
 
 
@@ -30,6 +31,17 @@ export default function ImgMediaCard(props) {
   const [errorOpen, setErrorOpen] = React.useState(false);
   const handleErrorOpen = () => setErrorOpen(true);
   const handleErrorClose = () => setErrorOpen(false);
+
+  const GreenBorderTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: #004625;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #004625;
+    }
+  }
+`;
 
 
   const onButtonClickToOrder = () => {
@@ -62,7 +74,6 @@ export default function ImgMediaCard(props) {
   return (
     <React.Fragment>
       <Card sx={{
-        maxWidth: 345,
         margin: '30px',
         backgroundColor: "#F6F8E8",
         borderRadius: '4px',
@@ -75,16 +86,16 @@ export default function ImgMediaCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions style={{ justifyContent: 'space-around' }}>
-          <Button style={{backgroundColor: "#612335"}} variant="contained" onClick={deleteButtonClicked} startIcon={<DeleteIcon />}>SİL</Button>
-          <Button style={{color: "#004225", borderColor: "#004225" }} variant='outlined' onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
-          <Button style={{backgroundColor: "#004225"}} variant="contained" onClick={() => onButtonClickToCheckout('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
+          <Button style={{ backgroundColor: "#612335" }} variant="contained" onClick={deleteButtonClicked} startIcon={<DeleteIcon />}>SİL</Button>
+          <Button style={{ color: "#004225", borderColor: "#004225" }} variant='outlined' onClick={() => { onButtonClickToOrder() }}>SİPARİŞ</Button>
+          <Button style={{ backgroundColor: "#004225" }} variant="contained" onClick={() => onButtonClickToCheckout('/checkout')} endIcon={<SendIcon />}>HESAP</Button>
         </CardActions>
       </Card>
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogTitle>Masa Adı :</DialogTitle>
+        <DialogTitle fontSize='200%' fontWeight='bold'>Yeni Masa Adı :</DialogTitle>
         <DialogContent>
-          <TextField
+          <GreenBorderTextField
             onChange={(e) => { setTableName(e.target.value) }}
             autoFocus
             margin="dense"
@@ -92,12 +103,12 @@ export default function ImgMediaCard(props) {
             label="Masa adı giriniz :"
             type="name"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Vazgeç</Button>
-          <Button type='submit' onClick={addTableNameOnClick} >Kaydet</Button>
+          <Button variant='contained' sx={{ backgroundColor: '#612335', color: 'lightgoldenrodyellow', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleClose}>Vazgeç</Button>
+          <Button variant='contained' sx={{ backgroundColor: '#004625', color: 'lightgoldenrodyellow', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={addTableNameOnClick} >Kaydet</Button>
         </DialogActions>
       </Dialog>
       <div>
@@ -107,17 +118,17 @@ export default function ImgMediaCard(props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
+          <DialogTitle id="alert-dialog-title" fontWeight='bold'>
             {"Masa Silinemedi"}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Masaya ait hesap bulunmaktadır.
+            <DialogContentText id="alert-dialog-description" fontWeight='bold'>
+              Masaya ait hesap bulunmaktadır, önce masadaki hesabı kapatınız.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button color='success' onClick={handleErrorClose} autoFocus>
-              Tamam Orhan
+            <Button color='success' variant='contained' backgroundColor='#004625' onClick={handleErrorClose} autoFocus>
+              Tamam
             </Button>
           </DialogActions>
         </Dialog>

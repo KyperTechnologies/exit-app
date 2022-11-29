@@ -6,8 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
-import OrderSlider from '../components/OrderSlider';
-import { addOrder } from '../Config';
+import OrderSlider from '../Sliders/OrderSlider';
+import { addOrder } from '../../Config';
 import { useLocation } from 'react-router-dom';
 import uuid from 'react-uuid';
 
@@ -44,7 +44,15 @@ export default function IconButtons(props) {
   return (
     <>
       <div>
-        <IconButton sx={{ backgroundColor: '#004225', color: 'lightgoldenrodyellow' }} onClick={handleOpen} >
+        <IconButton sx={{
+          backgroundColor: '#004225',
+          color: 'lightgoldenrodyellow',
+          '&:hover': {
+            backgroundColor: '#612335',
+            color: 'lightgoldenrodyellow',
+          }
+        }}
+          onClick={handleOpen} >
           <AddShoppingCartIcon />
         </IconButton>
         <Dialog open={open} onClose={handleClose} sx={{ color: 'lightgoldenrodyellow' }}>
@@ -53,8 +61,22 @@ export default function IconButtons(props) {
             <OrderSlider handleValue={handleValue} value={value}></OrderSlider>
           </DialogContent>
           <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant='contained' sx={{ backgroundColor: '#004225' }} onClick={handleClose}>Vazgeç</Button>
-            <Button variant='contained' sx={{ backgroundColor: '#004225' }} onClick={addOrderOnClick}>Onayla</Button>
+            <Button variant='contained' sx={{
+              backgroundColor: '#004225',
+              '&:hover': {
+                backgroundColor: '#612335',
+                color: 'lightgoldenrodyellow',
+              }
+            }}
+              onClick={handleClose}>Vazgeç</Button>
+            <Button variant='contained' sx={{
+              backgroundColor: '#004225',
+              '&:hover': {
+                backgroundColor: '#612335',
+                color: 'lightgoldenrodyellow',
+              }
+            }}
+              onClick={addOrderOnClick}>Onayla</Button>
           </DialogActions>
         </Dialog>
       </div>

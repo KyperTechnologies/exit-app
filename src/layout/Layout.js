@@ -129,7 +129,7 @@ export default function Layout({ children }) {
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ marginLeft: '530px' }}>
+          <Box>
             <Typography variant="h2" noWrap component="div" style={{ fontFamily: 'Arial Black', color: "#E9E0D2" }}>
               EXIT
             </Typography>

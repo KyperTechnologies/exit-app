@@ -6,9 +6,9 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import OrderCardDrinks from '../components/OrderCardDrinks'
-import OrderCardFoods from '../components/OrderCardFoods'
-import OrderSummary from '../components/OrderSummary';
+import OrderCardDrinks from '../components/Cards/OrderCardDrinks'
+import OrderCardFoods from '../components/Cards/OrderCardFoods'
+import OrderSummary from '../components/Cards/OrderSummary';
 import Grid from '@mui/material/Grid';
 import { getProduct } from '../Config';
 import { getOrderWithTableId } from '../Config';
@@ -116,39 +116,43 @@ const Order = () => {
 
   return (
     <>
-      <Grid container spacing={3}>
-        <Grid xs={3} marginTop='72px'>
-          <OrderSummary fetchOrder={fetchOrderData} order={order}>
-          </OrderSummary>
+      <Grid container >
+        <Grid lg={3} sm={7}>
+          <Grid marginTop='50px'>
+            <OrderSummary fetchOrder={fetchOrderData} order={order}>
+            </OrderSummary>
+          </Grid>
         </Grid>
-        <Grid xs={9}>
-          <AppBar>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              indicatorColor="exit"
-              textColor="inherit"
-              variant="fullWidth"
-              aria-label="full width tabs example"
-              sx={{ backgroundColor: '#004225' }}
-            >
-              <Tab label="İçecekler" {...a11yProps(0)} />
-              <Tab label="Yiyecekler" {...a11yProps(1)} />
-            </Tabs>
-          </AppBar>
+        <Grid lg={9} sm={5}>
+          <Grid item xs={12}>
+            <AppBar>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                TabIndicatorProps={{ style: { background: '#fff', height: '5px' } }}
+                textColor="inherit"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+                sx={{ backgroundColor: '#004225' }}
+              >
+                <Tab label="İçecekler" {...a11yProps(0)} />
+                <Tab label="Yiyecekler" {...a11yProps(1)} />
+              </Tabs>
+            </AppBar>
 
-          <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-          >
-            <TabPanel value={value} index={0} dir={theme.direction}>
-              {getDrinkContent()}
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
-              {getFoodContent()}
-            </TabPanel>
-          </SwipeableViews>
+            <SwipeableViews
+              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+              index={value}
+              onChangeIndex={handleChangeIndex}
+            >
+              <TabPanel value={value} index={0} dir={theme.direction}>
+                {getDrinkContent()}
+              </TabPanel>
+              <TabPanel value={value} index={1} dir={theme.direction}>
+                {getFoodContent()}
+              </TabPanel>
+            </SwipeableViews>
+          </Grid>
         </Grid>
       </Grid>
     </>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import OrderSummaryTable from './OrderSummaryTable';
+import OrderSummaryTable from '../Tables/OrderSummaryTable';
 
 export default function ImgMediaCard(props) {
 

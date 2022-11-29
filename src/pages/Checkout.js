@@ -1,36 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CheckoutSummary from '../components/CheckoutSummary';
-import { useLocation } from 'react-router-dom';
-import { getOrderWithTableId } from '../Config';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiAppBar from '@mui/material/AppBar';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Typography } from '@mui/material';
+import CheckoutCard from '../components/Cards/CheckoutCard';
 
-export default function ImgMediaCard() {
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme }) => ({
+    backgroundColor: '#004225',
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+}));
 
-  const [order, setOrder] = useState([]);
-  const location = useLocation();
+export default function LayoutWithoutToolbar({ item }) {
 
-  useEffect(() => {
-    fetchOrderData();
-    // eslint-disable-next-line
-  }, [])
-
-  async function fetchOrderData() {
-    const orderData = await getOrderWithTableId(location.state.tableId);
-    if (orderData && orderData.length > 0) {
-      setOrder(orderData);
-    }
-  }
-
-  return (
-    <Card style={{ backgroundColor: 'black', height: '100vh' }}>
-      <CardContent sx={{ display: 'flex', flexFlow: 'row wrap', justifyContent: 'space-evenly', marginTop: '30px' }}>
-        <CheckoutSummary order={order} fetchOrder={fetchOrderData} tableId={location.state.tableId} tableName={location.state.tableName} >
-        </CheckoutSummary>
-      </CardContent>
-      <CardActions>
-      </CardActions>
-    </Card>
-  );
+    return (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CssBaseline />
+            <AppBar position="fixed">
+                <Box>
+                    <Typography variant="h2" noWrap component="div" style={{ fontFamily: 'Arial Black', color: "#E9E0D2" }}>
+                        EXIT
+                    </Typography>
+                </Box>
+            </AppBar>
+            <CheckoutCard></CheckoutCard>
+        </Box>
+    );
 }
