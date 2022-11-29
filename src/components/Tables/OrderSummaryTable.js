@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import CancelOrderButton from '../components/CancelOrderButton';
+import CancelOrderButton from '../Buttons/CancelOrderButton';
 import { useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -34,26 +34,26 @@ export default function SpanningTable(props) {
       <Table aria-label="spanning table" sx={{ backgroundColor: '#fff' }}>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Ürün İsmi</TableCell>
-            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Tane</TableCell>
-            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Birim Fiyat</TableCell>
-            <TableCell sx={{ fontSize: '80%', fontWeight: 'bold' }}>Tutar</TableCell>
+            <TableCell sx={{ fontSize: '100%', fontWeight: 'bold' }}>Ürün İsmi</TableCell>
+            <TableCell sx={{ fontSize: '100%', fontWeight: 'bold' }}>Tane</TableCell>
+            <TableCell sx={{ fontSize: '100%', fontWeight: 'bold' }}>Birim Fiyat</TableCell>
+            <TableCell sx={{ fontSize: '100%', fontWeight: 'bold' }}>Tutar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {order.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell >{row.nameOfOrder}</TableCell>
-              <TableCell>{row.value}</TableCell>
-              <TableCell >{row.unitPrice}</TableCell>
-              <TableCell >{row.totalPrice}</TableCell>
+            <TableRow key={row.id} >
+              <TableCell sx={{ textAlign: 'center' }} >{row.nameOfOrder}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{row.value}</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{row.unitPrice} ₺</TableCell>
+              <TableCell sx={{ textAlign: 'center' }}>{row.totalPrice} ₺</TableCell>
               <TableCell>
                 <CancelOrderButton order={row} fetchOrder={fetchOrder}></CancelOrderButton>
               </TableCell>
             </TableRow>
           ))}
           <TableRow>
-            <TableCell colSpan={6} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Toplam Tutar: {getTotalPrice()}</TableCell>
+            <TableCell colSpan={6} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Toplam Tutar: {getTotalPrice()} ₺</TableCell>
           </TableRow>
         </TableBody>
       </Table>

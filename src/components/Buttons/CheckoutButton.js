@@ -6,8 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
-import CheckoutSlider from '../components/CheckoutSlider';
-import { updateOrder, deleteOrder } from '../Config';
+import CheckoutSlider from '../Sliders/CheckoutSlider';
+import { updateOrder, deleteOrder } from '../../Config';
 
 export default function IconButtons(props) {
   const { row, fetchOrder, splitValue } = props;
@@ -40,8 +40,8 @@ export default function IconButtons(props) {
   return (
     <>
       <div>
-        <IconButton onClick={handleOpen} color="primary" aria-label="add to shopping cart">
-          <PointOfSaleIcon />
+        <IconButton style={{ backgroundColor: "#612335" }} onClick={handleOpen} color="primary" aria-label="add to shopping cart">
+          <PointOfSaleIcon style={{ color: "#fff" }} />
         </IconButton>
       </div>
       <div>
@@ -51,8 +51,23 @@ export default function IconButtons(props) {
             <CheckoutSlider handleValue={handleValue} newValue={newValue} orderValue={row.value}></CheckoutSlider>
           </DialogContent>
           <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant='contained' onClick={handleClose}>Vazgeç</Button>
-            <Button variant='contained' onClick={updateOnClick}>Ayır</Button>
+            <Button sx={{
+              backgroundColor: '#004225',
+              '&:hover': {
+                backgroundColor: '#612335',
+                color: 'lightgoldenrodyellow',
+              }
+            }}
+              variant='contained' onClick={handleClose}>Vazgeç</Button>
+            <Button
+              sx={{
+                backgroundColor: '#004225',
+                '&:hover': {
+                  backgroundColor: '#612335',
+                  color: 'lightgoldenrodyellow',
+                }
+              }}
+              variant='contained' onClick={updateOnClick}>Ayır</Button>
           </DialogActions>
         </Dialog>
       </div>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { CardActions, Typography } from '@mui/material';
-import OrderSliderButton from '../components/OrderSliderButton';
+import OrderSliderButton from '../Buttons/OrderSliderButton';
 
 export default function ActionAreaCard(props) {
   const { food, fetch, fetchOrder } = props;

@@ -6,10 +6,10 @@ import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
 
 function ValueLabelComponent(props) {
-    const { children, value } = props;
+    const { children, newValue } = props;
 
     return (
-        <Tooltip enterTouchDelay={0} placement="top" title={value}>
+        <Tooltip enterTouchDelay={0} placement="top" title={newValue}>
             {children}
         </Tooltip>
     );
@@ -25,6 +25,7 @@ const PrettoSlider = styled(Slider)({
     height: 8,
     '& .MuiSlider-track': {
         border: 'none',
+        backgroundColor: '#612335',
     },
     '& .MuiSlider-thumb': {
         height: 24,
@@ -46,7 +47,7 @@ const PrettoSlider = styled(Slider)({
         width: 32,
         height: 32,
         borderRadius: '50% 50% 50% 0',
-        backgroundColor: '#52af77',
+        backgroundColor: '#004225',
         transformOrigin: 'bottom left',
         transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
         '&:before': { display: 'none' },
@@ -64,19 +65,19 @@ export default function CustomizedSlider(props) {
     const { newValue, handleValue, orderValue } = props;
 
     return (
-      <Box sx={{ width: 320 }}>
-        <PrettoSlider
-          sx={{ marginTop: '45px' }}
-          valueLabelDisplay="on"
-          aria-label="pretto slider"
-          value={newValue}
-          step={1}
-          marks
-          min={1}
-          max={orderValue}
-          onChange={handleValue}
-        />
-        <Box sx={{ m: 3 }} />
-      </Box>
+        <Box sx={{ width: 320 }}>
+            <PrettoSlider
+                sx={{ marginTop: '45px' }}
+                valueLabelDisplay="on"
+                aria-label="pretto slider"
+                value={newValue}
+                step={1}
+                marks
+                min={1}
+                max={orderValue}
+                onChange={handleValue}
+            />
+            <Box sx={{ m: 3 }} />
+        </Box>
     );
 }

@@ -19,8 +19,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { addProduct, getProduct, updateProduct, deleteProduct } from '../Config';
+import { addProduct, getProduct, updateProduct, deleteProduct } from '../../Config';
 import uuid from 'react-uuid';
+import styled from 'styled-components';
 
 
 export function Row(props) {
@@ -29,6 +30,17 @@ export function Row(props) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [name, upName] = useState("");
   const [price, upPrice] = useState("");
+
+  const GreenBorderTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: #004625;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #004625;
+    }
+  }
+`;
 
   const handleOpen = () => setDialogOpen(true);
   const handleClose = () => setDialogOpen(false);
@@ -53,36 +65,36 @@ export function Row(props) {
     <React.Fragment>
       <TableRow sx={{
         '& > *': { borderBottom: 'unset' },
-        backgroundColor: 'rgb(18, 18, 18)'
+        backgroundColor: '#fff',
       }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
-            color='primary'
+            sx={{ color: '#612335' }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.name}</TableCell>
-        <TableCell sx={{ color: 'rgb(255,255,255)' }}>{row.price}</TableCell>
+        <TableCell sx={{ color: 'black', backgroundColor: '#fff' }}>{row.name}</TableCell>
+        <TableCell sx={{ color: 'black', backgroundColor: '#fff' }}>{row.price}</TableCell>
       </TableRow>
-      <TableRow sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
+      <TableRow sx={{ backgroundColor: '#612335' }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1, textAlign: 'right' }}>
-              <Button onClick={handleOpen}>Güncelle</Button>
-              <Button onClick={deleteOnClick} >Sİl</Button>
+              <Button sx={{ backgroundColor: '#004625', color: '#fff', '&:hover': { backgroundColor: '#fff', color: 'black' }, marginRight: '10px' }} variant='contained' onClick={handleOpen}>Güncelle</Button>
+              <Button sx={{ backgroundColor: '#004625', color: '#fff', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={deleteOnClick} >Sİl</Button>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
       <div>
         <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-          <DialogTitle>Ürün Güncelle</DialogTitle>
+          <DialogTitle textAlign='center' fontWeight='bold' fontSize='200%'>Ürün Güncelle</DialogTitle>
           <DialogContent>
-            <TextField
+            <GreenBorderTextField
               onChange={(e) => { upName(e.target.value) }}
               autoFocus
               margin="dense"
@@ -90,10 +102,10 @@ export function Row(props) {
               label="Ürün İsmi"
               type="name"
               fullWidth
-              variant="standard"
+              variant="outlined"
               defaultValue={row.name}
             />
-            <TextField
+            <GreenBorderTextField
               onChange={(e) => { upPrice(e.target.value) }}
               autoFocus
               margin="dense"
@@ -101,13 +113,13 @@ export function Row(props) {
               label="Fiyat"
               type="price"
               fullWidth
-              variant="standard"
+              variant="outlined"
               defaultValue={row.price}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Vazgeç</Button>
-            <Button type='submit' onClick={updateOnClick} >Kaydet</Button>
+            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612325', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleClose}>Vazgeç</Button>
+            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={updateOnClick} >Kaydet</Button>
           </DialogActions>
         </Dialog>
       </div>
@@ -142,12 +154,23 @@ export default function CollapsibleTable() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
 
+  const GreenBorderTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: #004625;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #004625;
+    }
+  }
+`;
+
   useEffect(() => {
     fetchData();
   }, [])
 
   async function fetchData() {
-    const drinkData = await getProduct("food");
+    const drinkData = await getProduct("drink");
     if (drinkData && drinkData.length > 0) {
       setDrink(drinkData);
     }
@@ -160,7 +183,7 @@ export default function CollapsibleTable() {
       "id": id,
       "name": name,
       "price": price,
-      type: "food"
+      type: "drink"
     });
     handleClose();
     fetchData();
@@ -168,16 +191,18 @@ export default function CollapsibleTable() {
 
   return (
     <React.Fragment>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{
+        boxShadow: '#612335 0px 2px 1px 3px, #612335 0px 1px 1px 0px, #612335 0px 1px 3px 0px',
+      }}>
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
+            <TableRow sx={{ backgroundColor: '#fff' }}>
               <TableCell />
-              <TableCell sx={{ fontSize: '90%', fontWeight: 'bold', color: 'rgb(40,100,150)' }}>Ürün İsmi</TableCell>
-              <TableCell sx={{ fontSize: '90%', fontWeight: 'bold', color: 'rgb(40,100,150)' }}>Fiyat</TableCell>
+              <TableCell sx={{ fontSize: '100%', fontWeight: 'bold', color: 'black' }}>Ürün İsmi</TableCell>
+              <TableCell sx={{ fontSize: '100%', fontWeight: 'bold', color: 'black' }}>Fiyat</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody >
             {drink.map((row) => (
               <Row key={row.id} row={row} fetch={fetchData} />
             ))}
@@ -185,17 +210,17 @@ export default function CollapsibleTable() {
         </Table>
       </TableContainer>
       <IconButton
-        style={{ backgroundColor: "#1976d2", marginTop: "20px", width: "70px", height: "70px" }}
+        style={{ backgroundColor: "#004625", marginTop: "20px", width: "70px", height: "70px", color: 'lightgoldenrodyellow' }}
         aria-label="expand row"
         size="small"
         onClick={handleOpen}>
-        <AddIcon></AddIcon>
+        <AddIcon ></AddIcon>
       </IconButton>
       <div>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Ürün Ekle</DialogTitle>
+          <DialogTitle textAlign='center' fontWeight='bold' fontSize='200%'>Ürün Ekle</DialogTitle>
           <DialogContent>
-            <TextField
+            <GreenBorderTextField
               onChange={(e) => { setName(e.target.value) }}
               autoFocus
               margin="dense"
@@ -203,9 +228,9 @@ export default function CollapsibleTable() {
               label="Ürün İsmi"
               type="name"
               fullWidth
-              variant="standard"
+              variant="outlined"
             />
-            <TextField
+            <GreenBorderTextField
               onChange={(e) => { setPrice(e.target.value) }}
               autoFocus
               margin="dense"
@@ -213,12 +238,12 @@ export default function CollapsibleTable() {
               label="Fiyat"
               type="price"
               fullWidth
-              variant="standard"
+              variant="outlined"
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Vazgeç</Button>
-            <Button type='submit' onClick={onAddClick} >Ekle</Button>
+            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612325', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleClose}>Vazgeç</Button>
+            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={onAddClick} >Ekle</Button>
           </DialogActions>
         </Dialog>
       </div>
