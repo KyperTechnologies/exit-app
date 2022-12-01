@@ -151,3 +151,26 @@ export const deleteTable = async (tableId) => {
 
   await remove(ref(db, '/tables/' + tableId));
 }
+
+export const addCreditOwner = async (id, data) => {
+  await set(ref(db, 'creditOwners/' + id), data);
+};
+
+export const getCreditOwner = async () => {
+  const dbRef = ref(db);
+  return await get(child(dbRef, `creditOwners`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
+          return value;
+        });
+
+        return data;
+      } else {
+        console.log("No data available Credit Owner");
+        return [];
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+};

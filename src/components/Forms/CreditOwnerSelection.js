@@ -1,9 +1,12 @@
-import * as React from 'react';
+import React, { useState, useCallback } from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Button } from '@mui/material';
+import CreateCreditOwnerDialog from '../Dialogs/CreateCreditOwnerDialog';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -16,15 +19,21 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Buğra Soysal',
-  'Burak Kiper',
-];
 
 export default function MultipleSelect() {
+  const handleCreateCreditOpen = () => setCreateCreditOpen(true);
+  const handleCreateCreditClose = useCallback(() => setCreateCreditOpen(false), []);
+  const [openCreateCredit, setCreateCreditOpen] = useState(false);
   const [personName, setPersonName] = React.useState([]);
+  const [creditOwner, setCreditOwner] = useState([]);
+
+  const handleValue = (e) => {
+    e.preventDefault();
+    setCreditOwner(e.target.value);
+  };
 
   const handleChange = (event) => {
+    event.preventDefault();
     const {
       target: { value },
     } = event;
@@ -37,7 +46,7 @@ export default function MultipleSelect() {
   return (
     <div>
       <FormControl sx={{ m: 5, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label" sx={{color:'rgb(40,100,150)'}}>SEÇİNİZ</InputLabel>
+        <InputLabel id="demo-multiple-name-label" sx={{ color: 'rgb(40,100,150)' }}>SEÇİNİZ</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
@@ -45,18 +54,20 @@ export default function MultipleSelect() {
           onChange={handleChange}
           input={<OutlinedInput label="SEÇİNİZ" />}
           MenuProps={MenuProps}
-          style={{color:'white'}}
+          style={{ color: 'white' }}
         >
-          {names.map((name) => (
+          {creditOwner.map((ownerName) => (
             <MenuItem
               back
-              key={name}
-              value={name}
-              style={{backgroundColor:'rgb(18, 18, 18)',color:'white'}}
+              key={ownerName.id}
+              value={ownerName.name}
+              style={{ backgroundColor: 'rgb(18, 18, 18)', color: 'white' }}
             >
-              {name}
+              {ownerName.name}
             </MenuItem>
           ))}
+          <Button variant='contained' onClick={handleCreateCreditOpen}>YENİ KİŞİ</Button>
+          <CreateCreditOwnerDialog openCreateCredit={openCreateCredit} handleCreateCreditClose={handleCreateCreditClose} handleValue={handleValue} creditOwner={creditOwner}></CreateCreditOwnerDialog>
         </Select>
       </FormControl>
     </div>

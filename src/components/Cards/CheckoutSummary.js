@@ -14,6 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CreditOwnerSelection from '../Forms/CreditOwnerSelection';
 import { deleteTable } from '../../Config';
 
+
 export default function ImgMediaCard(props) {
 
   let navigate = useNavigate();
@@ -25,11 +26,11 @@ export default function ImgMediaCard(props) {
   const [open, setOpen] = useState(false);
   const [openCheckout, setOpenCheckout] = useState(false);
 
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleCheckoutOpen = () => setOpenCheckout(true);
   const handleCheckoutClose = () => setOpenCheckout(false);
-
 
   const checkoutAll = async () => {
     await deleteTable(tableId);
