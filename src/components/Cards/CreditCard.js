@@ -13,13 +13,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ImgMediaCard() {
+export default function ImgMediaCard(props) {
 
   const [open, setOpen] = React.useState(false);
-
   const handleOpen = () => setOpen(true);
-
   const handleClose = () => setOpen(false);
+  const { creditOwnerName } = props;
+
   return (
     <Box sx={{ height: '100vh' }}>
       <Card sx={{
@@ -31,7 +31,7 @@ export default function ImgMediaCard() {
       }}>
         <CardActionArea onClick={handleOpen}>
           <CardContent>
-            <Typography variant='h3'>Borçlu_Adı</Typography>
+            <Typography variant='h4'>{creditOwnerName}</Typography>
           </CardContent>
         </CardActionArea>
 

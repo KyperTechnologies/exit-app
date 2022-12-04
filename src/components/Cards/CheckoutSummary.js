@@ -12,7 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CreditOwnerSelection from '../Forms/CreditOwnerSelection';
-import { deleteTable } from '../../Config';
+import { addCreditOrder, deleteTable, updateCreditOrder } from '../../Config';
 
 
 export default function ImgMediaCard(props) {
@@ -35,6 +35,23 @@ export default function ImgMediaCard(props) {
   const checkoutAll = async () => {
     await deleteTable(tableId);
     onButtonClick('/')
+  }
+
+  const updateCreditOwnerOrder = (item) => {
+    return item.id, item.productId, item.nameOfOrder, item.value, item.unitPrice, item.totalPrice;
+  }
+  const mappedOrders = order.map(updateCreditOwnerOrder);
+
+  const updateCreditOnClick = () => {
+    const orders = {
+      id: mappedOrders.id,
+      productId: mappedOrders.productId,
+      nameOfOrder: mappedOrders.nameOfOrder,
+      value: mappedOrders.value,
+      unitPrice: Number(mappedOrders.unitPrice),
+      totalPrice: mappedOrders.value * Number(mappedOrders.totalPrice),
+    }
+    updateCreditOrder(orders);
   }
 
   return (
@@ -86,7 +103,7 @@ export default function ImgMediaCard(props) {
           </DialogContent>
           <DialogActions sx={{ backgroundColor: 'rgb(18, 18, 18)', justifyContent: 'space-between' }}>
             <Button onClick={handleClose}>VAZGEÇ</Button>
-            <Button color='success' onClick={handleClose}>YAZDIR</Button>
+            <Button color='success' onClick={updateCreditOnClick}>YAZDIR</Button>
           </DialogActions>
         </Dialog>
       </div>

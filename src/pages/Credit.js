@@ -3,38 +3,30 @@ import Layout from '../Layout/Layout'
 import CreditCard from '../components/Cards/CreditCard';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { getCreditOwner } from '../Config';
 
 const Home = () => {
-  const [tables, setTables] = useState([]);
+  const [creditOwner, setCreditOwner] = useState([]);
 
   useEffect(() => {
-    getTables()
+    fetchData();
   }, [])
 
-  const getTables = async () => {
-    fetch('data/table.json',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((myJson) => {
-        setTables(myJson.tables)
-      });
+  async function fetchData() {
+    const creditOwnerData = await getCreditOwner();
+    if (creditOwnerData && creditOwnerData.length > 0) {
+      setCreditOwner(creditOwnerData);
+    }
   }
 
   const getContent = () => {
     return (
       <Box sx={{ height: '100vh' }}>
         <Grid container spacing={3}>
-          {tables.map(element => {
+          {creditOwner.map((owner) => {
             return (
               <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }}>
-                <CreditCard></CreditCard>
+                <CreditCard key={owner.id} creditOwnerName={owner.name}></CreditCard>
               </Grid>
             );
           })}

@@ -174,3 +174,51 @@ export const getCreditOwner = async () => {
       console.error(error);
     });
 };
+
+export const updateCreditOrder = async (order) => {
+  const updates = {};
+  updates['/creditOwners/orders' + order.id] = order;
+
+  return await update(ref(db), updates);
+}
+
+export const addCreditOrder = async (id, data) => {
+
+  const orders = await getCreditOrderWithProductId(data.id, data.productId);
+
+  if (orders && orders.length > 0) {
+    const newValue = orders[0].value + data.value;
+    orders[0].value = newValue;
+    orders[0].totalPrice = newValue * data.unitPrice;
+    await updateCreditOrder(orders[0]);
+  }
+  else {
+    await set(ref(db, 'orders/' + id), data);
+  }
+};
+
+export const getCreditOrderWithProductId = async (id, productId) => {
+  return await getOrderWithTableId(id).then(res => res.filter(ele => ele.productId === productId));
+}
+
+export const getOrderWithOwnerId = async (id) => {
+  const dbRef = ref(db, 'creditOwners/');
+
+  const q = query(dbRef, orderByChild('id'), equalTo(id));
+
+  return await get(q)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
+          return value;
+        });
+
+        return data;
+      } else {
+        console.log("No data available3");
+        return [];
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+}
