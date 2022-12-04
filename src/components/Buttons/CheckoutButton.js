@@ -10,9 +10,9 @@ import CheckoutSlider from '../Sliders/CheckoutSlider';
 import { updateOrder, deleteOrder } from '../../Config';
 
 export default function IconButtons(props) {
-  const { row, fetchOrder, splitValue } = props;
+  const { row, fetchOrder } = props;
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true); console.log(splitValue);
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [newValue, setValue] = useState(1);
 
