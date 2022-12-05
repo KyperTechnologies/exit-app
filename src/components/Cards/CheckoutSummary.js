@@ -20,7 +20,7 @@ export default function ImgMediaCard(props) {
 
   let navigate = useNavigate();
   const { order, fetchOrder, tableId, tableName } = props;
-  const [selectedOwner, setSelectedOwner] = useState(['']);
+  const [value, setValue] = React.useState('');
 
   const onButtonClick = (state) => {
     navigate(state);
@@ -41,33 +41,24 @@ export default function ImgMediaCard(props) {
 
   const handleChange = (event) => {
     event.preventDefault();
-    const {
-      target: { value },
-    } = event;
-    setSelectedOwner(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    setValue(event.target.value);
   };
 
-  const updateCreditOwnerOrder = (item) => {
-    // eslint-disable-next-line
-    return item.id, item.productId, item.nameOfOrder, item.value, item.unitPrice, item.totalPrice;
-  }
-  const mappedOrders = order.map(updateCreditOwnerOrder);
-
   const addCreditOrderOnClick = () => {
-    const id = uuid();
-    addCreditOrder(id, {
-      "id": mappedOrders.id,
-      "ownerId": selectedOwner.ownerId,
-      "ownerName": selectedOwner.ownerName,
-      "productId": mappedOrders.productId,
-      "nameOfOrder": mappedOrders.nameOfOrder,
-      "value": mappedOrders.value,
-      "unitPrice": Number(mappedOrders.unitPrice),
-      "totalPrice": mappedOrders.value * Number(mappedOrders.totalPrice),
-    })
+    order.forEach(element => {
+      addCreditOrder(value, {
+        orders: [
+          {
+            "id": element.id,
+            "productId": element.productId,
+            "nameOfOrder": element.nameOfOrder,
+            "value": element.value,
+            "unitPrice": Number(element.unitPrice),
+            "totalPrice": element.value * Number(element.unitPrice),
+            "ownerName": value,
+          }]
+      })
+    });
   }
 
   return (
@@ -115,7 +106,7 @@ export default function ImgMediaCard(props) {
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle sx={{ fontWeight: 'bold', color: 'rgb(40,100,150)', backgroundColor: 'rgb(18, 18, 18)' }}>VERESİYE YAZDIRMA</DialogTitle>
           <DialogContent sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
-            <CreditOwnerSelection handleChange={handleChange} selectedOwner={selectedOwner}></CreditOwnerSelection>
+            <CreditOwnerSelection handleChange={handleChange} value={value}></CreditOwnerSelection>
           </DialogContent>
           <DialogActions sx={{ backgroundColor: 'rgb(18, 18, 18)', justifyContent: 'space-between' }}>
             <Button onClick={handleClose}>VAZGEÇ</Button>
