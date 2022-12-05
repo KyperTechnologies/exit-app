@@ -2,28 +2,16 @@ import React, { useState, useEffect } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
-import uuid from 'react-uuid';
 import { addCreditOwner, getCreditOwner } from '../../Config';
+import uuid from 'react-uuid';
+import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import styled from 'styled-components';
-import { TextField } from '@mui/material';
-import { Select } from '@mui/material';
-import { OutlinedInput } from '@mui/material';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const GreenBorderTextField = styled(TextField)`
 & label.Mui-focused {
@@ -36,67 +24,56 @@ const GreenBorderTextField = styled(TextField)`
 }
 `;
 
-export default function MultipleSelect(props) {
-  const handleCreateCreditOpen = () => setCreateCreditOpen(true);
-  const handleCreateCreditClose = () => setCreateCreditOpen(false);
-  const [openCreateCredit, setCreateCreditOpen] = useState(false);
-  const [creditOwner, setCreditOwner] = useState(['']);
-  const { handleChange, selectedOwner } = props;
 
-  async function fetchData() {
-    const creditOwnerData = await getCreditOwner();
-    if (creditOwnerData && creditOwnerData.length > 0) {
-      setCreditOwner(creditOwnerData);
-    }
-  }
+export default function SelectSmall(props) {
 
-  const onAddClick = () => {
+  const [creditOwner, setCreditOwner] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const { value, handleChange } = props;
+
+  const addCreditOwnerOnClick = () => {
     const id = uuid();
-    addCreditOwner(id, {
-      "ownerId": id,
-      "ownerName": creditOwner,
-    });
-    handleCreateCreditClose();
-    fetchData();
+    addCreditOwner(creditOwner, {
+      'ownerId': id,
+      'ownerName': creditOwner,
+    })
+    handleClose();
   }
 
   useEffect(() => {
     fetchData();
   }, [])
 
-  const handleName = async (event) => {
-    await setCreditOwner(event.target.value);
-  };
-
-
+  async function fetchData() {
+    const creditOwnerData = await getCreditOwner("ownerId");
+    if (creditOwnerData && creditOwnerData.length > 0) {
+      setCreditOwner(creditOwnerData);
+    }
+  }
 
   return (
-    <div>
-      <FormControl sx={{ m: 5, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label" sx={{ color: 'rgb(40,100,150)' }}>SEÇİNİZ</InputLabel>
-        <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          value={selectedOwner}
-          onChange={handleChange}
-          input={<OutlinedInput label="SEÇİNİZ" />}
-          MenuProps={MenuProps}
-          style={{ color: 'white' }}
-        >
-          {creditOwner.map((owner) => (
-            <MenuItem key={owner.ownerId} value={owner.ownerName}>
-              {owner.ownerName}
-            </MenuItem>
-          ))}
-        </Select>
-        <Button variant='contained' onClick={handleCreateCreditOpen}>YENİ KİŞİ</Button>
-      </FormControl>
+    <FormControl sx={{ m: 1, minWidth: 240 }} size="small">
+      <InputLabel id="demo-select-small">Age</InputLabel>
+      <Select
+        labelId="demo-select-small"
+        id="demo-select-small"
+        value={value}
+        label="Age"
+        onChange={handleChange}
+      >
+        {creditOwner.map((value) => (
+          <MenuItem key={value.ownerId} value={value.ownerName}>{value.ownerName}</MenuItem>
+        ))};
+      </Select>
+      <Button variant='contained' onClick={handleOpen}>YENİ KİŞİ</Button>
       <div>
-        <Dialog open={openCreateCredit}>
-          <DialogTitle textAlign='center' fontWeight='bold' fontSize='200%'>Yeni Kişi Ekle</DialogTitle>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle textAlign='center' fontWeight='bold' fontSize='200%'>Ürün Ekle</DialogTitle>
           <DialogContent>
             <GreenBorderTextField
-              onChange={handleName}
+              onChange={(e) => { setCreditOwner(e.target.value) }}
               autoFocus
               margin="dense"
               id="name"
@@ -107,11 +84,11 @@ export default function MultipleSelect(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612325', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleCreateCreditClose}>Vazgeç</Button>
-            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={onAddClick} >Ekle</Button>
+            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612325', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleClose}>Vazgeç</Button>
+            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={addCreditOwnerOnClick} >Ekle</Button>
           </DialogActions>
         </Dialog>
       </div>
-    </div>
+    </FormControl>
   );
 }

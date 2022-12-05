@@ -177,34 +177,34 @@ export const getCreditOwner = async () => {
 
 export const addCreditOrder = async (id, data) => {
 
-  const orders = await getCreditOrderWithProductId(data.ownerId, data.productId);
+  const creditOrders = await getCreditOrderWithProductId(data.ownerName, data.productId);
 
-  if (orders && orders.length > 0) {
-    const newValue = orders[0].value + data.value;
-    orders[0].value = newValue;
-    orders[0].totalPrice = newValue * data.unitPrice;
-    await updateOrder(orders[0]);
+  if (creditOrders && creditOrders.length > 0) {
+    const newValue = creditOrders[0].value + data.value;
+    creditOrders[0].value = newValue;
+    creditOrders[0].totalPrice = newValue * data.unitPrice;
+    await updateCreditOrder(creditOrders[0]);
   }
   else {
     await set(ref(db, 'creditOrders/' + id), data);
   }
 };
 
-export const updateCreditOrder = async (order) => {
+export const updateCreditOrder = async (id) => {
   const updates = {};
-  updates['/creditOrders/' + order.id] = order;
+  updates['/creditOrders/' + id] = id;
 
   return await update(ref(db), updates);
 }
 
-export const getCreditOrderWithProductId = async (ownerId, productId) => {
-  return await getCreditOrderWithOwnerId(ownerId).then(res => res.filter(ele => ele.productId === productId));
+export const getCreditOrderWithProductId = async (ownerName, productId) => {
+  return await getCreditOrderWithOwnerName(ownerName).then(res => res.filter(ele => ele.productId === productId));
 }
 
-export const getCreditOrderWithOwnerId = async (ownerId) => {
+export const getCreditOrderWithOwnerName = async (ownerName) => {
   const dbRef = ref(db, 'creditOrders/');
 
-  const q = query(dbRef, orderByChild('ownerId'), equalTo(ownerId));
+  const q = query(dbRef, orderByChild('ownerName'), equalTo(ownerName));
 
   return await get(q)
     .then((snapshot) => {
