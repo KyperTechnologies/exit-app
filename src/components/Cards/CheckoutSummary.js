@@ -12,13 +12,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CreditOwnerSelection from '../Forms/CreditOwnerSelection';
-import { addCreditOrder, deleteTable, updateCreditOrder } from '../../Config';
+import { addCreditOrder, deleteTable } from '../../Config';
+import uuid from 'react-uuid';
 
 
 export default function ImgMediaCard(props) {
 
   let navigate = useNavigate();
   const { order, fetchOrder, tableId, tableName } = props;
+  const [selectedOwner, setSelectedOwner] = useState(['']);
 
   const onButtonClick = (state) => {
     navigate(state);
@@ -37,21 +39,35 @@ export default function ImgMediaCard(props) {
     onButtonClick('/')
   }
 
+  const handleChange = (event) => {
+    event.preventDefault();
+    const {
+      target: { value },
+    } = event;
+    setSelectedOwner(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
   const updateCreditOwnerOrder = (item) => {
+    // eslint-disable-next-line
     return item.id, item.productId, item.nameOfOrder, item.value, item.unitPrice, item.totalPrice;
   }
   const mappedOrders = order.map(updateCreditOwnerOrder);
 
-  const updateCreditOnClick = () => {
-    const orders = {
-      id: mappedOrders.id,
-      productId: mappedOrders.productId,
-      nameOfOrder: mappedOrders.nameOfOrder,
-      value: mappedOrders.value,
-      unitPrice: Number(mappedOrders.unitPrice),
-      totalPrice: mappedOrders.value * Number(mappedOrders.totalPrice),
-    }
-    updateCreditOrder(orders);
+  const addCreditOrderOnClick = () => {
+    const id = uuid();
+    addCreditOrder(id, {
+      "id": mappedOrders.id,
+      "ownerId": selectedOwner.ownerId,
+      "ownerName": selectedOwner.ownerName,
+      "productId": mappedOrders.productId,
+      "nameOfOrder": mappedOrders.nameOfOrder,
+      "value": mappedOrders.value,
+      "unitPrice": Number(mappedOrders.unitPrice),
+      "totalPrice": mappedOrders.value * Number(mappedOrders.totalPrice),
+    })
   }
 
   return (
@@ -99,11 +115,11 @@ export default function ImgMediaCard(props) {
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle sx={{ fontWeight: 'bold', color: 'rgb(40,100,150)', backgroundColor: 'rgb(18, 18, 18)' }}>VERESİYE YAZDIRMA</DialogTitle>
           <DialogContent sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
-            <CreditOwnerSelection></CreditOwnerSelection>
+            <CreditOwnerSelection handleChange={handleChange} selectedOwner={selectedOwner}></CreditOwnerSelection>
           </DialogContent>
           <DialogActions sx={{ backgroundColor: 'rgb(18, 18, 18)', justifyContent: 'space-between' }}>
             <Button onClick={handleClose}>VAZGEÇ</Button>
-            <Button color='success' onClick={updateCreditOnClick}>YAZDIR</Button>
+            <Button color='success' onClick={addCreditOrderOnClick}>YAZDIR</Button>
           </DialogActions>
         </Dialog>
       </div>

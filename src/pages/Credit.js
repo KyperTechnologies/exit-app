@@ -26,7 +26,7 @@ const Home = () => {
           {creditOwner.map((owner) => {
             return (
               <Grid m={8} sx={{ marginTop: '50px', maxHeight: '207px' }}>
-                <CreditCard key={owner.id} creditOwnerName={owner.name}></CreditCard>
+                <CreditCard key={owner.ownerId} creditOwnerName={owner.ownerName}></CreditCard>
               </Grid>
             );
           })}

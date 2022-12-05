@@ -40,8 +40,8 @@ export default function MultipleSelect(props) {
   const handleCreateCreditOpen = () => setCreateCreditOpen(true);
   const handleCreateCreditClose = () => setCreateCreditOpen(false);
   const [openCreateCredit, setCreateCreditOpen] = useState(false);
-  const [selectedOwner, setSelectedOwner] = useState(['']);
   const [creditOwner, setCreditOwner] = useState(['']);
+  const { handleChange, selectedOwner } = props;
 
   async function fetchData() {
     const creditOwnerData = await getCreditOwner();
@@ -53,19 +53,8 @@ export default function MultipleSelect(props) {
   const onAddClick = () => {
     const id = uuid();
     addCreditOwner(id, {
-      "id": id,
-      "name": creditOwner,
-      orders: [
-        {
-          "id": '',
-          "productId": '',
-          "tableId": '',
-          "nameOfOrder": '',
-          "value": '',
-          "unitPrice": '',
-          "totalPrice": '',
-        }
-      ]
+      "ownerId": id,
+      "ownerName": creditOwner,
     });
     handleCreateCreditClose();
     fetchData();
@@ -79,16 +68,7 @@ export default function MultipleSelect(props) {
     await setCreditOwner(event.target.value);
   };
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    const {
-      target: { value },
-    } = event;
-    setSelectedOwner(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+
 
   return (
     <div>
@@ -97,15 +77,15 @@ export default function MultipleSelect(props) {
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
-          value={selectedOwner.name}
+          value={selectedOwner}
           onChange={handleChange}
           input={<OutlinedInput label="SEÇİNİZ" />}
           MenuProps={MenuProps}
           style={{ color: 'white' }}
         >
-          {selectedOwner.map((selectedOwner) => (
-            <MenuItem key={selectedOwner.id} value={selectedOwner.name}>
-              {selectedOwner.name}
+          {creditOwner.map((owner) => (
+            <MenuItem key={owner.ownerId} value={owner.ownerName}>
+              {owner.ownerName}
             </MenuItem>
           ))}
         </Select>
