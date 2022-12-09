@@ -152,11 +152,11 @@ export const deleteTable = async (tableId) => {
   await remove(ref(db, '/tables/' + tableId));
 }
 
-export const addCreditOwner = async (id, data) => {
+export const addCreditOrder = async (id, data) => {
   await set(ref(db, 'creditOrders/' + id), data);
 };
 
-export const getCreditOwner = async () => {
+export const getCreditOrder = async () => {
   const dbRef = ref(db);
   return await get(child(dbRef, `creditOrders`))
     .then((snapshot) => {
@@ -174,51 +174,3 @@ export const getCreditOwner = async () => {
       console.error(error);
     });
 };
-
-export const addCreditOrder = async (id, data) => {
-
-  const creditOrders = await getCreditOrderWithProductId(data.ownerName, data.productId);
-
-  if (creditOrders && creditOrders.length > 0) {
-    const newValue = creditOrders[0].value + data.value;
-    creditOrders[0].value = newValue;
-    creditOrders[0].totalPrice = newValue * data.unitPrice;
-    await updateCreditOrder(creditOrders[0]);
-  }
-  else {
-    await set(ref(db, 'creditOrders/' + id), data);
-  }
-};
-
-export const updateCreditOrder = async (id) => {
-  const updates = {};
-  updates['/creditOrders/' + id] = id;
-
-  return await update(ref(db), updates);
-}
-
-export const getCreditOrderWithProductId = async (ownerName, productId) => {
-  return await getCreditOrderWithOwnerName(ownerName).then(res => res.filter(ele => ele.productId === productId));
-}
-
-export const getCreditOrderWithOwnerName = async (ownerName) => {
-  const dbRef = ref(db, 'creditOrders/');
-
-  const q = query(dbRef, orderByChild('ownerName'), equalTo(ownerName));
-
-  return await get(q)
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
-          return value;
-        });
-
-        return data;
-      } else {
-        console.log("No data available3");
-        return [];
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -11,22 +11,23 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import CreditOwnerSelection from '../Forms/CreditOwnerSelection';
-import { addCreditOrder, deleteTable } from '../../Config';
+import CreditSelectTab from "../Tabs/CreditSelectTab";
+import { deleteTable, getCreditOrder } from '../../Config';
+import { addCreditOrder } from '../../Config';
 import uuid from 'react-uuid';
-
 
 export default function ImgMediaCard(props) {
 
   let navigate = useNavigate();
   const { order, fetchOrder, tableId, tableName } = props;
-  const [value, setValue] = React.useState('');
 
   const onButtonClick = (state) => {
     navigate(state);
   }
   const [open, setOpen] = useState(false);
   const [openCheckout, setOpenCheckout] = useState(false);
+  const [creditOwner, setCreditOwner] = useState([]);
+  const [creditOrder, setCreditOrder] = useState([]);
 
 
   const handleOpen = () => setOpen(true);
@@ -39,26 +40,26 @@ export default function ImgMediaCard(props) {
     onButtonClick('/')
   }
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    setValue(event.target.value);
-  };
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+  async function fetchData() {
+    const creditOwnerData = await getCreditOrder();
+    if (creditOwnerData && creditOwnerData.length > 0) {
+      setCreditOrder(creditOwnerData);
+    }
+  }
 
   const addCreditOrderOnClick = () => {
-    order.forEach(element => {
-      addCreditOrder(value, {
-        orders: [
-          {
-            "id": element.id,
-            "productId": element.productId,
-            "nameOfOrder": element.nameOfOrder,
-            "value": element.value,
-            "unitPrice": Number(element.unitPrice),
-            "totalPrice": element.value * Number(element.unitPrice),
-            "ownerName": value,
-          }]
-      })
-    });
+    const id = uuid();
+    addCreditOrder(id, {
+      'ownerId': id,
+      'ownerName': creditOwner,
+      'orders': order,
+    })
+    handleClose();
+    fetchData();
   }
 
   return (
@@ -102,18 +103,18 @@ export default function ImgMediaCard(props) {
           }
         }} variant="contained" onClick={handleCheckoutOpen}>HESABI KAPAT</Button>
       </CardActions>
-      <div>
+      <React.Fragment>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle sx={{ fontWeight: 'bold', color: 'rgb(40,100,150)', backgroundColor: 'rgb(18, 18, 18)' }}>VERESİYE YAZDIRMA</DialogTitle>
-          <DialogContent sx={{ backgroundColor: 'rgb(18, 18, 18)' }}>
-            <CreditOwnerSelection handleChange={handleChange} value={value}></CreditOwnerSelection>
+          <DialogTitle sx={{ fontWeight: 'bold', color: 'black', backgroundColor: '#fff' }}>VERESİYE YAZDIRMA</DialogTitle>
+          <DialogContent sx={{ backgroundColor: '#fff' }}>
+            <CreditSelectTab creditOwner={creditOwner} creditOrder={creditOrder} setCreditOwner={setCreditOwner}></CreditSelectTab>
           </DialogContent>
-          <DialogActions sx={{ backgroundColor: 'rgb(18, 18, 18)', justifyContent: 'space-between' }}>
-            <Button onClick={handleClose}>VAZGEÇ</Button>
-            <Button color='success' onClick={addCreditOrderOnClick}>YAZDIR</Button>
+          <DialogActions sx={{ justifyContent: 'space-between' }}>
+            <Button sx={{ color: '#fff', backgroundColor: '#612335', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={handleClose}>VAZGEÇ</Button>
+            <Button sx={{ color: '#fff', backgroundColor: '#004225', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={addCreditOrderOnClick}>YAZDIR</Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </React.Fragment>
       <div>
         <Dialog
           open={openCheckout}
