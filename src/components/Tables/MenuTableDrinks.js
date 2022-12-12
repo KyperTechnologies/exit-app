@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -23,6 +22,17 @@ import { addProduct, getProduct, updateProduct, deleteProduct } from '../../Conf
 import uuid from 'react-uuid';
 import styled from 'styled-components';
 
+const GreenBorderTextField = styled(TextField)`
+& label.Mui-focused {
+  color: #004625;
+}
+& .MuiOutlinedInput-root {
+  &.Mui-focused fieldset {
+    border-color: #004625;
+  }
+}
+`;
+
 
 export function Row(props) {
   const { row, fetch } = props;
@@ -30,17 +40,6 @@ export function Row(props) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [name, upName] = useState("");
   const [price, upPrice] = useState("");
-
-  const GreenBorderTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #004625;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #004625;
-    }
-  }
-`;
 
   const handleOpen = () => setDialogOpen(true);
   const handleClose = () => setDialogOpen(false);
@@ -127,25 +126,6 @@ export function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
-
-
 export default function CollapsibleTable() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -154,16 +134,7 @@ export default function CollapsibleTable() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
 
-  const GreenBorderTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #004625;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #004625;
-    }
-  }
-`;
+
 
   useEffect(() => {
     fetchData();

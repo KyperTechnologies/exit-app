@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,14 +7,37 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CheckoutButton from '../Buttons/CheckoutButton';
+import { deleteSplitOrder, getSplitOrder } from '../../Config';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function SpanningTable(props) {
 
-  const { order, fetchOrder, splitValue } = props;
+  const { order, fetchOrder } = props;
+  const [splitPrice, setSplitPrice] = useState([""]);
+
+  useEffect(() => {
+    fetchSplitData();
+  }, [])
+
+  async function fetchSplitData() {
+    const splitData = await getSplitOrder();
+    if (splitData && splitData.length > 0) {
+      setSplitPrice(splitData);
+    }
+  }
 
   const getTotalPrice = () => {
     return order.reduce((acc, obj) => acc + obj.totalPrice, 0);
   }
+
+  const mapPrice = splitPrice.map(value => value.totalSplitPrice);
+
+  const deleteAllOnClick = async () => {
+    deleteSplitOrder()
+    await fetchSplitData();
+  }
+
 
   return (
     <TableContainer component={Paper} sx={{
@@ -40,13 +63,22 @@ export default function SpanningTable(props) {
               <TableCell sx={{ textAlign: 'center' }}>{row.unitPrice} ₺</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>{row.totalPrice} ₺</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>
-                <CheckoutButton row={row} fetchOrder={fetchOrder} splitValue={splitValue}></CheckoutButton>
+                <CheckoutButton row={row} fetchOrder={fetchOrder} fetchSplitData={fetchSplitData}></CheckoutButton>
               </TableCell>
             </TableRow>
           ))}
 
           <TableRow>
             <TableCell rowSpan={3} />
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={2} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Ayrılan Tutar : {Number(mapPrice)} ₺
+
+              <IconButton style={{ backgroundColor: "#612335" }} onClick={deleteAllOnClick} color="primary" aria-label="add to shopping cart">
+                <DeleteIcon style={{ color: "#fff" }} />
+              </IconButton>
+
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Toplam Tutar : {getTotalPrice()} ₺</TableCell>

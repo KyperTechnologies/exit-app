@@ -88,7 +88,7 @@ const Order = () => {
         <Grid container spacing={3}>
           {product.filter(element => element.type === "drink").map(element => {
             return (
-              <Grid m={8} key={element.id}>
+              <Grid item m={8} key={element.id}>
                 <OrderCardDrinks key={element.id} drink={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardDrinks>
               </Grid>
             );
@@ -104,7 +104,7 @@ const Order = () => {
         <Grid container spacing={3}>
           {product.filter(element => element.type === "food").map(element => {
             return (
-              <Grid m={8} key={element.id}>
+              <Grid item m={8} key={element.id}>
                 <OrderCardFoods key={element.id} food={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardFoods>
               </Grid>
             );
@@ -117,13 +117,13 @@ const Order = () => {
   return (
     <>
       <Grid container >
-        <Grid lg={3} sm={7}>
+        <Grid item lg={3} sm={7}>
           <Grid marginTop='50px'>
             <OrderSummary fetchOrder={fetchOrderData} order={order}>
             </OrderSummary>
           </Grid>
         </Grid>
-        <Grid lg={9} sm={5}>
+        <Grid item lg={9} sm={5}>
           <Grid item xs={12}>
             <AppBar>
               <Tabs

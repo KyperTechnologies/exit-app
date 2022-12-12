@@ -7,7 +7,7 @@ import { getCredit } from '../Config';
 
 const Credit = () => {
 
-  const [credit, setCredit] = useState([""]);
+  const [credit, setCredit] = useState([]);
 
   useEffect(() => {
     fetchData();
