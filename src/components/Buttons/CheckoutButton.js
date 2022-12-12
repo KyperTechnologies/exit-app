@@ -7,14 +7,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
 import CheckoutSlider from '../Sliders/CheckoutSlider';
-import { updateOrder, deleteOrder } from '../../Config';
+import { updateOrder, deleteOrder, addSplitOrder } from '../../Config';
 
 export default function IconButtons(props) {
-  const { row, fetchOrder } = props;
+  const { row, fetchOrder, fetchSplitData } = props;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [newValue, setValue] = useState(1);
+
+  const addSplitOnClick = () => {
+    addSplitOrder("split", {
+      "value": newValue,
+      "totalSplitPrice": Number(row.unitPrice) * newValue
+    })
+  };
 
 
   const handleValue = (e) => {
@@ -31,9 +38,11 @@ export default function IconButtons(props) {
     } else {
       const newOrder = { ...row, value: value, totalPrice: Number(row.unitPrice) * value };
       await updateOrder(newOrder);
+      addSplitOnClick();
     }
 
     await fetchOrder();
+    await fetchSplitData();
     handleClose();
   }
 

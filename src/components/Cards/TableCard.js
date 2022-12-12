@@ -16,7 +16,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
 import styled from 'styled-components';
 
-
+const GreenBorderTextField = styled(TextField)`
+& label.Mui-focused {
+  color: #004625;
+}
+& .MuiOutlinedInput-root {
+  &.Mui-focused fieldset {
+    border-color: #004625;
+  }
+}
+`;
 
 export default function ImgMediaCard(props) {
 
@@ -31,18 +40,6 @@ export default function ImgMediaCard(props) {
   const [errorOpen, setErrorOpen] = React.useState(false);
   const handleErrorOpen = () => setErrorOpen(true);
   const handleErrorClose = () => setErrorOpen(false);
-
-  const GreenBorderTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: #004625;
-  }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #004625;
-    }
-  }
-`;
-
 
   const onButtonClickToOrder = () => {
     navigate('/order', { state: { tableId: table.id, tableName: table.name } });
@@ -67,8 +64,10 @@ export default function ImgMediaCard(props) {
       handleErrorOpen();
       return;
     }
-    await deleteTable(table.id);
-    fetch();
+    else {
+      await deleteTable(table.id);
+      await fetch();
+    }
   }
 
   return (

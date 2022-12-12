@@ -216,3 +216,54 @@ export const getCreditWithOwnerName = async (ownerName) => {
 }
 
 
+export const deleteCredit = async (ownerId) => {
+  await remove(ref(db, '/credits/' + ownerId));
+}
+
+/*export const addSplitOrder = async (id, data) => {
+  await set(ref(db, 'splitOrder/' + id), data);
+};*/
+
+export const getSplitOrder = async () => {
+  const dbRef = ref(db);
+  return await get(child(dbRef, `splitOrder`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
+          return value;
+        });
+
+        return data;
+      } else {
+        console.log("No SplitOrder");
+        return [];
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+};
+
+export const deleteSplitOrder = async () => {
+  await remove(ref(db, '/splitOrder/' + "split"));
+}
+
+export const addSplitOrder = async (id, data) => {
+
+  const splits = await getSplitOrder();
+
+  if (splits && splits.length > 0) {
+    const newTotalPrice = splits[0].totalSplitPrice + data.totalSplitPrice;
+    splits[0].totalSplitPrice = newTotalPrice;
+    await updateSplitOrder(splits[0]);
+  }
+  else {
+    await set(ref(db, 'splitOrder/' + id), data);
+  }
+};
+
+export const updateSplitOrder = async (split) => {
+  const updates = {};
+  updates['/splitOrder/' + "split"] = split;
+
+  return await update(ref(db), updates);
+}

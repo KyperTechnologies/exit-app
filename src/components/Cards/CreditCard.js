@@ -12,7 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import styled from 'styled-components';
 import { TextField } from '@mui/material';
-import { getCreditWithOwnerName, updateCredit } from '../../Config';
+import { deleteCredit, getCreditWithOwnerName, updateCredit } from '../../Config';
 
 const GreenBorderTextField = styled(TextField)`
 & label.Mui-focused {
@@ -32,6 +32,9 @@ export default function ImgMediaCard(props) {
   const handleClose = () => setOpen(false);
   const { credit, totalPrice, setCredit } = props;
   const [value, setValue] = useState([]);
+  const [errorOpen, setErrorOpen] = React.useState(false);
+  const handleErrorOpen = () => setErrorOpen(true);
+  const handleErrorClose = () => setErrorOpen(false);
 
   async function fetchData() {
     const creditOwnerData = await getCreditWithOwnerName(credit.ownerName);
@@ -40,15 +43,30 @@ export default function ImgMediaCard(props) {
     }
   }
 
-  const takeCreditOnClick = () => {
-    const newCredit = {
-      ownerId: credit.ownerId,
-      ownerName: credit.ownerName,
-      totalPrice: totalPrice - value,
+  const deleteButtonClicked = async () => {
+    const credits = await getCreditWithOwnerName(credit.ownerName);
+    if (credits && credits.length > 0) {
+      handleErrorOpen();
+      return;
     }
-    updateCredit(newCredit);
+    else {
+      await deleteCredit(credit.ownerName);
+      await fetch();
+    }
+  }
+
+  const updateOnClick = async () => {
+
+    const newValue = Number(totalPrice) - value;
+
+    if (newValue === 0) {
+      await deleteCredit(credit.ownerId);
+    } else {
+      const newCredit = { ...credit, totalPrice: totalPrice - newValue };
+      await updateCredit(newCredit);
+    }
     handleClose();
-    fetchData();
+    await fetchData();
   }
 
 
@@ -68,7 +86,7 @@ export default function ImgMediaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ justifyContent: 'space-around' }}>
-        <Button style={{ backgroundColor: "#612335" }} variant="contained" startIcon={<DeleteIcon />}>SİL</Button>
+        <Button style={{ backgroundColor: "#612335" }} variant="contained" startIcon={<DeleteIcon />} onClick={deleteButtonClicked}>SİL</Button>
       </CardActions>
       <div>
         <Dialog open={open} onClose={handleClose}>
@@ -89,9 +107,31 @@ export default function ImgMediaCard(props) {
           </DialogContent>
           <DialogActions sx={{ backgroundColor: '#fff', justifyContent: 'space-between' }}>
             <Button sx={{ color: '#fff', backgroundColor: '#612335', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={handleClose}>Vazgeç</Button>
-            <Button sx={{ color: '#fff', backgroundColor: '#004225', '&:hover': { backgroundColor: '#fff', color: 'black' } }} color='success' onClick={takeCreditOnClick}>ÖDEME AL</Button>
+            <Button sx={{ color: '#fff', backgroundColor: '#004225', '&:hover': { backgroundColor: '#fff', color: 'black' } }} color='success' onClick={updateOnClick}>ÖDEME AL</Button>
           </DialogActions>
         </Dialog>
+        <div>
+          <Dialog
+            open={errorOpen}
+            onClose={handleErrorClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title" fontWeight='bold'>
+              {"Veresiye Silinemedi"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description" fontWeight='bold'>
+                Kişiye ait veresiye alacak bulunmaktadır.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button color='success' variant='contained' backgroundColor='#004625' onClick={handleErrorClose} autoFocus>
+                Tamam
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     </Card>
   );
