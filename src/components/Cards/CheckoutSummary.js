@@ -12,8 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CreditSelectTab from "../Tabs/CreditSelectTab";
-import { deleteTable, getCreditOrder } from '../../Config';
-import { addCreditOrder } from '../../Config';
+import { deleteTable, getCredit, addCredit, getCreditWithOwnerName } from '../../Config';
 import uuid from 'react-uuid';
 
 export default function ImgMediaCard(props) {
@@ -26,39 +25,57 @@ export default function ImgMediaCard(props) {
   }
   const [open, setOpen] = useState(false);
   const [openCheckout, setOpenCheckout] = useState(false);
-  const [creditOwner, setCreditOwner] = useState([]);
-  const [creditOrder, setCreditOrder] = useState([]);
-
+  const [creditOwnerName, setCreditOwnerName] = useState([]);
+  const [credit, setCredit] = useState([]);
+  const [selectValue, setSelectValue] = useState('');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleCheckoutOpen = () => setOpenCheckout(true);
   const handleCheckoutClose = () => setOpenCheckout(false);
 
+  const handleChangeSelect = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectValue(value);
+    setCreditOwnerName(value);
+  };
+
   const checkoutAll = async () => {
     await deleteTable(tableId);
     onButtonClick('/')
   }
 
+
   useEffect(() => {
     fetchData();
-  }, [])
+  },)
 
   async function fetchData() {
-    const creditOwnerData = await getCreditOrder();
+    const creditOwnerData = await getCredit();
     if (creditOwnerData && creditOwnerData.length > 0) {
-      setCreditOrder(creditOwnerData);
+      setCredit(creditOwnerData);
+    }
+    const creditOwnerDataWithName = await getCreditWithOwnerName(selectValue);
+    if (creditOwnerDataWithName && creditOwnerDataWithName.length > 0) {
+      setCredit(creditOwnerDataWithName);
     }
   }
 
-  const addCreditOrderOnClick = () => {
+  const getTotalPrice = () => {
+    return order.reduce((acc, obj) => acc + obj.totalPrice, 0);
+  }
+
+  const addCreditOnClick = async () => {
     const id = uuid();
-    addCreditOrder(id, {
+    addCredit(id, {
       'ownerId': id,
-      'ownerName': creditOwner,
-      'orders': order,
+      'ownerName': creditOwnerName,
+      'totalPrice': getTotalPrice(),
     })
     handleClose();
+    checkoutAll();
     fetchData();
   }
 
@@ -107,11 +124,11 @@ export default function ImgMediaCard(props) {
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle sx={{ fontWeight: 'bold', color: 'black', backgroundColor: '#fff' }}>VERESİYE YAZDIRMA</DialogTitle>
           <DialogContent sx={{ backgroundColor: '#fff' }}>
-            <CreditSelectTab creditOwner={creditOwner} creditOrder={creditOrder} setCreditOwner={setCreditOwner}></CreditSelectTab>
+            <CreditSelectTab creditOwner={creditOwnerName} credit={credit} setCreditOwnerName={setCreditOwnerName} selectValue={selectValue} handleChangeSelect={handleChangeSelect}></CreditSelectTab>
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>
             <Button sx={{ color: '#fff', backgroundColor: '#612335', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={handleClose}>VAZGEÇ</Button>
-            <Button sx={{ color: '#fff', backgroundColor: '#004225', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={addCreditOrderOnClick}>YAZDIR</Button>
+            <Button sx={{ color: '#fff', backgroundColor: '#004225', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={addCreditOnClick}>YAZDIR</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

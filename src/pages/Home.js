@@ -33,8 +33,8 @@ const Home = () => {
   const getContent = () => {
     return (
       <Grid container spacing={2}>
-        <Grid xs={11} lg={11}>
-          <Grid xs={12} container spacing={2} justifyContent='space-evenly'>
+        <Grid item xs={11} lg={11}>
+          <Grid item xs={12} container spacing={2} justifyContent='space-evenly'>
             {table.map(element => {
               return (
                 <Grid m={8}>
@@ -45,8 +45,8 @@ const Home = () => {
 
           </Grid>
         </Grid>
-        <Grid lg={1} xs={1}>
-          <Grid xs={12} display='flex' justifyContent='center'>
+        <Grid item lg={1} xs={1}>
+          <Grid item xs={12} display='flex' justifyContent='center'>
             <IconButton onClick={onAddClick} variant="outlined" sx={{
               color: 'lightgoldenrodyellow',
               backgroundColor: '#004225',
