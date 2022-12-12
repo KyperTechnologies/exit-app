@@ -36,7 +36,7 @@ export const getTable = async () => {
 
         return data;
       } else {
-        console.log("No data available1");
+        console.log("No Table");
         return [];
       }
     }).catch((error) => {
@@ -65,7 +65,7 @@ export const getProduct = async (type) => {
 
         return data;
       } else {
-        console.log("No data available2");
+        console.log("No Product");
         return [];
       }
     }).catch((error) => {
@@ -115,7 +115,7 @@ export const getOrderWithTableId = async (tableId) => {
 
         return data;
       } else {
-        console.log("No data available3");
+        console.log("No TableId");
         return [];
       }
     }).catch((error) => {
@@ -152,13 +152,9 @@ export const deleteTable = async (tableId) => {
   await remove(ref(db, '/tables/' + tableId));
 }
 
-export const addCreditOrder = async (id, data) => {
-  await set(ref(db, 'creditOrders/' + id), data);
-};
-
-export const getCreditOrder = async () => {
+export const getCredit = async () => {
   const dbRef = ref(db);
-  return await get(child(dbRef, `creditOrders`))
+  return await get(child(dbRef, `credits`))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
@@ -167,10 +163,56 @@ export const getCreditOrder = async () => {
 
         return data;
       } else {
-        console.log("No data available1");
+        console.log("No Credit");
         return [];
       }
     }).catch((error) => {
       console.error(error);
     });
 };
+
+export const addCredit = async (id, data) => {
+
+  const credits = await getCreditWithOwnerName(data.ownerName);
+
+  if (credits && credits.length > 0) {
+    const newTotalPrice = credits[0].totalPrice + data.totalPrice;
+    credits[0].totalPrice = newTotalPrice;
+    await updateCredit(credits[0]);
+  }
+  else {
+    await set(ref(db, 'credits/' + id), data);
+  }
+};
+
+export const updateCredit = async (credit) => {
+  const updates = {};
+  updates['/credits/' + credit.ownerId] = credit;
+
+  return await update(ref(db), updates);
+}
+
+export const getCreditWithOwnerName = async (ownerName) => {
+  const dbRef = ref(db, 'credits');
+
+  const q = query(dbRef, orderByChild('ownerName'), equalTo(ownerName));
+
+
+  return await get(q)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.entries(snapshot.exportVal()).map(([key, value]) => {
+          return value;
+        });
+
+        return data;
+      } else {
+        console.log("No Credit OwnerName");
+        return [];
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+}
+
+

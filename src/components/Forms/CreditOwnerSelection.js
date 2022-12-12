@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -17,16 +17,7 @@ const GreenBorderTextField = styled(Select)`
 `;
 
 export default function SelectSmall(props) {
-  const { creditOrder, setCreditOwner } = props;
-  const [selectValue, setSelectValue] = useState('');
-
-  const handleChangeSelect = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectValue(value);
-    setCreditOwner(value);
-  };
+  const { credit, selectValue, handleChangeSelect } = props;
 
   return (
     <FormControl sx={{ m: 1, minWidth: 240 }} size="small">
@@ -39,7 +30,7 @@ export default function SelectSmall(props) {
         onChange={handleChangeSelect}
         sx={{ color: 'black' }}
       >
-        {creditOrder.map((owner) => (
+        {credit.map((owner) => (
           <MenuItem key={owner.ownerId} value={owner.ownerName}>{owner.ownerName}</MenuItem>
         ))};
       </GreenBorderTextField>

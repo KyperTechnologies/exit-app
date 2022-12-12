@@ -54,16 +54,13 @@ function a11yProps(index) {
 }
 
 export default function VerticalTabs(props) {
+
+    const { credit, setCreditOwnerName, selectValue, handleChangeSelect } = props;
     const [value, setValue] = useState(0);
-    const { creditOrder, setCreditOwner } = props;
-
-
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-
 
     return (
         <Box
@@ -82,11 +79,11 @@ export default function VerticalTabs(props) {
                 <Tab label="Yeni Kişi" {...a11yProps(1)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <CreditOwnerSelection creditOrder={creditOrder} setCreditOwner={setCreditOwner}></CreditOwnerSelection>
+                <CreditOwnerSelection credit={credit} setCreditOwnerName={setCreditOwnerName} selectValue={selectValue} handleChangeSelect={handleChangeSelect}></CreditOwnerSelection>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <GreenBorderTextField
-                    onChange={(event) => { setCreditOwner(event.target.value) }}
+                    onChange={(event) => { setCreditOwnerName(event.target.value) }}
                     autoFocus
                     margin="dense"
                     id="name"
