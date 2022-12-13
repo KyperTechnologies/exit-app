@@ -33,19 +33,18 @@ const Home = () => {
   const getContent = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={11} lg={11}>
-          <Grid item xs={12} container spacing={2} justifyContent='space-evenly'>
+        <Grid item xl={11} xs={11} >
+          <Grid container={true} spacing={2} justifyContent='space-evenly'>
             {table.map(element => {
               return (
-                <Grid m={8}>
+                <Grid xl={3}>
                   <TableCard key={table.id} table={element} fetch={fetchData}></TableCard>
                 </Grid>
               );
             })}
-
           </Grid>
         </Grid>
-        <Grid item lg={1} xs={1}>
+        <Grid item xl={1} xs={1}>
           <Grid item xs={12} display='flex' justifyContent='center'>
             <IconButton onClick={onAddClick} variant="outlined" sx={{
               color: 'lightgoldenrodyellow',

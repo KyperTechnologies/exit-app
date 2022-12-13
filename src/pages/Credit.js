@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../Layout/Layout'
 import CreditCard from '../components/Cards/CreditCard';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import { getCredit } from '../Config';
 
 const Credit = () => {
@@ -22,19 +21,20 @@ const Credit = () => {
 
   const getContent = () => {
     return (
-      <Box sx={{ height: '100vh' }}>
-        <Grid item xs={12} lg={12}>
-          <Grid item xs={12} container spacing={2} justifyContent='space-evenly'>
+      <Grid container spacing={2}>
+        <Grid item xs={12} xl={12}>
+          <Grid container={true} spacing={2} justifyContent='space-evenly'>
             {credit.map(element => {
               return (
-                <Grid m={8}>
+                <Grid xl={3}>
                   <CreditCard key={credit.id} credit={element} totalPrice={element.totalPrice} fetch={fetchData} setCredit={setCredit}></CreditCard>
                 </Grid>
               );
             })}
           </Grid>
         </Grid>
-      </Box>
+      </Grid>
+
     );
   }
 
