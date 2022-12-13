@@ -186,15 +186,10 @@ export const addCredit = async (id, data) => {
 };
 
 export const updateCredit = async (credit) => {
-  if (credit.length > 0) {
-    const updates = {};
-    updates['/credits/' + credit.ownerId] = credit;
+  const updates = {};
+  updates['/credits/' + credit.ownerId] = credit;
 
-    return await update(ref(db), updates);
-  }
-  else {
-    await remove(ref(db, '/credits/' + credit.ownerId));
-  }
+  return await update(ref(db), updates);
 }
 
 export const getCreditWithOwnerName = async (ownerName) => {

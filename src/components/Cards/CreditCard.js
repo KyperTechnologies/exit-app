@@ -73,11 +73,19 @@ export default function ImgMediaCard(props) {
       borderRadius: '4px',
       boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 0px 3px, rgba(0, 0, 0, 0.14) 0px 1px 1px 2px, rgba(0, 0, 0, 0.12) 0px 1px 3px 2px',
       color: 'black',
+      margin: '30px',
       minWidth: '250px',
     }}>
       <CardActionArea onClick={handleOpen}>
         <CardContent>
           <Typography variant='h4'>{credit.ownerName}</Typography>
+
+          {credit.totalPrice > 999 &&
+            <Typography variant='h6' sx={{ color: 'red' }}>Veresiye hesabı: {Number(credit.totalPrice)} ₺</Typography>
+          }
+          {credit.totalPrice <= 999 &&
+            <Typography variant='h6'>Veresiye hesabı: {Number(credit.totalPrice)} ₺</Typography>
+          }
         </CardContent>
       </CardActionArea>
       <CardActions style={{ justifyContent: 'space-around' }}>

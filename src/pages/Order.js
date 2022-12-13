@@ -85,10 +85,10 @@ const Order = () => {
   const getDrinkContent = () => {
     return (
       <Box sx={{ minHeight: '100vh' }}>
-        <Grid container spacing={3}>
+        <Grid container={true} spacing={3} justifyContent='space-evenly'>
           {product.filter(element => element.type === "drink").map(element => {
             return (
-              <Grid item m={8} key={element.id}>
+              <Grid item xl={3} md={6} key={element.id}>
                 <OrderCardDrinks key={element.id} drink={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardDrinks>
               </Grid>
             );
@@ -101,10 +101,10 @@ const Order = () => {
   const getFoodContent = () => {
     return (
       <Box sx={{ minHeight: '100vh' }}>
-        <Grid container spacing={3}>
+        <Grid container={true} spacing={3} justifyContent='space-evenly'>
           {product.filter(element => element.type === "food").map(element => {
             return (
-              <Grid item m={8} key={element.id}>
+              <Grid item xl={3} md={6} key={element.id}>
                 <OrderCardFoods key={element.id} food={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardFoods>
               </Grid>
             );
@@ -116,15 +116,15 @@ const Order = () => {
 
   return (
     <>
-      <Grid container >
-        <Grid item lg={3} sm={7}>
+      <Grid container={true} justifyContent='space-evenly' >
+        <Grid item xl={3} lg={3} md={6} sm={8}>
           <Grid marginTop='50px'>
             <OrderSummary fetchOrder={fetchOrderData} order={order}>
             </OrderSummary>
           </Grid>
         </Grid>
-        <Grid item lg={9} sm={5}>
-          <Grid item xs={12}>
+        <Grid item xl={9} lg={9} md={6} sm={4}>
+          <Grid container={true} justifyContent='space-evenly'>
             <AppBar>
               <Tabs
                 value={value}
