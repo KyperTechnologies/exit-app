@@ -149,10 +149,10 @@ export default function ImgMediaCard(props) {
           </DialogContent>
           <DialogActions>
             <Button variant='contained' sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612335', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleCheckoutClose} autoFocus>
-              Tamam Değil Orhan
+              Hayır
             </Button>
             <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={checkoutAll} autoFocus>
-              Tamam Orhan
+              Evet
             </Button>
           </DialogActions>
         </Dialog>

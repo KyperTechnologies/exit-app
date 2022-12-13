@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CheckoutButton from '../Buttons/CheckoutButton';
-import { deleteSplitOrder, getSplitOrder } from '../../Config';
+import { updateSplitOrder, getSplitOrder } from '../../Config';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -34,7 +34,8 @@ export default function SpanningTable(props) {
   const mapPrice = splitPrice.map(value => value.totalSplitPrice);
 
   const deleteAllOnClick = async () => {
-    deleteSplitOrder()
+    const newSplit = { ...mapPrice, value: 0, totalSplitPrice: 0 };
+    updateSplitOrder(newSplit)
     await fetchSplitData();
   }
 
@@ -73,11 +74,11 @@ export default function SpanningTable(props) {
           </TableRow>
           <TableRow>
             <TableCell colSpan={2} sx={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center' }}>Ayrılan Tutar : {Number(mapPrice)} ₺
-
-              <IconButton style={{ backgroundColor: "#612335" }} onClick={deleteAllOnClick} color="primary" aria-label="add to shopping cart">
-                <DeleteIcon style={{ color: "#fff" }} />
-              </IconButton>
-
+              {mapPrice > 0 &&
+                <IconButton style={{ backgroundColor: "#612335" }} onClick={deleteAllOnClick} color="primary" aria-label="add to shopping cart">
+                  <DeleteIcon style={{ color: "#fff" }} />
+                </IconButton>
+              }
             </TableCell>
           </TableRow>
           <TableRow>

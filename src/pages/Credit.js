@@ -11,7 +11,7 @@ const Credit = () => {
 
   useEffect(() => {
     fetchData();
-  },)
+  }, [])
 
   async function fetchData() {
     const creditOwnerData = await getCredit();

@@ -49,9 +49,10 @@ export default function IconButtons(props) {
   return (
     <>
       <div>
-        <IconButton style={{ backgroundColor: "#612335" }} onClick={handleOpen} color="primary" aria-label="add to shopping cart">
-          <PointOfSaleIcon style={{ color: "#fff" }} />
-        </IconButton>
+        {row.value > 1 &&
+          <IconButton style={{ backgroundColor: "#612335" }} onClick={handleOpen} color="primary" aria-label="add to shopping cart">
+            <PointOfSaleIcon style={{ color: "#fff" }} />
+          </IconButton>}
       </div>
       <div>
         <Dialog open={open} onClose={handleClose}>

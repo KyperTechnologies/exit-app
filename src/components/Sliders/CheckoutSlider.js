@@ -74,7 +74,7 @@ export default function CustomizedSlider(props) {
                 step={1}
                 marks
                 min={1}
-                max={orderValue}
+                max={Number(orderValue) - 1}
                 onChange={handleValue}
             />
             <Box sx={{ m: 3 }} />
