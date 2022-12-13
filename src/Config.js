@@ -186,10 +186,15 @@ export const addCredit = async (id, data) => {
 };
 
 export const updateCredit = async (credit) => {
-  const updates = {};
-  updates['/credits/' + credit.ownerId] = credit;
+  if (credit.length > 0) {
+    const updates = {};
+    updates['/credits/' + credit.ownerId] = credit;
 
-  return await update(ref(db), updates);
+    return await update(ref(db), updates);
+  }
+  else {
+    await remove(ref(db, '/credits/' + credit.ownerId));
+  }
 }
 
 export const getCreditWithOwnerName = async (ownerName) => {
@@ -244,6 +249,7 @@ export const getSplitOrder = async () => {
 };
 
 export const deleteSplitOrder = async () => {
+  // eslint-disable-next-line
   await remove(ref(db, '/splitOrder/' + "split"));
 }
 
@@ -263,6 +269,7 @@ export const addSplitOrder = async (id, data) => {
 
 export const updateSplitOrder = async (split) => {
   const updates = {};
+  // eslint-disable-next-line
   updates['/splitOrder/' + "split"] = split;
 
   return await update(ref(db), updates);

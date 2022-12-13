@@ -21,6 +21,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { addProduct, getProduct, updateProduct, deleteProduct } from '../../Config';
 import uuid from 'react-uuid';
 import styled from 'styled-components';
+import { DialogContentText } from '@mui/material';
 
 const GreenBorderTextField = styled(TextField)`
 & label.Mui-focused {
@@ -40,6 +41,9 @@ export function Row(props) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [name, upName] = useState("");
   const [price, upPrice] = useState("");
+  const [openDeletion, setOpenDeletion] = useState(false);
+  const handleDeletionOpen = () => setOpenDeletion(true);
+  const handleDeletionClose = () => setOpenDeletion(false);
 
   const handleOpen = () => setDialogOpen(true);
   const handleClose = () => setDialogOpen(false);
@@ -84,7 +88,7 @@ export function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1, textAlign: 'right' }}>
               <Button sx={{ backgroundColor: '#004625', color: '#fff', '&:hover': { backgroundColor: '#fff', color: 'black' }, marginRight: '10px' }} variant='contained' onClick={handleOpen}>Güncelle</Button>
-              <Button sx={{ backgroundColor: '#004625', color: '#fff', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={deleteOnClick} >Sİl</Button>
+              <Button sx={{ backgroundColor: '#004625', color: '#fff', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={handleDeletionOpen} >Sİl</Button>
             </Box>
           </Collapse>
         </TableCell>
@@ -119,6 +123,31 @@ export function Row(props) {
           <DialogActions>
             <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612325', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleClose}>Vazgeç</Button>
             <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={updateOnClick} >Kaydet</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+      <div>
+        <Dialog
+          open={openDeletion}
+          onClose={handleDeletionClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" fontWeight='bold'>
+            {"UYARI"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description" fontWeight='bold'>
+              Ürün silinecektir,emin misiniz?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant='contained' sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612335', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleDeletionClose} autoFocus>
+              Hayır
+            </Button>
+            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={deleteOnClick} autoFocus>
+              Evet
+            </Button>
           </DialogActions>
         </Dialog>
       </div>

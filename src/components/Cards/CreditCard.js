@@ -58,13 +58,8 @@ export default function ImgMediaCard(props) {
   const updateOnClick = async () => {
 
     const newValue = Number(totalPrice) - value;
-
-    if (newValue === 0) {
-      await deleteCredit(credit.ownerId);
-    } else {
-      const newCredit = { ...credit, totalPrice: totalPrice - newValue };
-      await updateCredit(newCredit);
-    }
+    const newCredit = { ...credit, totalPrice: totalPrice - newValue };
+    updateCredit(newCredit);
     handleClose();
     await fetchData();
   }
