@@ -88,7 +88,7 @@ const Order = () => {
         <Grid container={true} spacing={3} justifyContent='space-evenly'>
           {product.filter(element => element.type === "drink").map(element => {
             return (
-              <Grid item xl={3} md={6} key={element.id}>
+              <Grid item xl={3} lg={4} md={6} sm={12} key={element.id}>
                 <OrderCardDrinks key={element.id} drink={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardDrinks>
               </Grid>
             );
@@ -104,7 +104,7 @@ const Order = () => {
         <Grid container={true} spacing={3} justifyContent='space-evenly'>
           {product.filter(element => element.type === "food").map(element => {
             return (
-              <Grid item xl={3} md={6} key={element.id}>
+              <Grid item xl={3} lg={4} md={5} sm={12} xs={12} key={element.id}>
                 <OrderCardFoods key={element.id} food={element} fetch={fetchData} fetchOrder={fetchOrderData}></OrderCardFoods>
               </Grid>
             );
@@ -117,13 +117,13 @@ const Order = () => {
   return (
     <>
       <Grid container={true} justifyContent='space-evenly' >
-        <Grid item xl={3} lg={3} md={6} sm={8}>
+        <Grid item xl={4} lg={5} md={6} sm={7} xs={7}>
           <Grid marginTop='50px'>
             <OrderSummary fetchOrder={fetchOrderData} order={order}>
             </OrderSummary>
           </Grid>
         </Grid>
-        <Grid item xl={9} lg={9} md={6} sm={4}>
+        <Grid item xl={8} lg={7} md={6} sm={5} xs={5}>
           <Grid container={true} justifyContent='space-evenly'>
             <AppBar>
               <Tabs

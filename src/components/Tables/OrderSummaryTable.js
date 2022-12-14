@@ -25,7 +25,7 @@ export default function SpanningTable(props) {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ height: '90vh' }}>
       <TableCell sx={{ display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
         <Typography gutterBottom variant="h4" component="div" sx={{ display: 'flex', textAlign: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
           {location.state.tableName}
@@ -40,7 +40,7 @@ export default function SpanningTable(props) {
             <TableCell sx={{ fontSize: '100%', fontWeight: 'bold' }}>Tutar</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ height: 'max-content' }}>
           {order.map((row) => (
             <TableRow key={row.id} >
               <TableCell sx={{ textAlign: 'center' }} >{row.nameOfOrder}</TableCell>

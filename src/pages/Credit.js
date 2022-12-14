@@ -22,7 +22,7 @@ const Credit = () => {
   const getContent = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12} xl={12}>
+        <Grid item xl={12}>
           <Grid container={true} spacing={2} justifyContent='space-evenly'>
             {credit.map(element => {
               return (

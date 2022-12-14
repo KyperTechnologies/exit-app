@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "ExitApp",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}

@@ -45,7 +45,8 @@ export default function SpanningTable(props) {
       backgroundColor: '#fff',
       borderRadius: '4px',
       boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
-      color: 'black'
+      color: 'black',
+      height: '60vh'
     }}>
       <Table aria-label="spanning table" >
         <TableHead>
@@ -56,7 +57,7 @@ export default function SpanningTable(props) {
             <TableCell sx={{ fontSize: '100%', fontWeight: 'bold', textAlign: 'center' }}>Tutar</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ height: 'max-content' }}>
           {order.map((row) => (
             <TableRow key={row.id}>
               <TableCell sx={{ textAlign: 'center' }}>{row.nameOfOrder}</TableCell>
@@ -86,6 +87,6 @@ export default function SpanningTable(props) {
           </TableRow>
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   );
 }

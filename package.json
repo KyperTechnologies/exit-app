@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "4.6.1",
+    "@capacitor/app": "4.1.1",
+    "@capacitor/core": "4.6.1",
+    "@capacitor/haptics": "4.1.0",
+    "@capacitor/ios": "4.6.1",
+    "@capacitor/keyboard": "4.1.0",
+    "@capacitor/status-bar": "4.1.1",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
@@ -47,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@capacitor/cli": "4.6.1"
   }
 }

@@ -33,19 +33,19 @@ const Home = () => {
   const getContent = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xl={11} xs={11} >
+        <Grid item xl={10} lg={9} md={9} xs={6}  >
           <Grid container={true} spacing={2} justifyContent='space-evenly'>
             {table.map(element => {
               return (
-                <Grid xl={3}>
+                <Grid item xl={4} lg={4} md={5} xs={12} >
                   <TableCard key={table.id} table={element} fetch={fetchData}></TableCard>
                 </Grid>
               );
             })}
           </Grid>
         </Grid>
-        <Grid item xl={1} xs={1}>
-          <Grid item xs={12} display='flex' justifyContent='center'>
+        <Grid item xl={2} lg={3} md={3} xs={6}>
+          <Grid itemdisplay='flex' justifyContent='center'>
             <IconButton onClick={onAddClick} variant="outlined" sx={{
               color: 'lightgoldenrodyellow',
               backgroundColor: '#004225',
@@ -56,7 +56,7 @@ const Home = () => {
                 color: 'lightgoldenrodyellow',
               }
             }}>
-              <AddCircle sx={{ height: '100px', width: '100px', }} />
+              <AddCircle sx={{ height: '75px', width: '75px', }} />
             </IconButton>
           </Grid>
         </Grid>
