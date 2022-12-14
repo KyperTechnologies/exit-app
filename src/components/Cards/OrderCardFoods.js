@@ -13,7 +13,7 @@ export default function ActionAreaCard(props) {
       borderRadius: '4px',
       boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 1px 2px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px',
       color: 'black',
-      minWidth: '150px'
+      minWidth: '165px'
     }}>
       <CardContent>
         <Typography variant='h5' key={food.id} food={food}>{food.name}</Typography>

@@ -30,18 +30,12 @@ export default function ImgMediaCard(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { credit, totalPrice, setCredit } = props;
+  const { credit, totalPrice, fetch } = props;
   const [value, setValue] = useState([]);
   const [errorOpen, setErrorOpen] = React.useState(false);
   const handleErrorOpen = () => setErrorOpen(true);
   const handleErrorClose = () => setErrorOpen(false);
 
-  async function fetchData() {
-    const creditOwnerData = await getCreditWithOwnerName(credit.ownerName);
-    if (creditOwnerData && creditOwnerData.length > 0) {
-      setCredit(creditOwnerData);
-    }
-  }
 
   const deleteButtonClicked = async () => {
     const credits = await getCreditWithOwnerName(credit.ownerName);
@@ -58,10 +52,10 @@ export default function ImgMediaCard(props) {
   const updateOnClick = async () => {
 
     const newValue = Number(totalPrice) - value;
-    const newCredit = { ...credit, totalPrice: totalPrice - newValue };
+    const newCredit = { ...credit, totalPrice: newValue };
     updateCredit(newCredit);
     handleClose();
-    await fetchData();
+    await fetch();
   }
 
 
@@ -80,11 +74,11 @@ export default function ImgMediaCard(props) {
         <CardContent>
           <Typography variant='h4'>{credit.ownerName}</Typography>
 
-          {credit.totalPrice > 999 &&
-            <Typography variant='h6' sx={{ color: 'red' }}>Veresiye hesabı: {Number(credit.totalPrice)} ₺</Typography>
+          {totalPrice > 999 &&
+            <Typography variant='h6' sx={{ color: 'red' }}>Veresiye hesabı: {Number(totalPrice)} ₺</Typography>
           }
-          {credit.totalPrice <= 999 &&
-            <Typography variant='h6'>Veresiye hesabı: {Number(credit.totalPrice)} ₺</Typography>
+          {totalPrice <= 999 &&
+            <Typography variant='h6'>Veresiye hesabı: {Number(totalPrice)} ₺</Typography>
           }
         </CardContent>
       </CardActionArea>

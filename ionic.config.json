@@ -1,0 +1,7 @@
+{
+  "name": "ExitApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

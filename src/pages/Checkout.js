@@ -5,6 +5,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Typography } from '@mui/material';
 import CheckoutCard from '../components/Cards/CheckoutCard';
+import { Grid } from '@mui/material';
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -17,7 +18,7 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-export default function LayoutWithoutToolbar({ item }) {
+export default function LayoutWithoutToolbar() {
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -29,7 +30,11 @@ export default function LayoutWithoutToolbar({ item }) {
                     </Typography>
                 </Box>
             </AppBar>
-            <CheckoutCard></CheckoutCard>
+            <Grid container={true} justifyContent='center'>
+                <Grid item xl={4}>
+                    <CheckoutCard></CheckoutCard>
+                </Grid>
+            </Grid>
         </Box>
     );
 }
