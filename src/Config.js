@@ -7,14 +7,14 @@ import { getDatabase, ref, set, get, child, update, remove, query, equalTo, orde
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDEAgkWz7-ZzSed38nugxE6bIh2sTfhBbc",
-  authDomain: "exit-b6e71.firebaseapp.com",
-  databaseURL: "https://exit-b6e71-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "exit-b6e71",
-  storageBucket: "exit-b6e71.appspot.com",
-  messagingSenderId: "837750412660",
-  appId: "1:837750412660:web:2e003bce7ca921b0188821",
-  measurementId: "G-9Z0MN8EJZB"
+  apiKey: "**********",
+  authDomain: "**********",
+  databaseURL: "**********",
+  projectId: "**********",
+  storageBucket: "**********",
+  messagingSenderId: "**********",
+  appId: "**********",
+  measurementId: "**********"
 };
 
 // Initialize Firebase
