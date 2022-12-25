@@ -35,6 +35,15 @@ export default function ImgMediaCard(props) {
   const [errorOpen, setErrorOpen] = React.useState(false);
   const handleErrorOpen = () => setErrorOpen(true);
   const handleErrorClose = () => setErrorOpen(false);
+  const [error2Open, setError2Open] = React.useState(false);
+  const handleError2Open = () => setError2Open(true);
+  const handleError2Close = () => setError2Open(false);
+
+  const deleteCreditWithDebt = async () => {
+    await deleteCredit(credit.ownerId);
+    handleErrorClose();
+    await fetch();
+  }
 
 
   const deleteButtonClicked = async () => {
@@ -44,16 +53,22 @@ export default function ImgMediaCard(props) {
       return;
     }
     else {
-      await deleteCredit(credit.ownerName);
+      await deleteCredit(credit.ownerId);
       await fetch();
     }
+
   }
 
   const updateOnClick = async () => {
 
     const newValue = Number(totalPrice) - value;
-    const newCredit = { ...credit, totalPrice: newValue };
-    updateCredit(newCredit);
+    if (newValue >= 0) {
+      const newCredit = { ...credit, totalPrice: newValue };
+      updateCredit(newCredit);
+    }
+    else {
+      handleError2Open();
+    }
     handleClose();
     await fetch();
   }
@@ -119,11 +134,36 @@ export default function ImgMediaCard(props) {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description" fontWeight='bold'>
-                Kişiye ait veresiye alacak bulunmaktadır.
+                Kişiye ait veresiye alacak bulunmaktadır. Silmek istediğinize emin misiniz?
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button color='success' variant='contained' backgroundColor='#004625' onClick={handleErrorClose} autoFocus>
+                Hayır
+              </Button>
+              <Button color='success' variant='contained' backgroundColor='#004625' onClick={deleteCreditWithDebt} autoFocus>
+                Evet
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        <div>
+          <Dialog
+            open={error2Open}
+            onClose={handleError2Close}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title" fontWeight='bold'>
+              {"Veresiye Silinemedi"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description" fontWeight='bold'>
+                Kalan tutar sıfırdan küçük olmamalıdır , lütfen tekrar kontrol ediniz.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button color='success' variant='contained' backgroundColor='#004625' onClick={handleError2Close} autoFocus>
                 Tamam
               </Button>
             </DialogActions>

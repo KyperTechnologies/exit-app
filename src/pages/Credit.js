@@ -14,7 +14,7 @@ const Credit = () => {
 
   async function fetchData() {
     const creditOwnerData = await getCredit();
-    if (creditOwnerData && creditOwnerData.length > 0) {
+    if (creditOwnerData && creditOwnerData.length >= 0) {
       setCredit(creditOwnerData);
     }
   }
