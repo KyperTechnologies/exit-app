@@ -215,14 +215,9 @@ export const getCreditWithOwnerName = async (ownerName) => {
     });
 }
 
-
-export const deleteCredit = async (ownerId) => {
-  await remove(ref(db, '/credits/' + ownerId));
+export const deleteCredit = async (ownerName) => {
+  await remove(ref(db, '/credits/' + ownerName));
 }
-
-/*export const addSplitOrder = async (id, data) => {
-  await set(ref(db, 'splitOrder/' + id), data);
-};*/
 
 export const getSplitOrder = async () => {
   const dbRef = ref(db);

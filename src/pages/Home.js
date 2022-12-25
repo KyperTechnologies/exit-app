@@ -16,7 +16,7 @@ const Home = () => {
 
   async function fetchData() {
     const tableData = await getTable();
-    if (tableData && tableData.length > 0) {
+    if (tableData && tableData.length >= 0) {
       setTable(tableData);
     }
   }
