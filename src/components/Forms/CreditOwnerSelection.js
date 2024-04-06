@@ -1,19 +1,19 @@
-import React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import styled from 'styled-components';
+import React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import styled from "styled-components";
 
 const GreenBorderTextField = styled(Select)`
-& label.Mui-focused {
-  color: #004625;
-}
-& .MuiOutlinedInput-root {
-  &.Mui-focused fieldset {
-    border-color: #004625;
+  & label.Mui-focused {
+    color: #004625;
   }
-}
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #004625;
+    }
+  }
 `;
 
 export default function SelectSmall(props) {
@@ -28,11 +28,14 @@ export default function SelectSmall(props) {
         value={selectValue}
         label="Müşteri Seç"
         onChange={handleChangeSelect}
-        sx={{ color: 'black' }}
+        sx={{ color: "black" }}
       >
         {credit.map((owner) => (
-          <MenuItem key={owner.ownerId} value={owner.ownerName}>{owner.ownerName}</MenuItem>
-        ))};
+          <MenuItem key={owner.ownerId} value={owner.ownerName}>
+            {owner.ownerName}
+          </MenuItem>
+        ))}
+        ;
       </GreenBorderTextField>
     </FormControl>
   );

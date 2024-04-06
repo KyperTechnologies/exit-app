@@ -2,6 +2,7 @@
 .git
 .idea
 # dependencies
+/backend/node_modules
 /node_modules
 /dist
 /ios

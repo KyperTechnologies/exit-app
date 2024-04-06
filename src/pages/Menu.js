@@ -1,14 +1,14 @@
-import React from 'react';
-import Layout from '../Layout/Layout'
-import MenuTableDrinks from '../components/Tables/MenuTableDrinks';
-import MenuTableFoods from '../components/Tables/MenuTableFoods';
-import PropTypes from 'prop-types';
-import SwipeableViews from 'react-swipeable-views';
-import { useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
+import React from "react";
+import Layout from "../layout/Layout";
+import MenuTableDrinks from "../components/Tables/MenuTableDrinks";
+import MenuTableFoods from "../components/Tables/MenuTableFoods";
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
+import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -21,11 +21,7 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3, height: '100vh' }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3, height: "100vh" }}>{children}</Box>}
     </div>
   );
 }
@@ -39,7 +35,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
@@ -58,25 +54,25 @@ const Menu = () => {
   return (
     <>
       <Layout>
-        <AppBar position="static" style={{ marginTop: '20px' }}>
+        <AppBar position="static" style={{ marginTop: "20px" }}>
           <Tabs
             value={value}
             onChange={handleChange}
-            TabIndicatorProps={{ style: { background: '#fff', height: '5px' } }}
+            TabIndicatorProps={{ style: { background: "#fff", height: "5px" } }}
             textColor="inherit"
             variant="fullWidth"
             aria-label="full width tabs example"
-            sx={{ backgroundColor: '#004225' }}
+            sx={{ backgroundColor: "#004225" }}
           >
             <Tab label="İçecekler" {...a11yProps(0)} />
             <Tab label="Yİyecekler" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
           onChangeIndex={handleChangeIndex}
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
             <MenuTableDrinks></MenuTableDrinks>

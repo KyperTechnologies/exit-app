@@ -1,39 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { addProduct, getProduct, updateProduct, deleteProduct } from '../../Config';
-import uuid from 'react-uuid';
-import styled from 'styled-components';
-import { DialogContentText } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import {
+  addProduct,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+} from "../../Config";
+import uuid from "react-uuid";
+import styled from "styled-components";
+import { DialogContentText } from "@mui/material";
 
 const GreenBorderTextField = styled(TextField)`
-& label.Mui-focused {
-  color: #004625;
-}
-& .MuiOutlinedInput-root {
-  &.Mui-focused fieldset {
-    border-color: #004625;
+  & label.Mui-focused {
+    color: #004625;
   }
-}
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #004625;
+    }
+  }
 `;
-
 
 export function Row(props) {
   const { row, fetch } = props;
@@ -52,53 +56,84 @@ export function Row(props) {
       id: row.id,
       name: name,
       price: price,
-      type: row.type
-    }
+      type: row.type,
+    };
     updateProduct(drink);
     setDialogOpen(false);
     fetch();
-  }
+  };
 
   const deleteOnClick = () => {
     deleteProduct(row);
     fetch();
-  }
+  };
 
   return (
     <React.Fragment>
-      <TableRow sx={{
-        '& > *': { borderBottom: 'unset' },
-        backgroundColor: '#fff'
-      }}>
+      <TableRow
+        sx={{
+          "& > *": { borderBottom: "unset" },
+          backgroundColor: "#fff",
+        }}
+      >
         <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
-            sx={{ color: '#612335' }}
+            sx={{ color: "#612335" }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell sx={{ color: 'black', backgroundColor: '#fff' }}>{row.name}</TableCell>
-        <TableCell sx={{ color: 'black', backgroundColor: '#fff' }}>{row.price}</TableCell>
+        <TableCell sx={{ color: "black", backgroundColor: "#fff" }}>
+          {row.name}
+        </TableCell>
+        <TableCell sx={{ color: "black", backgroundColor: "#fff" }}>
+          {row.price}
+        </TableCell>
       </TableRow>
-      <TableRow sx={{ backgroundColor: '#612335' }}>
+      <TableRow sx={{ backgroundColor: "#612335" }}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1, textAlign: 'right' }}>
-              <Button sx={{ backgroundColor: '#004625', color: '#fff', '&:hover': { backgroundColor: '#fff', color: 'black' }, marginRight: '10px' }} variant='contained' onClick={handleOpen}>Güncelle</Button>
-              <Button sx={{ backgroundColor: '#004625', color: '#fff', '&:hover': { backgroundColor: '#fff', color: 'black' } }} variant='contained' onClick={handleDeletionOpen} >Sİl</Button>
+            <Box sx={{ margin: 1, textAlign: "right" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#004625",
+                  color: "#fff",
+                  "&:hover": { backgroundColor: "#fff", color: "black" },
+                  marginRight: "10px",
+                }}
+                variant="contained"
+                onClick={handleOpen}
+              >
+                Güncelle
+              </Button>
+              <Button
+                sx={{
+                  backgroundColor: "#004625",
+                  color: "#fff",
+                  "&:hover": { backgroundColor: "#fff", color: "black" },
+                }}
+                variant="contained"
+                onClick={handleDeletionOpen}
+              >
+                Sİl
+              </Button>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
       <div>
         <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-          <DialogTitle textAlign='center' fontWeight='bold' fontSize='200%'>Ürün Güncelle</DialogTitle>
+          <DialogTitle textAlign="center" fontWeight="bold" fontSize="200%">
+            Ürün Güncelle
+          </DialogTitle>
           <DialogContent>
             <GreenBorderTextField
-              onChange={(e) => { upName(e.target.value) }}
+              onChange={(e) => {
+                upName(e.target.value);
+              }}
               autoFocus
               margin="dense"
               id="name"
@@ -109,7 +144,9 @@ export function Row(props) {
               defaultValue={row.name}
             />
             <GreenBorderTextField
-              onChange={(e) => { upPrice(e.target.value) }}
+              onChange={(e) => {
+                upPrice(e.target.value);
+              }}
               autoFocus
               margin="dense"
               id="name"
@@ -121,8 +158,27 @@ export function Row(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612325', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleClose}>Vazgeç</Button>
-            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={updateOnClick} >Kaydet</Button>
+            <Button
+              sx={{
+                color: "lightgoldenrodyellow",
+                backgroundColor: "#612325",
+                "&:hover": { backgroundColor: "#fff", color: "black" },
+              }}
+              onClick={handleClose}
+            >
+              Vazgeç
+            </Button>
+            <Button
+              sx={{
+                color: "lightgoldenrodyellow",
+                backgroundColor: "#004625",
+                "&:hover": { backgroundColor: "#fff", color: "black" },
+              }}
+              type="submit"
+              onClick={updateOnClick}
+            >
+              Kaydet
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
@@ -133,19 +189,36 @@ export function Row(props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title" fontWeight='bold'>
+          <DialogTitle id="alert-dialog-title" fontWeight="bold">
             {"UYARI"}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description" fontWeight='bold'>
+            <DialogContentText id="alert-dialog-description" fontWeight="bold">
               Ürün silinecektir,emin misiniz?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button variant='contained' sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612335', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleDeletionClose} autoFocus>
+            <Button
+              variant="contained"
+              sx={{
+                color: "lightgoldenrodyellow",
+                backgroundColor: "#612335",
+                "&:hover": { backgroundColor: "#fff", color: "black" },
+              }}
+              onClick={handleDeletionClose}
+              autoFocus
+            >
               Hayır
             </Button>
-            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={deleteOnClick} autoFocus>
+            <Button
+              sx={{
+                color: "lightgoldenrodyellow",
+                backgroundColor: "#004625",
+                "&:hover": { backgroundColor: "#fff", color: "black" },
+              }}
+              onClick={deleteOnClick}
+              autoFocus
+            >
               Evet
             </Button>
           </DialogActions>
@@ -160,12 +233,12 @@ export default function CollapsibleTable() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [drink, setDrink] = useState([]);
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
 
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
 
   async function fetchData() {
     const drinkData = await getProduct("food");
@@ -174,30 +247,41 @@ export default function CollapsibleTable() {
     }
   }
 
-
   const onAddClick = () => {
     const id = uuid();
     addProduct(id, {
-      "id": id,
-      "name": name,
-      "price": price,
-      type: "food"
+      id: id,
+      name: name,
+      price: price,
+      type: "food",
     });
     handleClose();
     fetchData();
-  }
+  };
 
   return (
     <React.Fragment>
-      <TableContainer component={Paper} sx={{
-        boxShadow: '#612335 0px 2px 1px 3px, #612335 0px 1px 1px 0px, #612335 0px 1px 3px 0px',
-      }}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          boxShadow:
+            "#612335 0px 2px 1px 3px, #612335 0px 1px 1px 0px, #612335 0px 1px 3px 0px",
+        }}
+      >
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow sx={{ backgroundColor: '#fff' }}>
+            <TableRow sx={{ backgroundColor: "#fff" }}>
               <TableCell />
-              <TableCell sx={{ fontSize: '100%', fontWeight: 'bold', color: 'black' }}>Ürün İsmi</TableCell>
-              <TableCell sx={{ fontSize: '100%', fontWeight: 'bold', color: 'black' }}>Fiyat</TableCell>
+              <TableCell
+                sx={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
+              >
+                Ürün İsmi
+              </TableCell>
+              <TableCell
+                sx={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
+              >
+                Fiyat
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -208,18 +292,29 @@ export default function CollapsibleTable() {
         </Table>
       </TableContainer>
       <IconButton
-        style={{ backgroundColor: "#004625", color: 'lightgoldenrodyellow', marginTop: "20px", width: "70px", height: "70px" }}
+        style={{
+          backgroundColor: "#004625",
+          color: "lightgoldenrodyellow",
+          marginTop: "20px",
+          width: "70px",
+          height: "70px",
+        }}
         aria-label="expand row"
         size="small"
-        onClick={handleOpen}>
+        onClick={handleOpen}
+      >
         <AddIcon></AddIcon>
       </IconButton>
       <div>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle textAlign='center' fontWeight='bold' fontSize='200%'>Ürün Ekle</DialogTitle>
+          <DialogTitle textAlign="center" fontWeight="bold" fontSize="200%">
+            Ürün Ekle
+          </DialogTitle>
           <DialogContent>
             <GreenBorderTextField
-              onChange={(e) => { setName(e.target.value) }}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
               autoFocus
               margin="dense"
               id="name"
@@ -229,7 +324,9 @@ export default function CollapsibleTable() {
               variant="outlined"
             />
             <GreenBorderTextField
-              onChange={(e) => { setPrice(e.target.value) }}
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
               autoFocus
               margin="dense"
               id="name"
@@ -240,8 +337,27 @@ export default function CollapsibleTable() {
             />
           </DialogContent>
           <DialogActions>
-            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#612325', '&:hover': { backgroundColor: '#fff', color: 'black' } }} onClick={handleClose}>Vazgeç</Button>
-            <Button sx={{ color: 'lightgoldenrodyellow', backgroundColor: '#004625', '&:hover': { backgroundColor: '#fff', color: 'black' } }} type='submit' onClick={onAddClick} >Ekle</Button>
+            <Button
+              sx={{
+                color: "lightgoldenrodyellow",
+                backgroundColor: "#612325",
+                "&:hover": { backgroundColor: "#fff", color: "black" },
+              }}
+              onClick={handleClose}
+            >
+              Vazgeç
+            </Button>
+            <Button
+              sx={{
+                color: "lightgoldenrodyellow",
+                backgroundColor: "#004625",
+                "&:hover": { backgroundColor: "#fff", color: "black" },
+              }}
+              type="submit"
+              onClick={onAddClick}
+            >
+              Ekle
+            </Button>
           </DialogActions>
         </Dialog>
       </div>

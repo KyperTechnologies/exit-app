@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Button } from '@mui/material';
-import CheckoutSlider from '../Sliders/CheckoutSlider';
-import { updateOrder, deleteOrder, addSplitOrder } from '../../Config';
+import React, { useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Button } from "@mui/material";
+import CheckoutSlider from "../sliders/CheckoutSlider";
+import { updateOrder, deleteOrder, addSplitOrder } from "../../Config";
 
 export default function IconButtons(props) {
   const { row, fetchOrder, fetchSplitData } = props;
@@ -18,11 +18,10 @@ export default function IconButtons(props) {
 
   const addSplitOnClick = () => {
     addSplitOrder("split", {
-      "value": newValue,
-      "totalSplitPrice": Number(row.unitPrice) * newValue
-    })
+      value: newValue,
+      totalSplitPrice: Number(row.unitPrice) * newValue,
+    });
   };
-
 
   const handleValue = (e) => {
     e.preventDefault();
@@ -30,13 +29,16 @@ export default function IconButtons(props) {
   };
 
   const updateOnClick = async () => {
-
     const value = Number(row.value) - newValue;
 
     if (value === 0) {
       await deleteOrder(row.id);
     } else {
-      const newOrder = { ...row, value: value, totalPrice: Number(row.unitPrice) * value };
+      const newOrder = {
+        ...row,
+        value: value,
+        totalPrice: Number(row.unitPrice) * value,
+      };
       await updateOrder(newOrder);
       addSplitOnClick();
     }
@@ -44,40 +46,61 @@ export default function IconButtons(props) {
     await fetchOrder();
     await fetchSplitData();
     handleClose();
-  }
+  };
 
   return (
     <>
       <div>
-        {row.value > 1 &&
-          <IconButton style={{ backgroundColor: "#612335" }} onClick={handleOpen} color="primary" aria-label="add to shopping cart">
+        {row.value > 1 && (
+          <IconButton
+            style={{ backgroundColor: "#612335" }}
+            onClick={handleOpen}
+            color="primary"
+            aria-label="add to shopping cart"
+          >
             <PointOfSaleIcon style={{ color: "#fff" }} />
-          </IconButton>}
+          </IconButton>
+        )}
       </div>
       <div>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Ürün Ayır</DialogTitle>
           <DialogContent>
-            <CheckoutSlider handleValue={handleValue} newValue={newValue} orderValue={row.value}></CheckoutSlider>
+            <CheckoutSlider
+              handleValue={handleValue}
+              newValue={newValue}
+              orderValue={row.value}
+            ></CheckoutSlider>
           </DialogContent>
-          <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button sx={{
-              backgroundColor: '#004225',
-              '&:hover': {
-                backgroundColor: '#612335',
-                color: 'lightgoldenrodyellow',
-              }
-            }}
-              variant='contained' onClick={handleClose}>Vazgeç</Button>
+          <DialogActions
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
             <Button
               sx={{
-                backgroundColor: '#004225',
-                '&:hover': {
-                  backgroundColor: '#612335',
-                  color: 'lightgoldenrodyellow',
-                }
+                backgroundColor: "#004225",
+                "&:hover": {
+                  backgroundColor: "#612335",
+                  color: "lightgoldenrodyellow",
+                },
               }}
-              variant='contained' onClick={updateOnClick}>Ayır</Button>
+              variant="contained"
+              onClick={handleClose}
+            >
+              Vazgeç
+            </Button>
+            <Button
+              sx={{
+                backgroundColor: "#004225",
+                "&:hover": {
+                  backgroundColor: "#612335",
+                  color: "lightgoldenrodyellow",
+                },
+              }}
+              variant="contained"
+              onClick={updateOnClick}
+            >
+              Ayır
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
