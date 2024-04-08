@@ -8,13 +8,14 @@ import { CardActionArea, Typography, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import { useNavigate } from "react-router-dom";
-import { addTable, deleteTable, getOrderWithTableId } from "../../Config";
+import { getOrderWithTableId } from "../../Config";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContentText from "@mui/material/DialogContentText";
 import styled from "styled-components";
+import { addTable, deleteTable } from "../../NewConfig";
 
 const GreenBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -50,23 +51,21 @@ export default function ImgMediaCard(props) {
   };
 
   const addTableNameOnClick = () => {
-    addTable(table.id, {
-      id: table.id,
-      name: tableName,
-    });
+    addTable(table.id, tableName);
     handleClose();
     fetch();
   };
 
   const deleteButtonClicked = async () => {
-    const orders = await getOrderWithTableId(table.id);
-    if (orders && orders.length > 0) {
-      handleErrorOpen();
-      return;
-    } else {
-      await deleteTable(table.id);
-      await fetch();
-    }
+    await deleteTable(table.id);
+    await fetch();
+    // const orders = await getOrderWithTableId(table.id);
+    // if (orders && orders.length > 0) {
+    //   handleErrorOpen();
+    //   return;
+    // } else {
+    //   await fetch();
+    // }
   };
 
   return (

@@ -5,7 +5,7 @@ const path = require("path");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
@@ -16,7 +16,6 @@ const filePath = path.join(dataFolderPath, "tableData.json");
 let tableDataToSave = [];
 
 const addTable = (id, tableInfo) => {
-  console.log("data", tableDataToSave);
   tableDataToSave.push(tableInfo);
 
   if (!fs.existsSync(dataFolderPath)) {
@@ -28,6 +27,18 @@ const addTable = (id, tableInfo) => {
       console.error("Error...", err);
     } else {
       console.log("Table added and data written to file successfully");
+    }
+  });
+};
+
+const removeTable = (id) => {
+  tableDataToSave = tableDataToSave.filter((table) => table.id !== id);
+
+  fs.writeFile(filePath, JSON.stringify(tableDataToSave), (err) => {
+    if (err) {
+      console.error("Error...", err);
+    } else {
+      console.log("Table removed and data updated in file successfully");
     }
   });
 };
@@ -54,6 +65,12 @@ app.get("/getTables", (req, res) => {
       res.status(500).send("Internal Server Error");
     }
   });
+});
+
+app.delete("/removeTable/:id", (req, res) => {
+  const idToRemove = req.params.id;
+  removeTable(idToRemove);
+  res.send("Table removed successfully");
 });
 
 app.listen(PORT, () => {

@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
-import CancelOrderSlider from "../Sliders/CancelOrderSlider";
+import CancelOrderSlider from "../sliders/CancelOrderSlider";
 import { updateOrder, deleteOrder } from "../../Config";
 
 export default function IconButtons(props) {

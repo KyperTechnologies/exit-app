@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../layout/Layout";
-import CreditCard from "../components/Cards/CreditCard";
+import CreditCard from "../components/cards/CreditCard";
 import Grid from "@mui/material/Grid";
 import { getCredit } from "../Config";
 

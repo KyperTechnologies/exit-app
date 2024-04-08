@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Typography } from "@mui/material";
-import CheckoutCard from "../components/Cards/CheckoutCard";
+import CheckoutCard from "../components/cards/CheckoutCard";
 import { Grid } from "@mui/material";
 
 const AppBar = styled(MuiAppBar, {

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { IconButton } from "@mui/material";
 import Layout from "../layout/Layout";
-import TableCard from "../components/Cards/TableCard";
+import TableCard from "../components/cards/TableCard";
 import Grid from "@mui/material/Grid";
 import uuid from "react-uuid";
 import { AddCircle } from "@mui/icons-material";
+import { addTable, getTable } from "../NewConfig";
 
 const Home = () => {
   const [table, setTable] = useState([]);
@@ -14,47 +15,17 @@ const Home = () => {
   }, []);
 
   async function fetchData() {
-    fetch("http://localhost:3000/getTables")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch tables");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data && data.length >= 0) {
-          setTable(data);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const data = await getTable();
+    if (data && data.length >= 0) {
+      setTable(data);
+    }
   }
 
-  const onAddClick = () => {
+  const onAddClick = async () => {
     const id = uuid();
     const name = `Masa ${table.length + 1}`;
-    fetch("http://localhost:3000/addTable", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id, name }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.log(response);
-          throw new Error("Failed to add table");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        fetchData();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    await addTable(id, name);
+    await fetchData();
   };
 
   const getContent = () => {

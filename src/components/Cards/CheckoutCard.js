@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CheckoutSummary from "../Cards/CheckoutSummary";
+import CheckoutSummary from "../cards/CheckoutSummary";
 import { useLocation } from "react-router-dom";
 import { getOrderWithTableId } from "../../Config";
 

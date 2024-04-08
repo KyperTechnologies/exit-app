@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../layout/Layout";
-import MenuTableDrinks from "../components/Tables/MenuTableDrinks";
-import MenuTableFoods from "../components/Tables/MenuTableFoods";
+import MenuTableDrinks from "../components/tables/MenuTableDrinks";
+import MenuTableFoods from "../components/tables/MenuTableFoods";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";

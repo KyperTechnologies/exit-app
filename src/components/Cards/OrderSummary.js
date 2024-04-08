@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import OrderSummaryTable from "../Tables/OrderSummaryTable";
+import OrderSummaryTable from "../tables/OrderSummaryTable";
 
 export default function ImgMediaCard(props) {
   const { order, fetchOrder, drink } = props;
