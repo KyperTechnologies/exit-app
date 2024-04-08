@@ -46,3 +46,79 @@ export const deleteTable = async (id) => {
     throw error;
   }
 };
+
+export const addProduct = async (id, name, price, type) => {
+  let fileName;
+  if (type === "drink") {
+    fileName = "drinkData";
+  } else if (type === "food") {
+    fileName = "foodData";
+  }
+  await fetch("http://localhost:4000/addProduct", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id, name, price, type, fileName }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+        throw new Error("Failed to add table");
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const getProducts = async (type) => {
+  try {
+    const response = await fetch(`http://localhost:4000/getProducts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ type }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch tables");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteDrink = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:4000/deleteDrink/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to remove table");
+    }
+    console.log("Table removed successfully");
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteFood = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:4000/deleteFood/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to remove table");
+    }
+    console.log("Table removed successfully");
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -3,6 +3,7 @@
 .idea
 # dependencies
 /backend/node_modules
+/backend/data/
 /node_modules
 /dist
 /ios

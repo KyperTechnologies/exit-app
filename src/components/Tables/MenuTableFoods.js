@@ -18,15 +18,16 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import {
-  addProduct,
-  getProduct,
-  updateProduct,
-  deleteProduct,
-} from "../../Config";
+// import {
+//   addProduct,
+//   getProduct,
+//   updateProduct,
+//   deleteProduct,
+// } from "../../Config";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { DialogContentText } from "@mui/material";
+import { addProduct, getProducts, deleteFood } from "../../NewConfig";
 
 const GreenBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -58,13 +59,13 @@ export function Row(props) {
       price: price,
       type: row.type,
     };
-    updateProduct(drink);
+    // TODO: updateProduct(drink);
     setDialogOpen(false);
     fetch();
   };
 
-  const deleteOnClick = () => {
-    deleteProduct(row);
+  const deleteOnClick = async () => {
+    await deleteFood(row.id);
     fetch();
   };
 
@@ -241,7 +242,7 @@ export default function CollapsibleTable() {
   }, []);
 
   async function fetchData() {
-    const drinkData = await getProduct("food");
+    const drinkData = await getProducts("food");
     if (drinkData && drinkData.length > 0) {
       setDrink(drinkData);
     }
@@ -249,12 +250,7 @@ export default function CollapsibleTable() {
 
   const onAddClick = () => {
     const id = uuid();
-    addProduct(id, {
-      id: id,
-      name: name,
-      price: price,
-      type: "food",
-    });
+    addProduct(id, name, price, "food");
     handleClose();
     fetchData();
   };
