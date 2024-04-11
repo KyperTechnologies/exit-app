@@ -190,3 +190,98 @@ export const getOrdersWithTableId = async (tableId) => {
     throw error;
   }
 };
+
+export const deleteOrderWithTableId = async (tableId, orderId) => {
+  await fetch("http://localhost:4000/deleteOrderWithTableId", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ tableId, orderId }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+        throw new Error("Failed to update product");
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const addCredit = async (newCredit) => {
+  await fetch("http://localhost:4000/addCredit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ newCredit }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+        throw new Error("Failed to add table");
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const getCredits = async () => {
+  try {
+    const response = await fetch("http://localhost:4000/getCredits");
+    if (!response.ok) {
+      console.log("Failed to fetch credits");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getCreditWithOwnerName = async (ownerName) => {
+  try {
+    const response = await fetch(
+      `http://localhost:4000/getCreditWithOwnerName`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ownerName }),
+      }
+    );
+    if (!response.ok) {
+      console.log("Failed to fetch credit with ownerName");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteCredit = async (ownerName) => {
+  try {
+    const response = await fetch(
+      `http://localhost:4000/deleteCredit/${ownerName}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to remove table");
+    }
+    console.log("Food removed successfully");
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

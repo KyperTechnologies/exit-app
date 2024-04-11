@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
 import CancelOrderSlider from "../sliders/CancelOrderSlider";
-import { updateOrder, deleteOrder } from "../../Config";
+import { addOrder, deleteOrderWithTableId } from "../../NewConfig";
 
 export default function IconButtons(props) {
   const [newValue, setValue] = useState(1);
@@ -16,24 +16,24 @@ export default function IconButtons(props) {
   const handleClose = () => setOpen(false);
 
   const { fetchOrder, order } = props;
-
+  const existingOrder = order;
   const handleValue = (e) => {
     e.preventDefault();
     setValue(e.target.value);
   };
 
   const updateOnClick = async () => {
-    const value = Number(order.value) - newValue;
+    const value = Number(existingOrder.value) - newValue;
 
     if (value === 0) {
-      await deleteOrder(order.id);
+      await deleteOrderWithTableId(existingOrder.tableId, existingOrder.id);
     } else {
-      const newOrder = {
-        ...order,
-        value: value,
-        totalPrice: Number(order.unitPrice) * value,
+      const order = {
+        ...existingOrder,
+        value: -Number(newValue),
+        totalPrice: -Number(existingOrder.unitPrice) * newValue,
       };
-      await updateOrder(newOrder);
+      await addOrder({ order });
     }
 
     await fetchOrder();

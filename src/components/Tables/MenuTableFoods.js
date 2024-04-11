@@ -244,6 +244,8 @@ export default function CollapsibleTable() {
     const drinkData = await getProducts("food");
     if (drinkData && drinkData.length > 0) {
       setDrink(drinkData);
+    } else {
+      setDrink([]);
     }
   }
 

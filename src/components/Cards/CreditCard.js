@@ -13,10 +13,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import styled from "styled-components";
 import { TextField } from "@mui/material";
 import {
+  addCredit,
   deleteCredit,
   getCreditWithOwnerName,
-  updateCredit,
-} from "../../Config";
+} from "../../NewConfig";
 
 const GreenBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -43,27 +43,22 @@ export default function ImgMediaCard(props) {
   const handleError2Close = () => setError2Open(false);
 
   const deleteCreditWithDebt = async () => {
-    await deleteCredit(credit.ownerId);
+    debugger;
+    await deleteCredit(credit.ownerName);
     handleErrorClose();
     await fetch();
   };
 
-  const deleteButtonClicked = async () => {
-    const credits = await getCreditWithOwnerName(credit.ownerName);
-    if (credits && credits.length > 0) {
-      handleErrorOpen();
-      return;
-    } else {
-      await deleteCredit(credit.ownerId);
-      await fetch();
-    }
-  };
+  // const deleteButtonClicked = async (ownerName) => {
+  //   await deleteCredit(ownerName);
+  //   await fetch();
+  // };
 
   const updateOnClick = async () => {
-    const newValue = Number(totalPrice) - value;
-    if (newValue >= 0) {
+    const newValue = -Number(value);
+    if (-newValue >= 0) {
       const newCredit = { ...credit, totalPrice: newValue };
-      updateCredit(newCredit);
+      await addCredit(newCredit);
     } else {
       handleError2Open();
     }
@@ -91,12 +86,12 @@ export default function ImgMediaCard(props) {
 
           {totalPrice > 999 && (
             <Typography variant="h6" sx={{ color: "red" }}>
-              Veresiye hesabı: {Number(totalPrice)} ₺
+              Veresiye hesabı: {-Number(totalPrice)} ₺
             </Typography>
           )}
           {totalPrice <= 999 && (
             <Typography variant="h6">
-              Veresiye hesabı: {Number(totalPrice)} ₺
+              Veresiye hesabı: {-Number(totalPrice)} ₺
             </Typography>
           )}
         </CardContent>
@@ -106,7 +101,7 @@ export default function ImgMediaCard(props) {
           style={{ backgroundColor: "#612335" }}
           variant="contained"
           startIcon={<DeleteIcon />}
-          onClick={deleteButtonClicked}
+          onClick={() => handleErrorOpen(credit.ownerName)}
         >
           SİL
         </Button>
@@ -120,7 +115,7 @@ export default function ImgMediaCard(props) {
           </DialogTitle>
           <DialogContent sx={{ backgroundColor: "#fff" }}>
             <DialogContentText>
-              Toplam Veresiye Tutarı : {totalPrice} ₺
+              Toplam Veresiye Tutarı : {-Number(totalPrice)} ₺
             </DialogContentText>
             <GreenBorderTextField
               onChange={(event) => {
@@ -129,7 +124,7 @@ export default function ImgMediaCard(props) {
               autoFocus
               margin="dense"
               id="name"
-              label="Alıancak Tutar"
+              label="Eklenecek Tutar"
               type="text"
               fullWidth
               variant="outlined"
@@ -170,15 +165,15 @@ export default function ImgMediaCard(props) {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title" fontWeight="bold">
-              {"Veresiye Silinemedi"}
+              {"Uyarı"}
             </DialogTitle>
             <DialogContent>
               <DialogContentText
                 id="alert-dialog-description"
                 fontWeight="bold"
               >
-                Kişiye ait veresiye alacak bulunmaktadır. Silmek istediğinize
-                emin misiniz?
+                Kişiye ait bakiye bulunmaktadır. Silmek istediğinize emin
+                misiniz?
               </DialogContentText>
             </DialogContent>
             <DialogActions>

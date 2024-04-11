@@ -106,6 +106,7 @@ const Order = () => {
                     drink={element}
                     fetch={fetchData}
                     fetchOrder={fetchOrderData}
+                    existingOrder={order}
                   ></OrderCardDrinks>
                 </Grid>
               );
@@ -137,6 +138,7 @@ const Order = () => {
                     food={element}
                     fetch={fetchData}
                     fetchOrder={fetchOrderData}
+                    existingOrder={order}
                   ></OrderCardFoods>
                 </Grid>
               );

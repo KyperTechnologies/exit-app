@@ -12,13 +12,13 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CreditSelectTab from "../tabs/CreditSelectTab";
+import uuid from "react-uuid";
 import {
   deleteTable,
-  getCredit,
   addCredit,
   getCreditWithOwnerName,
-} from "../../Config";
-import uuid from "react-uuid";
+  getCredits,
+} from "../../NewConfig";
 
 export default function ImgMediaCard(props) {
   let navigate = useNavigate();
@@ -53,10 +53,10 @@ export default function ImgMediaCard(props) {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   async function fetchData() {
-    const creditOwnerData = await getCredit();
+    const creditOwnerData = await getCredits();
     if (creditOwnerData && creditOwnerData.length > 0) {
       setCredit(creditOwnerData);
     }
@@ -72,14 +72,15 @@ export default function ImgMediaCard(props) {
 
   const addCreditOnClick = async () => {
     const id = uuid();
-    addCredit(id, {
+    const newCredit = {
       ownerId: id,
       ownerName: creditOwnerName,
       totalPrice: getTotalPrice(),
-    });
+    };
+    await addCredit(newCredit);
     handleClose();
     checkoutAll();
-    fetchData();
+    await fetchData();
   };
 
   return (

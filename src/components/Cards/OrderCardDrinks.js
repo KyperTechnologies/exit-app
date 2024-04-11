@@ -1,11 +1,31 @@
 import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { CardActions, Typography } from "@mui/material";
+import { CardActionArea, CardActions, Typography } from "@mui/material";
 import OrderSliderButton from "../buttons/OrderSliderButton";
+import { addOrder } from "../../NewConfig";
+import { useLocation } from "react-router-dom";
 
 export default function ActionAreaCard(props) {
-  const { drink, fetch, fetchOrder } = props;
+  const { drink, fetch, fetchOrder, existingOrder } = props;
+  const location = useLocation();
+
+  const addOrderOnClick = async () => {
+    const order = {
+      id: existingOrder.id,
+      productId: drink.id,
+      tableId: location.state.tableId,
+      nameOfOrder: drink.name,
+      value: 1,
+      unitPrice: Number(drink.price),
+      totalPrice: Number(drink.price),
+      productType: drink.type,
+    };
+    await addOrder({
+      order,
+    });
+    await fetchOrder();
+  };
 
   return (
     <Card
@@ -18,11 +38,13 @@ export default function ActionAreaCard(props) {
         minWidth: "165px",
       }}
     >
-      <CardContent>
-        <Typography variant="h5" key={drink.id} drink={drink}>
-          {drink.name}
-        </Typography>
-      </CardContent>
+      <CardActionArea onClick={addOrderOnClick}>
+        <CardContent>
+          <Typography variant="h5" key={drink.id} drink={drink}>
+            {drink.name}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
       <CardActions sx={{ display: "flex", justifyContent: "center" }}>
         <OrderSliderButton
           fetch={fetch}

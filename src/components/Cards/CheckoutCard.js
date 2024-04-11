@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CheckoutSummary from "../cards/CheckoutSummary";
 import { useLocation } from "react-router-dom";
-import { getOrderWithTableId } from "../../Config";
+import { getOrdersWithTableId } from "../../NewConfig";
 
 export default function ImgMediaCard() {
   const [order, setOrder] = useState([]);
@@ -15,7 +15,7 @@ export default function ImgMediaCard() {
   }, []);
 
   async function fetchOrderData() {
-    const orderData = await getOrderWithTableId(location.state.tableId);
+    const orderData = await getOrdersWithTableId(location.state.tableId);
     if (orderData && orderData.length > 0) {
       setOrder(orderData);
     }

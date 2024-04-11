@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CheckoutButton from "../buttons/CheckoutButton";
-import { updateSplitOrder, getSplitOrder } from "../../Config";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -15,27 +14,14 @@ export default function SpanningTable(props) {
   const { order, fetchOrder } = props;
   const [splitPrice, setSplitPrice] = useState([""]);
 
-  useEffect(() => {
-    fetchSplitData();
-  }, []);
-
-  async function fetchSplitData() {
-    const splitData = await getSplitOrder();
-    if (splitData && splitData.length > 0) {
-      setSplitPrice(splitData);
-    }
-  }
-
   const getTotalPrice = () => {
     return order.reduce((acc, obj) => acc + obj.totalPrice, 0);
   };
 
-  const mapPrice = splitPrice.map((value) => value.totalSplitPrice);
+  const mapPrice = -Number(splitPrice);
 
   const deleteAllOnClick = async () => {
-    const newSplit = { ...mapPrice, value: 0, totalSplitPrice: 0 };
-    updateSplitOrder(newSplit);
-    await fetchSplitData();
+    setSplitPrice(0);
   };
 
   return (
@@ -92,7 +78,7 @@ export default function SpanningTable(props) {
                 <CheckoutButton
                   row={row}
                   fetchOrder={fetchOrder}
-                  fetchSplitData={fetchSplitData}
+                  setSplitPrice={setSplitPrice}
                 ></CheckoutButton>
               </TableCell>
             </TableRow>

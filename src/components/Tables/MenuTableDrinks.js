@@ -62,12 +62,14 @@ export function Row(props) {
     const priceToUpdate = price !== "" ? price : row.price;
     await updateProduct(row.id, nameToUpdate, priceToUpdate, row.type);
     setDialogOpen(false);
-    await fetch();
+    fetch();
   };
 
   const deleteOnClick = async () => {
     await deleteDrink(row.id);
-    fetch();
+    console.log(row);
+    handleDeletionClose();
+    await fetch();
   };
 
   return (
@@ -240,20 +242,22 @@ export default function CollapsibleTable() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [drink]);
 
   async function fetchData() {
     const drinkData = await getProducts("drink");
     if (drinkData && drinkData.length > 0) {
       setDrink(drinkData);
+    } else {
+      setDrink([]);
     }
   }
 
-  const onAddClick = () => {
+  const onAddClick = async () => {
     const id = uuid();
-    addProduct(id, name, price, "drink");
+    await addProduct(id, name, price, "drink");
+    await fetchData();
     handleClose();
-    fetchData();
   };
 
   return (

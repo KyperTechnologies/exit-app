@@ -7,60 +7,51 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
 import CheckoutSlider from "../sliders/CheckoutSlider";
-import { updateOrder, deleteOrder, addSplitOrder } from "../../Config";
+import { addOrder, deleteOrderWithTableId } from "../../NewConfig";
 
 export default function IconButtons(props) {
-  const { row, fetchOrder, fetchSplitData } = props;
+  const { row, fetchOrder, setSplitPrice } = props;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [newValue, setValue] = useState(1);
 
-  const addSplitOnClick = () => {
-    addSplitOrder("split", {
-      value: newValue,
-      totalSplitPrice: Number(row.unitPrice) * newValue,
-    });
-  };
-
   const handleValue = (e) => {
     e.preventDefault();
     setValue(e.target.value);
   };
+  const existingOrder = row;
 
   const updateOnClick = async () => {
-    const value = Number(row.value) - newValue;
+    const value = Number(existingOrder.value) - newValue;
 
     if (value === 0) {
-      await deleteOrder(row.id);
+      await deleteOrderWithTableId(existingOrder.tableId, existingOrder.id);
     } else {
-      const newOrder = {
-        ...row,
-        value: value,
-        totalPrice: Number(row.unitPrice) * value,
+      const order = {
+        ...existingOrder,
+        value: -Number(newValue),
+        totalPrice: -Number(existingOrder.unitPrice) * newValue,
       };
-      await updateOrder(newOrder);
-      addSplitOnClick();
+      setSplitPrice(order.totalPrice);
+      await addOrder({ order });
     }
 
     await fetchOrder();
-    await fetchSplitData();
     handleClose();
   };
 
   return (
     <>
       <div>
-        {row.value > 1 && (
-          <IconButton
-            style={{ backgroundColor: "#612335" }}
-            onClick={handleOpen}
-            color="primary"
-            aria-label="add to shopping cart"
-          >
-            <PointOfSaleIcon style={{ color: "#fff" }} />
-          </IconButton>
-        )}
+        <IconButton
+          style={{ backgroundColor: "#612335" }}
+          onClick={handleOpen}
+          color="primary"
+          aria-label="add to shopping cart"
+        >
+          <PointOfSaleIcon style={{ color: "#fff" }} />
+        </IconButton>
       </div>
       <div>
         <Dialog open={open} onClose={handleClose}>
