@@ -10,9 +10,8 @@ import OrderCardDrinks from "../components/cards/OrderCardDrinks";
 import OrderCardFoods from "../components/cards/OrderCardFoods";
 import OrderSummary from "../components/cards/OrderSummary";
 import Grid from "@mui/material/Grid";
-import { getProduct } from "../Config";
-import { getOrderWithTableId } from "../Config";
 import { useLocation } from "react-router-dom";
+import { getOrdersWithTableId, getProducts } from "../NewConfig";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -57,7 +56,8 @@ function a11yProps(index) {
 const Order = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [product, setProduct] = useState([]);
+  const [drinks, setDrinks] = useState([]);
+  const [foods, setFoods] = useState([]);
   const [order, setOrder] = useState([]);
   const location = useLocation();
 
@@ -76,14 +76,19 @@ const Order = () => {
   }, []);
 
   async function fetchData() {
-    const productData = await getProduct();
-    if (productData && productData.length > 0) {
-      setProduct(productData);
+    const drinkData = await getProducts("drink");
+    const foodData = await getProducts("food");
+
+    if (drinkData && drinkData.length > 0) {
+      setDrinks(drinkData);
+    }
+    if (foodData && foodData.length > 0) {
+      setFoods(foodData);
     }
   }
 
   async function fetchOrderData() {
-    const orderData = await getOrderWithTableId(location.state.tableId);
+    const orderData = await getOrdersWithTableId(location.state.tableId);
     setOrder(orderData);
   }
 
@@ -91,7 +96,7 @@ const Order = () => {
     return (
       <Box sx={{ minHeight: "100vh" }}>
         <Grid container={true} spacing={3} justifyContent="space-evenly">
-          {product
+          {drinks
             .filter((element) => element.type === "drink")
             .map((element) => {
               return (
@@ -114,7 +119,7 @@ const Order = () => {
     return (
       <Box sx={{ minHeight: "100vh" }}>
         <Grid container={true} spacing={3} justifyContent="space-evenly">
-          {product
+          {foods
             .filter((element) => element.type === "food")
             .map((element) => {
               return (

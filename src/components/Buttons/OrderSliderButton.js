@@ -7,9 +7,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Button } from "@mui/material";
 import OrderSlider from "../sliders/OrderSlider";
-import { addOrder } from "../../Config";
 import { useLocation } from "react-router-dom";
 import uuid from "react-uuid";
+import { addOrder } from "../../NewConfig";
 
 export default function IconButtons(props) {
   const [open, setOpen] = React.useState(false);
@@ -26,8 +26,7 @@ export default function IconButtons(props) {
 
   const addOrderOnClick = async () => {
     const id = uuid();
-
-    await addOrder(id, {
+    const order = {
       id: id,
       productId: product.id,
       tableId: location.state.tableId,
@@ -35,6 +34,10 @@ export default function IconButtons(props) {
       value: value,
       unitPrice: Number(product.price),
       totalPrice: value * Number(product.price),
+      productType: product.type,
+    };
+    await addOrder({
+      order,
     });
     await fetchOrder();
     handleClose();

@@ -22,7 +22,7 @@ export const getTable = async () => {
   try {
     const response = await fetch("http://localhost:4000/getTables");
     if (!response.ok) {
-      throw new Error("Failed to fetch tables");
+      console.log("Failed to fetch tables");
     }
     const data = await response.json();
     return data;
@@ -64,7 +64,7 @@ export const addProduct = async (id, name, price, type) => {
     .then((response) => {
       if (!response.ok) {
         console.log(response);
-        throw new Error("Failed to add table");
+        throw new Error("Failed to add product");
       }
       return response.json();
     })
@@ -83,7 +83,7 @@ export const getProducts = async (type) => {
       body: JSON.stringify({ type }),
     });
     if (!response.ok) {
-      throw new Error("Failed to fetch tables");
+      console.log("Failed to fetch products");
     }
     const data = await response.json();
     return data;
@@ -101,7 +101,7 @@ export const deleteDrink = async (id) => {
     if (!response.ok) {
       throw new Error("Failed to remove table");
     }
-    console.log("Table removed successfully");
+    console.log("Drink removed successfully");
   } catch (error) {
     console.error(error);
     throw error;
@@ -116,7 +116,75 @@ export const deleteFood = async (id) => {
     if (!response.ok) {
       throw new Error("Failed to remove table");
     }
-    console.log("Table removed successfully");
+    console.log("Food removed successfully");
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const updateProduct = async (id, name, price, type) => {
+  let fileName;
+  if (type === "drink") {
+    fileName = "drinkData";
+  } else if (type === "food") {
+    fileName = "foodData";
+  }
+  await fetch("http://localhost:4000/updateProduct", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id, name, price, type, fileName }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+        throw new Error("Failed to update product");
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const addOrder = async (order) => {
+  await fetch("http://localhost:4000/addOrder", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      order,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.log(response);
+        throw new Error("Failed to add order");
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const getOrdersWithTableId = async (tableId) => {
+  try {
+    const response = await fetch(`http://localhost:4000/getOrdersWithTableId`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tableId }),
+    });
+    if (!response.ok) {
+      console.log("Failed to fetch orders with tableId");
+    }
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error(error);
     throw error;

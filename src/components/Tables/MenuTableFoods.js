@@ -27,7 +27,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { DialogContentText } from "@mui/material";
-import { addProduct, getProducts, deleteFood } from "../../NewConfig";
+import {
+  addProduct,
+  getProducts,
+  deleteFood,
+  updateProduct,
+} from "../../NewConfig";
 
 const GreenBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -52,16 +57,10 @@ export function Row(props) {
 
   const handleOpen = () => setDialogOpen(true);
   const handleClose = () => setDialogOpen(false);
-  const updateOnClick = () => {
-    const drink = {
-      id: row.id,
-      name: name,
-      price: price,
-      type: row.type,
-    };
-    // TODO: updateProduct(drink);
+  const updateOnClick = async () => {
+    await updateProduct(row.id, name, price, row.type);
     setDialogOpen(false);
-    fetch();
+    await fetch();
   };
 
   const deleteOnClick = async () => {
